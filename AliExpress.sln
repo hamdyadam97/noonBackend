@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34322.80
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AliExpress.Models", "AliExpress.Models\AliExpress.Models.csproj", "{7B4254A4-56C0-48BD-BF7C-A091F632C415}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AliExpress.Context", "AliExpress.Context\AliExpress.Context.csproj", "{6F4C0746-FB3E-477F-96C4-1506DFA21346}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AliExpress.Api", "AliExpress.Api\AliExpress.Api.csproj", "{7A007724-34A5-46D7-824A-A600FB16B9A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AliExpress.Application", "AliExpress.Application\AliExpress.Application.csproj", "{65589FCB-3B44-42F1-8F55-50F3EA358474}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AliExpress.Dtos", "AliExpress.Dtos\AliExpress.Dtos.csproj", "{A212D53B-E207-4423-ABDA-73A0995F7C2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "None.Infrastructure", "None.Infrastructure\None.Infrastructure.csproj", "{C5F26968-E482-45DE-8012-8B56898F0001}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7B4254A4-56C0-48BD-BF7C-A091F632C415}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B4254A4-56C0-48BD-BF7C-A091F632C415}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B4254A4-56C0-48BD-BF7C-A091F632C415}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B4254A4-56C0-48BD-BF7C-A091F632C415}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F4C0746-FB3E-477F-96C4-1506DFA21346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F4C0746-FB3E-477F-96C4-1506DFA21346}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F4C0746-FB3E-477F-96C4-1506DFA21346}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F4C0746-FB3E-477F-96C4-1506DFA21346}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A007724-34A5-46D7-824A-A600FB16B9A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A007724-34A5-46D7-824A-A600FB16B9A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A007724-34A5-46D7-824A-A600FB16B9A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A007724-34A5-46D7-824A-A600FB16B9A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65589FCB-3B44-42F1-8F55-50F3EA358474}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65589FCB-3B44-42F1-8F55-50F3EA358474}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65589FCB-3B44-42F1-8F55-50F3EA358474}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65589FCB-3B44-42F1-8F55-50F3EA358474}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A212D53B-E207-4423-ABDA-73A0995F7C2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A212D53B-E207-4423-ABDA-73A0995F7C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A212D53B-E207-4423-ABDA-73A0995F7C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A212D53B-E207-4423-ABDA-73A0995F7C2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5F26968-E482-45DE-8012-8B56898F0001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5F26968-E482-45DE-8012-8B56898F0001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5F26968-E482-45DE-8012-8B56898F0001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5F26968-E482-45DE-8012-8B56898F0001}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2F523AB4-38AB-4DC0-BB6D-780FD6CA9C45}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,6 @@
+@AliExpress.Api_HostAddress = http://localhost:5114
+
+GET {{AliExpress.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
