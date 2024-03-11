@@ -11,9 +11,9 @@ namespace AliExpress.Application.IServices
     public interface ICategoryService
     {
         Task<IEnumerable<CategoryDto>> GetAllCategory();
-        Task<CategoryDto> Create(CategoryDto category);
-        Task<CategoryDto> Update(CategoryDto category);
-        Task<CategoryDto> Delete(CategoryDto category);
+        Task<CategoryDto> Create(CategoryDto categoryDto);
+        Task<CategoryDto> Update(CategoryDto categoryDto);
+        Task Delete(CategoryDto categoryDto);
         Task<CategoryDto> GetOne(int Id);
     }
 }

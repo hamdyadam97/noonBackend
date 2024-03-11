@@ -97,9 +97,10 @@ namespace AliExpress.Models
         public string? Language { get; set; }
         public string? Functionality { get; set; }
 
+        public bool IsDeleted { get; set; } = false;
 
+        public ICollection<Cart> Carts{ get; set; }
         public ICollection<ProductCategory> ProductCategories { get; set; }
-
         public ICollection<Images> Images { get; set; }
     }
 }
