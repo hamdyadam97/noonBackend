@@ -8,18 +8,17 @@ namespace AliExpress.Dtos.Pagination
 {
     public class PaginationResult<T>
     {
-       public IEnumerable<T> Entities { get; set; }
+        public IEnumerable<T> Entities { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
         public int TotalCount { get; set; }
-        public PaginationResult(List<T> entities,int page,int pageSize,int count)
+
+        public PaginationResult(IEnumerable<T> entities, int pageIndex, int pageSize, int totalCount)
         {
             Entities = entities;
-            PageIndex = page;
+            PageIndex = pageIndex;
             PageSize = pageSize;
-            TotalCount = count;
-            
+            TotalCount = totalCount;
         }
-
     }
 }

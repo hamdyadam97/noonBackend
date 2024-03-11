@@ -13,7 +13,7 @@ namespace AliExpress.Models
         Female
     }
 
-    public class Product: BaseEntity
+    public class Product: BaseEntity , IDeletedEntity
     {
         public string Title { get; set; }
         public string Description { get; set; }
@@ -96,7 +96,7 @@ namespace AliExpress.Models
         public string? Compatibility { get; set; }
         public string? Language { get; set; }
         public string? Functionality { get; set; }
-
+        public bool IsDeleted { get; set; } = false;
 
         public ICollection<ProductCategory> ProductCategories { get; set; }
 

@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace AliExpress.Application.Contract
 {
-    public interface IProductRepository :IRepository<Product, int>
+    public interface ISubCategoryRepository:IRepository<Subcategory,int>
     {
-        Task<IEnumerable<Product>> GetAllAsync(string searchValue,int page,int pageSize);
-        Task<int> CoutProducts();
+      
     }
 }
