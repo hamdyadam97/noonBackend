@@ -1,5 +1,6 @@
 
 using AliExpress.Application.Contract;
+using AliExpress.Application.IServices;
 using AliExpress.Application.Mapper;
 using AliExpress.Application.Services;
 using AliExpress.Context;
@@ -55,6 +56,10 @@ namespace AliExpress.Api
 
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IProductRepository,ProductRepository>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
