@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AliExpress.Application", "A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AliExpress.Dtos", "AliExpress.Dtos\AliExpress.Dtos.csproj", "{A212D53B-E207-4423-ABDA-73A0995F7C2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "None.Infrastructure", "None.Infrastructure\None.Infrastructure.csproj", "{C5F26968-E482-45DE-8012-8B56898F0001}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "None.Infrastructure", "None.Infrastructure\None.Infrastructure.csproj", "{C5F26968-E482-45DE-8012-8B56898F0001}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Noon.MVC", "Noon.MVC\Noon.MVC.csproj", "{C570699F-EFA0-42CD-8DCB-04DDA76184AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{C5F26968-E482-45DE-8012-8B56898F0001}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5F26968-E482-45DE-8012-8B56898F0001}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5F26968-E482-45DE-8012-8B56898F0001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C570699F-EFA0-42CD-8DCB-04DDA76184AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C570699F-EFA0-42CD-8DCB-04DDA76184AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C570699F-EFA0-42CD-8DCB-04DDA76184AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C570699F-EFA0-42CD-8DCB-04DDA76184AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
