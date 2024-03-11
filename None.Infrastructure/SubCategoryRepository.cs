@@ -9,13 +9,16 @@ using System.Threading.Tasks;
 
 namespace None.Infrastructure
 {
-    public class CategoryRepository:Repoditory<Category,int>,ICategoryRepository
+    public class SubCategoryRepository:Repoditory<Subcategory,int> ,ISubCategoryRepository
     {
         private readonly AliExpressContext _context;
+       
 
-        public CategoryRepository(AliExpressContext context):base(context)
+        public SubCategoryRepository(AliExpressContext context):base(context)
         {
             _context = context;
+          
         }
+
     }
 }
