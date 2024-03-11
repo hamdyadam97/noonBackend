@@ -24,7 +24,7 @@ namespace None.Infrastructure
             return counts;
         }
 
-        public async Task<IEnumerable<Product>> GetAll(string searchValue, int page, int pageSize)
+        public async Task<IEnumerable<Product>> GetAllAsync(string searchValue, int page, int pageSize)
         {
             IQueryable<Product> query=_context.Products;
             //search

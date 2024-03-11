@@ -15,6 +15,7 @@ namespace AliExpress.Context
         public DbSet<Category> Categories { get; set; }
         public DbSet<Images> Images { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<Subcategory> Subcategories { get; set; }
         public AliExpressContext(DbContextOptions dbContextOptions) : base(dbContextOptions) { }
 
         //public AppContext(DbContextOptions<AppContext> options) : base(options)
