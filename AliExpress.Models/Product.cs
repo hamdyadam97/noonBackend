@@ -98,8 +98,8 @@ namespace AliExpress.Models
         public string? Functionality { get; set; }
 
 
+        public ICollection<Cart> Carts{ get; set; }
         public ICollection<ProductCategory> ProductCategories { get; set; }
-
         public ICollection<Images> Images { get; set; }
     }
 }
