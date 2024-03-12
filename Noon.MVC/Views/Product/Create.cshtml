@@ -2,7 +2,16 @@
 
 @{
     ViewData["Title"] = "Create";
-    SelectList list = new SelectList(ViewBag.Cat, "Id", "Name");
+    //SelectList list = new SelectList(ViewBag.Cat, "Id", "Name");
+
+    
+                SelectList list=null;
+                if (ViewBag.Cat != null)
+                {
+                     list = new SelectList(ViewBag.Cat, "Id", "Name");
+                    // Use SelectList here
+                }
+            
 }
 
 <h1>Create</h1>
@@ -413,9 +422,14 @@
             </div>
 
              @* category drop down list  *@
+
+
+
+
+            
            
             <div>
-                <label asp-for="Id">Category Name</label>
+                <label asp-for="Category">Category Name</label>
                 <select asp-for="Id" asp-items="list"></select>
                 <span asp-validation-for="Id" style="color:red"></span>
             </div>

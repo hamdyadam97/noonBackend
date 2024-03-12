@@ -42,25 +42,50 @@ namespace Noon.MVC.Controllers
         // POST: ProductController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        
+
+
+
         public async Task<ActionResult> Create(CreateUpdateDeleteProductDto createUpdateDeleteProductDto)
         {
             try
             {
-                if(ModelState.IsValid) 
+                if (ModelState.IsValid)
                 {
                     var result = await _productService.Create(createUpdateDeleteProductDto);
                     if (result.IsSuccess)
+                    {
                         return RedirectToAction("Index");
-                    else ViewBag.Error = result.Message;
+                    }
+                    else
+                    {
+                        ViewBag.Error = result.Message;
+                        return View(createUpdateDeleteProductDto);
+                    }
                 }
-                return View(createUpdateDeleteProductDto);
+                else
+                {
+                    return View(createUpdateDeleteProductDto);
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.Error = ex.Message;
-                return View("Error");
+                return View(createUpdateDeleteProductDto);
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
 
         // GET: ProductController/Edit/5
         public ActionResult Edit(int id)
