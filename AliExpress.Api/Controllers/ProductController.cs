@@ -66,21 +66,7 @@ namespace AliExpress.Api.Controllers
 
             return Ok("Images uploaded successfully");
         }
-        [HttpDelete("DeleteProduct/{id}")]
-        public async Task<ActionResult> DeleteProduct(int id)
-        {
-            var Cat = await _productService.GetOne(id);
-            if (Cat == null)
-            {
-                return NotFound(); // Return 404 if the product is not found
-            }
-            else
-            {
-                _productService.Delete(id);
-
-            }
-            return NoContent();
-        }
+      
 
 
       
