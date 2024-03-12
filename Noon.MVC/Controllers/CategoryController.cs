@@ -3,6 +3,7 @@ using AliExpress.Dtos.Category;
 using AliExpress.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SQLitePCL;
 
 namespace Noon.MVC.Controllers
 {
@@ -18,9 +19,11 @@ namespace Noon.MVC.Controllers
 
 
         // GET: CategoryController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+
+            var catergory = await (_categoryService.GetAllCategory());
+            return View(catergory);
         }
 
         // GET: CategoryController/Details/5
@@ -47,15 +50,16 @@ namespace Noon.MVC.Controllers
                 {
                     var result = await _categoryService.Create(categoryDto);
 
-                    if (result!=null)
+                    if (result.IsSuccess)
                     {
                         return RedirectToAction("Index");
                     }
                     else
                     {
-                        ViewBag.Error = result;
+                        ViewBag.Error = result.Message;
                     }
                 }
+
 
                 // If ModelState is not valid, return the view with the provided data
                 return View(categoryDto);
@@ -69,23 +73,43 @@ namespace Noon.MVC.Controllers
         }
 
         // GET: CategoryController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+
+            var catergory=await (_categoryService.GetOne(id));
+            return View(catergory.Entity);
         }
 
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task< ActionResult> Edit(int id, CategoryDto categoryDto)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    var result = await _categoryService.Update(categoryDto);
+
+                    if (result.IsSuccess)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        ViewBag.Error = result.Message;
+                    }
+                }
+
+
+                // If ModelState is not valid, return the view with the provided data
+                return View(categoryDto);
             }
             catch
             {
-                return View();
+                // Return an error view or redirect to a generic error page
+                ViewBag.Error = "An unexpected error occurred.";
+                return View("Error");
             }
         }
 
