@@ -14,7 +14,7 @@ namespace AliExpress.Application.IServices
         Task<IEnumerable<CategoryDto>> GetAllCategory();
         Task<ResultView<CategoryDto>> Create(CategoryDto categoryDto);
         Task<ResultView<CategoryDto>> Update(CategoryDto categoryDto);
-        Task Delete(CategoryDto categoryDto);
+        Task<ResultView<CategoryDto>> Delete(int id);
         Task<ResultView<CategoryDto>> GetOne(int Id);
     }
 }

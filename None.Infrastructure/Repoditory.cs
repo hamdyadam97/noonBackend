@@ -39,17 +39,16 @@ namespace None.Infrastructure
             if (entity is IDeletedEntity deletedEntity)
             {
                 deletedEntity.IsDeleted = true;
-                _context.Update(deletedEntity);
-                await _context.SaveChangesAsync();
+                _context.Update(entity); // Update the entity in the context
             }
-            
             else
             {
-                _context.Set<TEntity>().Remove(entity);
+                _context.Set<TEntity>().Remove(entity); // This line is not needed for soft delete
             }
 
             await _context.SaveChangesAsync();
         }
+
         //changed - Haidy
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {

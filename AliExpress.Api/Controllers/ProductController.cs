@@ -1,9 +1,13 @@
-﻿using AliExpress.Application.Services;
+﻿using AliExpress.Application.IServices;
+using AliExpress.Application.Services;
 using AliExpress.Context;
+using AliExpress.Dtos.Product;
+using AliExpress.Dtos.ViewResult;
 using AliExpress.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace AliExpress.Api.Controllers
@@ -62,7 +66,49 @@ namespace AliExpress.Api.Controllers
 
             return Ok("Images uploaded successfully");
         }
+        [HttpDelete("DeleteProduct/{id}")]
+        public async Task<ActionResult> DeleteProduct(int id)
+        {
+            var Cat = await _productService.GetOne(id);
+            if (Cat == null)
+            {
+                return NotFound(); // Return 404 if the product is not found
+            }
+            else
+            {
+                _productService.Delete(Cat.Entity);
+
+            }
+            return NoContent();
+        }
 
 
+      
+        [HttpPost]
+        public async Task<ActionResult<CreateUpdateDeleteProductDto>> Create(CreateUpdateDeleteProductDto product)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var prd = await _productService.Create(product);
+                
+                return Created("http://localhost:5164/api/Product/" + product.Id, "Saved");
+            }
+            return BadRequest(ModelState);
+        }
+
+
+
+        [HttpDelete("DeleteProduct/{id}")]
+        public async Task<ActionResult> DeleteSubCategory(int id)
+        {
+            var result = await _productService.Delete(id);
+            if (!result.IsSuccess)
+            {
+                return NotFound(); // Return 404 if the category is not found or deletion fails
+            }
+            await _context.SaveChangesAsync();
+            return Ok(result);
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace AliExpress.Application.IServices
         Task<ResultList <SubCategoryDto>> GetAllCategory();
         Task<ResultView<SubCategoryDto>> Create(SubCategoryDto subcategoryDto);
         Task<ResultView<SubCategoryDto>> Update(SubCategoryDto subcategoryDto);
-        Task Delete(SubCategoryDto subcategoryDto);
+        Task<ResultView<SubCategoryDto>> Delete(int id);
         Task<ResultView<SubCategoryDto>> GetOne(int Id);
     }
 }
