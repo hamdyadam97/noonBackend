@@ -1,5 +1,6 @@
 ﻿using AliExpress.Dtos.Pagination;
 using AliExpress.Dtos.Product;
+using AliExpress.Dtos.Subcategory;
 using AliExpress.Dtos.ViewResult;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace AliExpress.Application.Services
         Task<PaginationResult<ProductViewDto>> GetAllProducts(string searchValue , int page,int pageSize);
         Task<ResultView<CreateUpdateDeleteProductDto>> Create(CreateUpdateDeleteProductDto productDto);
         Task<ResultView<CreateUpdateDeleteProductDto>> Update(CreateUpdateDeleteProductDto productDto);
-        Task Delete(CreateUpdateDeleteProductDto productDto);
+        Task<ResultView<CreateUpdateDeleteProductDto>> Delete(int id);
         Task<ResultView<CreateUpdateDeleteProductDto>> GetOne(int Id);
     }
 }

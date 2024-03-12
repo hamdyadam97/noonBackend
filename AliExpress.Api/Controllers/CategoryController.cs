@@ -1,7 +1,9 @@
 ﻿using AliExpress.Application.IServices;
 using AliExpress.Application.Services;
+using AliExpress.Context;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AliExpress.Api.Controllers
 {
@@ -9,11 +11,12 @@ namespace AliExpress.Api.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-
+        private readonly AliExpressContext _context;
         private readonly ICategoryService _categoryService;
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService, AliExpressContext aliExpress )
         {
             _categoryService = categoryService;
+            _context = aliExpress;
         }
 
         [HttpGet]
@@ -37,5 +40,19 @@ namespace AliExpress.Api.Controllers
 
             return Ok(Cat);
         }
+
+        [HttpDelete("DeleteCategory/{id}")]
+        public async Task<ActionResult> DeleteCategory(int id)
+        {
+            var result = await _categoryService.Delete(id);
+            if (!result.IsSuccess)
+            {
+                return NotFound(); // Return 404 if the category is not found or deletion fails
+            }
+            await _context.SaveChangesAsync();
+            return Ok(result);
+        }
     }
 }
+
+
