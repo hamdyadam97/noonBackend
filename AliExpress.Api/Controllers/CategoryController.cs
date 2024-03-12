@@ -51,7 +51,7 @@ namespace AliExpress.Api.Controllers
                 _categoryService.Delete(Cat.Entity);
 
             }
-            return Ok(Cat);
+            return NoContent();
         }
     }
 }

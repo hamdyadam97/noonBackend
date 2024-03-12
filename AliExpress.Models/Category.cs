@@ -9,7 +9,7 @@ namespace AliExpress.Models
     public class Category: BaseEntity,IDeletedEntity
     {
         public string Name { get; set; }
-    public bool IsDeleted { get; set; } = false;
+    public bool IsDeleted { get; set; }
     public ICollection<Subcategory> Subcategories { get; set; }
     
         public virtual ICollection<ProductCategory> ProductCategories { get; set; }
