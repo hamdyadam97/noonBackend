@@ -34,6 +34,18 @@ namespace AliExpress.Api
 
             builder.Services.AddAutoMapper(M =>M.AddProfile(new MappingProduct()));
             builder.Services.AddAutoMapper(M => M.AddProfile(typeof(MappingCategory)));
+            builder.Services.AddAutoMapper(M => M.AddProfile(typeof(MappingSubCategory)));
+
+            //Repository
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+
+            //service
+            builder.Services.AddScoped<ICategoryService ,CategoryService>();
+            builder.Services.AddScoped<ISubCategoryService, SubCategoryService>();
+            builder.Services.AddScoped<IProductService, ProductService>();
 
           
 

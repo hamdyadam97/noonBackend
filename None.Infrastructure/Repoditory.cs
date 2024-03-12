@@ -41,6 +41,11 @@ namespace None.Infrastructure
                 deletedEntity.IsDeleted = true;
                 _context.Update(deletedEntity);
             }
+            if (entity.IsDeleted)
+            {
+                entity.IsDeleted = true;
+                _context.Update(deletedEntity);
+            }
             else
             {
                 _context.Set<TEntity>().Remove(entity);
