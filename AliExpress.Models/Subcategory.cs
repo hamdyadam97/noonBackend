@@ -10,8 +10,8 @@ namespace AliExpress.Models
     {
 
         public string Name { get; set; }
+        public bool IsDeleted { get; set; } = false;
         public int CategoryId { get; set; }
-        public bool IsDeleted { get; set; }
 
         // Navigation property
         public Category Category { get; set; }

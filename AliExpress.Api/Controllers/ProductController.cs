@@ -23,5 +23,19 @@ namespace AliExpress.Api.Controllers
 
             return Ok(Prds);
         }
+
+       
+        [HttpGet("DetailsProduct/{id}")]
+        public async Task<ActionResult> DetailsProduct(int id)
+        {
+            var product = await _productService.GetOne(id);
+            if (product == null)
+            {
+                return NotFound(); // Return 404 if the product is not found
+            }
+
+            return Ok(product);
+        }
+
     }
 }
