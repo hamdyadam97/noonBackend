@@ -12,7 +12,7 @@ namespace AliExpress.Application.Contract
         Task<TEntity> UpdateAsync(TEntity entity);
         Task DeleteAsync(TEntity entity);
         Task<TEntity> GetByIdAsync(TId id);
-        Task<IQueryable<TEntity>> GetAllAsync();
+        Task<IEnumerable<TEntity>> GetAllAsync();
         Task<int> SaveChangesAsync();
     }
 }

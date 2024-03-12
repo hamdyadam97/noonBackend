@@ -41,11 +41,6 @@ namespace None.Infrastructure
                 deletedEntity.IsDeleted = true;
                 _context.Update(deletedEntity);
             }
-            if (entity.IsDeleted)
-            {
-                entity.IsDeleted = true;
-                _context.Update(deletedEntity);
-            }
             else
             {
                 _context.Set<TEntity>().Remove(entity);
@@ -54,23 +49,26 @@ namespace None.Infrastructure
             await _context.SaveChangesAsync();
         }
         //changed - Haidy
-        public async Task<IQueryable<TEntity>> GetAllAsync()
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             if (typeof(TEntity) == typeof(Category))
             {
-                return (IQueryable<TEntity>)await _context.Categories
+                return (IEnumerable<TEntity>)await _context.Categories
                     .Include(c => c.Subcategories)
                     .ToListAsync();
             }
             else if (typeof(TEntity) == typeof(Subcategory))
             {
-                return (IQueryable<TEntity>)await _context.Subcategories
-                    .Include(s => s.ProductCategories.Select(pc => pc.Product))
-                    .ToListAsync();
+                //return (IEnumerable<TEntity>)await _context.Subcategories
+                //    .Include(s => s.ProductCategories.Select(pc => pc.Product))
+                //    .ToListAsync();
+                return (IEnumerable<TEntity>)await _context.Subcategories
+                .Include(s => s.ProductCategories)
+                .ThenInclude(pc => pc.Product).ToListAsync();
             }
             else if (typeof(TEntity) == typeof(Product))
             {
-                return (IQueryable<TEntity>)await _context.Products
+                return (IEnumerable<TEntity>)await _context.Products
                     .Include(p => p.ProductCategories)
                     .Include(p => p.Images)
                     .ToListAsync();
@@ -79,8 +77,29 @@ namespace None.Infrastructure
             {
                 return _context.Set<TEntity>().AsQueryable();
             }
-            //return await Task.FromResult(_context.Set<TEntity>().AsQueryable());
+            return await Task.FromResult(_context.Set<TEntity>().AsQueryable());
         }
+
+        //public async Task<IEnumerable<TEntity>> GetAllAsync()
+        //{
+        //    var query = _context.Set<TEntity>().AsQueryable();
+
+        //    if (typeof(TEntity) == typeof(Category))
+        //    {
+        //        query = query.Include(c => ((Category)(object)c).Subcategories);
+        //    }
+        //    else if (typeof(TEntity) == typeof(Subcategory))
+        //    {
+        //        query = query.Include(s => ((Subcategory)(object)s).ProductCategories.Select(pc => pc.Product));
+        //    }
+        //    else if (typeof(TEntity) == typeof(Product))
+        //    {
+        //        query = query.Include(p => ((Product)(object)p).ProductCategories)
+        //                     .Include(p => ((Product)(object)p).Images);
+        //    }
+
+        //    return await query.ToListAsync();
+        //}
 
         public async Task<TEntity> GetByIdAsync(TId id)
         {
