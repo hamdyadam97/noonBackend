@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AliExpress.Models
 {
-    public class Subcategory:BaseEntity , IDeletedEntity
+    public class Subcategory:BaseEntity, IDeletedEntity
     {
 
         public string Name { get; set; }
