@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    SelectList list = new SelectList(ViewBag.Cat, "Id", "Name");
 }
 
 <h1>Create</h1>
@@ -410,9 +411,28 @@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+
+             @* category drop down list  *@
+           
+            <div>
+                <label asp-for="Id">Category Name</label>
+                <select asp-for="Id" asp-items="list"></select>
+                <span asp-validation-for="Id" style="color:red"></span>
+            </div>
+
+
+        
+
+
+
         </form>
     </div>
 </div>
+
+<div>
+    <span style="color:red">@ViewBag.Error</span>
+</div>
+
 
 <div>
     <a asp-action="Index">Back to List</a>

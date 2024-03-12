@@ -1,5 +1,6 @@
 ﻿using AliExpress.Application.IServices;
 using AliExpress.Application.Services;
+using AliExpress.Dtos.Product;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,15 +42,23 @@ namespace Noon.MVC.Controllers
         // POST: ProductController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(CreateUpdateDeleteProductDto createUpdateDeleteProductDto)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if(ModelState.IsValid) 
+                {
+                    var result = await _productService.Create(createUpdateDeleteProductDto);
+                    if (result.IsSuccess)
+                        return RedirectToAction("Index");
+                    else ViewBag.Error = result.Message;
+                }
+                return View(createUpdateDeleteProductDto);
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                ViewBag.Error = ex.Message;
+                return View("Error");
             }
         }
 

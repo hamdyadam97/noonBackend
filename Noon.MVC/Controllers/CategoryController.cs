@@ -126,6 +126,7 @@ namespace Noon.MVC.Controllers
         {
             try
             {
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -133,5 +134,38 @@ namespace Noon.MVC.Controllers
                 return View();
             }
         }
+
+
+
+
+
+
+
+
+
+
+        public async Task<ActionResult> SfotDelete(int id)
+        {
+            try
+            {
+                var cat = await _categoryService.GetOne(id);
+                await _categoryService.Delete(cat.Entity);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+
+                return View("Error");
+            }
+        }
+
+
+
+
+
+
+
+
+
     }
 }
