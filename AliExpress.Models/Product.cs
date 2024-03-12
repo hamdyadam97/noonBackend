@@ -13,7 +13,7 @@ namespace AliExpress.Models
         Female
     }
 
-    public class Product: BaseEntity
+    public class Product: BaseEntity, IDeletedEntity
     {
         public string Title { get; set; }
         public string Description { get; set; }

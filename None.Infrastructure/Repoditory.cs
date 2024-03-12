@@ -41,6 +41,7 @@ namespace None.Infrastructure
                 deletedEntity.IsDeleted = true;
                 _context.Update(deletedEntity);
             }
+            
             else
             {
                 _context.Set<TEntity>().Remove(entity);
@@ -49,23 +50,22 @@ namespace None.Infrastructure
             await _context.SaveChangesAsync();
         }
         //changed - Haidy
-        public async Task<IQueryable<TEntity>> GetAllAsync()
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             if (typeof(TEntity) == typeof(Category))
             {
-                return (IQueryable<TEntity>)await _context.Categories
+                return (IEnumerable<TEntity>)await _context.Categories
                     .Include(c => c.Subcategories)
                     .ToListAsync();
             }
             else if (typeof(TEntity) == typeof(Subcategory))
             {
-                return (IQueryable<TEntity>)await _context.Subcategories
-                    .Include(s => s.ProductCategories.Select(pc => pc.Product))
-                    .ToListAsync();
+                return (IEnumerable<TEntity>)await _context.Subcategories
+                    .Include(s => s.ProductCategories).ThenInclude(pc => pc.Product).ToListAsync();
             }
             else if (typeof(TEntity) == typeof(Product))
             {
-                return (IQueryable<TEntity>)await _context.Products
+                return (IEnumerable<TEntity>)await _context.Products
                     .Include(p => p.ProductCategories)
                     .Include(p => p.Images)
                     .ToListAsync();

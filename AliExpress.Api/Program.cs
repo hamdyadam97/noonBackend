@@ -1,10 +1,14 @@
 
+using AliExpress.Application.Contract;
+using AliExpress.Application.IServices;
 using AliExpress.Application.Mapper;
+using AliExpress.Application.Services;
 using AliExpress.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using None.Infrastructure;
 using System.Text;
 
 namespace AliExpress.Api
@@ -30,6 +34,18 @@ namespace AliExpress.Api
 
             builder.Services.AddAutoMapper(M =>M.AddProfile(new MappingProduct()));
             builder.Services.AddAutoMapper(M => M.AddProfile(typeof(MappingCategory)));
+            builder.Services.AddAutoMapper(M => M.AddProfile(typeof(MappingSubCategory)));
+
+            //Repository
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+
+            //service
+            builder.Services.AddScoped<ICategoryService ,CategoryService>();
+            builder.Services.AddScoped<ISubCategoryService, SubCategoryService>();
+            builder.Services.AddScoped<IProductService, ProductService>();
 
           
 
@@ -48,6 +64,14 @@ namespace AliExpress.Api
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
                     };
                 });
+
+
+            builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IProductRepository,ProductRepository>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<ISubCategoryService, SubCategoryService>();
+            builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
