@@ -1,10 +1,23 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AliExpress.Application.IServices;
+using AliExpress.Application.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Noon.MVC.Controllers
 {
     public class ProductController : Controller
     {
+
+       private ICategoryService _categoryService;
+        private IProductService _productService;
+        public ProductController(ICategoryService categoryService ,IProductService productService)
+        {
+            _categoryService = categoryService;
+            _productService = productService;
+        }
+
+
+
         // GET: ProductController
         public ActionResult Index()
         {
@@ -18,8 +31,10 @@ namespace Noon.MVC.Controllers
         }
 
         // GET: ProductController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
+            var cat = await(_categoryService.GetAllCategory());
+            ViewBag.Cat = cat;
             return View();
         }
 

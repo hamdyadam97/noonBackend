@@ -1,6 +1,10 @@
+using AliExpress.Application.Contract;
+using AliExpress.Application.IServices;
+using AliExpress.Application.Services;
 using AliExpress.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using None.Infrastructure;
 
 namespace Noon.MVC
 {
@@ -15,7 +19,15 @@ namespace Noon.MVC
 
 
 
+            //Dependency Injection 
+            builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.AddSession();
 
             //Dependency Injection Context
             builder.Services.AddDbContext<AliExpressContext>(op =>

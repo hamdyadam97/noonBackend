@@ -1,10 +1,22 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AliExpress.Application.IServices;
+using AliExpress.Dtos.Category;
+using AliExpress.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Noon.MVC.Controllers
 {
     public class CategoryController : Controller
     {
+
+        public ICategoryService _categoryService;
+        public CategoryController(ICategoryService categoryService)
+        {
+            _categoryService = categoryService;
+        }
+
+
+
         // GET: CategoryController
         public ActionResult Index()
         {
@@ -26,15 +38,33 @@ namespace Noon.MVC.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task< ActionResult> Create(CategoryDto categoryDto)
         {
+
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    var result = await _categoryService.Create(categoryDto);
+
+                    if (result!=null)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        ViewBag.Error = result;
+                    }
+                }
+
+                // If ModelState is not valid, return the view with the provided data
+                return View(categoryDto);
             }
             catch
             {
-                return View();
+                // Return an error view or redirect to a generic error page
+                ViewBag.Error = "An unexpected error occurred.";
+                return View("Error");
             }
         }
 

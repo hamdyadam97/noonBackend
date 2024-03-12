@@ -26,8 +26,8 @@ namespace AliExpress.Application.Services
         {
            var category=_mapper.Map<CategoryDto,Category>(categoryDto);
            var NewCategory= await _categoryRepository.CreateAsync(category);
-            var NewCategoryDto = _mapper.Map<Category, CategoryDto>(NewCategory);
-            return NewCategoryDto;
+           var NewCategoryDto = _mapper.Map<Category, CategoryDto>(NewCategory);
+           return NewCategoryDto;
 
         }
 
