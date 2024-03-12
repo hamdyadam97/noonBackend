@@ -40,6 +40,7 @@ namespace None.Infrastructure
             {
                 deletedEntity.IsDeleted = true;
                 _context.Update(deletedEntity);
+                await _context.SaveChangesAsync();
             }
             
             else

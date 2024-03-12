@@ -1,7 +1,10 @@
 ﻿using AliExpress.Application.Services;
+using AliExpress.Context;
 using AliExpress.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AliExpress.Api.Controllers
 {
@@ -10,9 +13,11 @@ namespace AliExpress.Api.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
-        public ProductController(IProductService productService)
+        private readonly AliExpressContext _context;
+        public ProductController(IProductService productService, AliExpressContext aliExpress)
         {
             _productService = productService;
+            _context = aliExpress;
         }
 
         [HttpGet]
@@ -36,6 +41,28 @@ namespace AliExpress.Api.Controllers
 
             return Ok(product);
         }
+
+       
+        [HttpPost("{productId}/images")]
+        public async Task<IActionResult> AddImages(int productId, List<IFormFile> files)
+        {
+            var product = await _context.Products.Include(p => p.Images).FirstOrDefaultAsync(p => p.Id == productId);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            foreach (var file in files)
+            {
+                var image = new Images { Url = file.FileName };
+                product.Images.Add(image);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok("Images uploaded successfully");
+        }
+
 
     }
 }

@@ -37,5 +37,21 @@ namespace AliExpress.Api.Controllers
 
             return Ok(Cat);
         }
+
+        [HttpDelete("DeleteCategory/{id}")]
+        public async Task<ActionResult> DeleteCategory(int id)
+        {
+            var Cat = await _categoryService.GetOne(id);
+            if (Cat == null)
+            {
+                return NotFound(); // Return 404 if the product is not found
+            }
+            else
+            {
+                _categoryService.Delete(Cat.Entity);
+
+            }
+            return Ok(Cat);
+        }
     }
 }
