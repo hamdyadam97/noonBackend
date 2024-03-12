@@ -1,6 +1,7 @@
 ﻿using AliExpress.Application.Contract;
 using AliExpress.Dtos.Pagination;
 using AliExpress.Dtos.Product;
+using AliExpress.Dtos.ViewResult;
 using AliExpress.Models;
 using AutoMapper;
 using System;
@@ -22,20 +23,22 @@ namespace AliExpress.Application.Services
             _productRepository = productRepository;
             _mapper = mapper;
         }
-        public async Task<CreateUpdateDeleteProductDto> Create(CreateUpdateDeleteProductDto productDto)
+        public async Task<ResultView<CreateUpdateDeleteProductDto>> Create(CreateUpdateDeleteProductDto productDto)
         {
             var product = _mapper.Map<CreateUpdateDeleteProductDto, Product>(productDto);
             var NewProduct= await _productRepository.CreateAsync(product);
             var CreatedProductDto = _mapper.Map<Product, CreateUpdateDeleteProductDto>(NewProduct);
-            return CreatedProductDto;
+            return new ResultView<CreateUpdateDeleteProductDto> { Entity = CreatedProductDto, IsSuccess = true, Message = "create success" };
+            //return CreatedProductDto;
         }
 
-        public async Task<CreateUpdateDeleteProductDto> Update(CreateUpdateDeleteProductDto productDto)
+        public async Task<ResultView<CreateUpdateDeleteProductDto>> Update(CreateUpdateDeleteProductDto productDto)
         {
             var product = _mapper.Map<CreateUpdateDeleteProductDto, Product>(productDto);
             var NewProduct = await _productRepository.UpdateAsync(product);
             var UpdatedProductDto = _mapper.Map<Product, CreateUpdateDeleteProductDto>(NewProduct);
-            return UpdatedProductDto;
+            return new ResultView<CreateUpdateDeleteProductDto> { Entity = UpdatedProductDto, IsSuccess = true, Message = "create success" };
+            
         }
       
         public async Task<PaginationResult<ProductViewDto>> GetAllProducts(string searchValue, int page, int pageSize)
@@ -44,6 +47,8 @@ namespace AliExpress.Application.Services
             var productsDto = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewDto>>(products);
 
             var result = new PaginationResult<ProductViewDto>(
+                isSuccess : true,
+                message : "data return success",
                 entities: productsDto,
                 pageIndex: page,
                 pageSize: pageSize,
@@ -52,11 +57,11 @@ namespace AliExpress.Application.Services
 
             return result;
         }
-        public async Task<CreateUpdateDeleteProductDto> GetOne(int Id)
+        public async Task<ResultView<CreateUpdateDeleteProductDto>> GetOne(int Id)
         {
             var product=await _productRepository.GetByIdAsync(Id);
             var ProductDto = _mapper.Map<Product, CreateUpdateDeleteProductDto>(product);
-            return ProductDto;
+            return new ResultView<CreateUpdateDeleteProductDto> { Entity = ProductDto, IsSuccess = true, Message = "create success" };
         }
         public async Task Delete(CreateUpdateDeleteProductDto productDto)
         {
