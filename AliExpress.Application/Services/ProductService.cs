@@ -1,4 +1,5 @@
 ﻿using AliExpress.Application.Contract;
+using AliExpress.Dtos.Category;
 using AliExpress.Dtos.Pagination;
 using AliExpress.Dtos.Product;
 using AliExpress.Dtos.ViewResult;
@@ -63,12 +64,18 @@ namespace AliExpress.Application.Services
             var ProductDto = _mapper.Map<Product, CreateUpdateDeleteProductDto>(product);
             return new ResultView<CreateUpdateDeleteProductDto> { Entity = ProductDto, IsSuccess = true, Message = "create success" };
         }
-        public async Task Delete(CreateUpdateDeleteProductDto productDto)
+        public async Task<ResultView<CategoryDto>> Delete(int id)
         {
-            var product = _mapper.Map<CreateUpdateDeleteProductDto,Product>(productDto);
-             await _productRepository.DeleteAsync(product);
+            var category = await _productRepository.GetByIdAsync(id);
+            if (category == null)
+            {
+                return new ResultView<CategoryDto> { IsSuccess = false, Message = "Category not found" };
+            }
+
+            await _productRepository.DeleteAsync(category);
+            return new ResultView<CategoryDto> { IsSuccess = true, Message = "Category deleted successfully" };
         }
 
-        
+
     }
 }

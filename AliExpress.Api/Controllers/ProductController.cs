@@ -76,7 +76,7 @@ namespace AliExpress.Api.Controllers
             }
             else
             {
-                _productService.Delete(Cat.Entity);
+                _productService.Delete(id);
 
             }
             return NoContent();
