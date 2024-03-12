@@ -64,16 +64,16 @@ namespace AliExpress.Application.Services
             var ProductDto = _mapper.Map<Product, CreateUpdateDeleteProductDto>(product);
             return new ResultView<CreateUpdateDeleteProductDto> { Entity = ProductDto, IsSuccess = true, Message = "create success" };
         }
-        public async Task<ResultView<CategoryDto>> Delete(int id)
+        public async Task<ResultView<CreateUpdateDeleteProductDto>> Delete(int id)
         {
-            var category = await _productRepository.GetByIdAsync(id);
-            if (category == null)
+            var prod = await _productRepository.GetByIdAsync(id);
+            if (prod == null)
             {
-                return new ResultView<CategoryDto> { IsSuccess = false, Message = "Category not found" };
+                return new ResultView<CreateUpdateDeleteProductDto> { IsSuccess = false, Message = "product not found" };
             }
 
-            await _productRepository.DeleteAsync(category);
-            return new ResultView<CategoryDto> { IsSuccess = true, Message = "Category deleted successfully" };
+            await _productRepository.DeleteAsync(prod);
+            return new ResultView<CreateUpdateDeleteProductDto> { IsSuccess = true, Message = "product deleted successfully" };
         }
 
 
