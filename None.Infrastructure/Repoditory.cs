@@ -21,8 +21,8 @@ namespace None.Infrastructure
         }
         public async Task<TEntity> CreateAsync(TEntity entity)
         {
-             await _context.Set<TEntity>().AddAsync(entity);
-              await _context.SaveChangesAsync();
+            await _context.Set<TEntity>().AddAsync(entity);
+            await _context.SaveChangesAsync();
             return entity;
 
         }
@@ -39,15 +39,16 @@ namespace None.Infrastructure
             if (entity is IDeletedEntity deletedEntity)
             {
                 deletedEntity.IsDeleted = true;
-                _context.Update(deletedEntity);
+                _context.Update(entity); // Update the entity in the context
             }
             else
             {
-                _context.Set<TEntity>().Remove(entity);
+                _context.Set<TEntity>().Remove(entity); // This line is not needed for soft delete
             }
 
             await _context.SaveChangesAsync();
         }
+
         //changed - Haidy
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
@@ -59,12 +60,8 @@ namespace None.Infrastructure
             }
             else if (typeof(TEntity) == typeof(Subcategory))
             {
-                //return (IEnumerable<TEntity>)await _context.Subcategories
-                //    .Include(s => s.ProductCategories.Select(pc => pc.Product))
-                //    .ToListAsync();
                 return (IEnumerable<TEntity>)await _context.Subcategories
-                .Include(s => s.ProductCategories)
-                .ThenInclude(pc => pc.Product).ToListAsync();
+                    .Include(s => s.ProductCategories).ThenInclude(pc => pc.Product).ToListAsync();
             }
             else if (typeof(TEntity) == typeof(Product))
             {
@@ -103,14 +100,14 @@ namespace None.Infrastructure
 
         public async Task<TEntity> GetByIdAsync(TId id)
         {
-           return await _context.Set<TEntity>().FindAsync(id);
+            return await _context.Set<TEntity>().FindAsync(id);
         }
 
         public async Task<int> SaveChangesAsync()
         {
-           return await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
 
-       
+
     }
 }
