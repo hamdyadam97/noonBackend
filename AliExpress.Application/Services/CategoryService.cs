@@ -1,6 +1,9 @@
 ﻿using AliExpress.Application.Contract;
 using AliExpress.Application.IServices;
 using AliExpress.Dtos.Category;
+using AliExpress.Dtos.Product;
+using AliExpress.Dtos.Subcategory;
+using AliExpress.Dtos.ViewResult;
 using AliExpress.Models;
 using AutoMapper;
 using System;
@@ -22,12 +25,13 @@ namespace AliExpress.Application.Services
             _categoryRepository = categoryRepository;
             _mapper = mapper;
         }
-        public async Task<CategoryDto> Create(CategoryDto categoryDto)
+        public async Task<ResultView<CategoryDto>> Create(CategoryDto categoryDto)
         {
            var category=_mapper.Map<CategoryDto,Category>(categoryDto);
            var NewCategory= await _categoryRepository.CreateAsync(category);
             var NewCategoryDto = _mapper.Map<Category, CategoryDto>(NewCategory);
-            return NewCategoryDto;
+            return new ResultView<CategoryDto> { Entity = NewCategoryDto, IsSuccess = true, Message = "create success" };
+            //return NewCategoryDto;
 
         }
 
@@ -44,19 +48,23 @@ namespace AliExpress.Application.Services
             return categoriesDto;
         }
 
-        public async Task<CategoryDto> GetOne(int Id)
+        public async Task<ResultView<CategoryDto>> GetOne(int Id)
         {
             var category =await _categoryRepository.GetByIdAsync(Id);
             var ReturnedCategoryDto=_mapper.Map<Category, CategoryDto>(category);
-            return ReturnedCategoryDto;
+            return new ResultView<CategoryDto> { Entity = ReturnedCategoryDto, IsSuccess = true, Message = "create success" };
+
         }
 
-        public async Task<CategoryDto> Update(CategoryDto categoryDto)
+        public async Task<ResultView<CategoryDto>> Update(CategoryDto categoryDto)
         {
             var category=_mapper.Map<CategoryDto,Category>(categoryDto);
             var updatedCategory=await _categoryRepository.UpdateAsync(category);
             var updatedCategoryDto=_mapper.Map<Category,CategoryDto>(updatedCategory);
-            return updatedCategoryDto;
+            return new ResultView<CategoryDto> { Entity = updatedCategoryDto, IsSuccess = true, Message = "create success" };
+
         }
+
+      
     }
 }
