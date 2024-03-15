@@ -74,8 +74,29 @@ namespace None.Infrastructure
             {
                 return _context.Set<TEntity>().AsQueryable();
             }
-            //return await Task.FromResult(_context.Set<TEntity>().AsQueryable());
+            return await Task.FromResult(_context.Set<TEntity>().AsQueryable());
         }
+
+        //public async Task<IEnumerable<TEntity>> GetAllAsync()
+        //{
+        //    var query = _context.Set<TEntity>().AsQueryable();
+
+        //    if (typeof(TEntity) == typeof(Category))
+        //    {
+        //        query = query.Include(c => ((Category)(object)c).Subcategories);
+        //    }
+        //    else if (typeof(TEntity) == typeof(Subcategory))
+        //    {
+        //        query = query.Include(s => ((Subcategory)(object)s).ProductCategories.Select(pc => pc.Product));
+        //    }
+        //    else if (typeof(TEntity) == typeof(Product))
+        //    {
+        //        query = query.Include(p => ((Product)(object)p).ProductCategories)
+        //                     .Include(p => ((Product)(object)p).Images);
+        //    }
+
+        //    return await query.ToListAsync();
+        //}
 
         public async Task<TEntity> GetByIdAsync(TId id)
         {
