@@ -27,6 +27,21 @@ namespace AliExpress.Context
             modelBuilder.Entity<ProductCategory>()
                 .HasKey(pc => new { pc.ProductId, pc.CategoryId });
             base.OnModelCreating(modelBuilder);
+
+            //Ayed 
+            // Configure soft delete behavior for Product entity
+            modelBuilder.Entity<Category>()
+                .Property<bool>("IsDeleted");
+
+            // Apply global query filter to exclude deleted products
+            modelBuilder.Entity<Category>().HasQueryFilter(p => !EF.Property<bool>(p, "IsDeleted"));
+
+            // Configure soft delete behavior for Product entity
+            modelBuilder.Entity<Product>()
+                .Property<bool>("IsDeleted");
+
+            // Apply global query filter to exclude deleted products
+            modelBuilder.Entity<Product>().HasQueryFilter(p => !EF.Property<bool>(p, "IsDeleted"));
         }
 
     }

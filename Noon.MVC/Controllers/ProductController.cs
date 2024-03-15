@@ -9,7 +9,7 @@ namespace Noon.MVC.Controllers
     public class ProductController : Controller
     {
 
-       private ICategoryService _categoryService;
+        private ICategoryService _categoryService;
         private IProductService _productService;
         public ProductController(ICategoryService categoryService ,IProductService productService)
         {
@@ -20,10 +20,27 @@ namespace Noon.MVC.Controllers
 
 
         // GET: ProductController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            var product = await _productService.GetAllProducts(1, 1);
+            return View(product.Entities);
+           // return View();
         }
+
+        
+           
+
+
+
+
+
+
+
+
+
+
+
+
 
         // GET: ProductController/Details/5
         public ActionResult Details(int id)
@@ -31,11 +48,18 @@ namespace Noon.MVC.Controllers
             return View();
         }
 
+
         // GET: ProductController/Create
         public async Task<ActionResult> Create()
         {
             var cat = await(_categoryService.GetAllCategory());
             ViewBag.Cat = cat;
+            ViewBag.Shipment = new Dictionary<int, string>
+                            {
+                                { 0, "Free Shipping" },
+                                { 1, "Paid Shipping" },
+                                { 2, "Express Shipping" }
+                            };
             return View();
         }
 

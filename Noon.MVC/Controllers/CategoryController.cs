@@ -149,7 +149,7 @@ namespace Noon.MVC.Controllers
             try
             {
                 var cat = await _categoryService.GetOne(id);
-                await _categoryService.Delete(cat.Entity);
+                await _categoryService.Delete(id);
                 return RedirectToAction("Index");
             }
             catch
