@@ -18,6 +18,7 @@ namespace AliExpress.Api.Controllers
     {
         private readonly IProductService _productService;
         private readonly AliExpressContext _context;
+
         public ProductController(IProductService productService, AliExpressContext aliExpress)
         {
             _productService = productService;
