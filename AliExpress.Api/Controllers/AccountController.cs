@@ -8,6 +8,8 @@ using System.Net.Mail;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
+using AliExpress.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AliExpress.Api.Controllers
 {
@@ -15,8 +17,10 @@ namespace AliExpress.Api.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        //private readonly UserManager<IdentityUser> _userManager;
+        //private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IConfiguration _configuration;
 
         private string GenerateVerificationCode()
@@ -52,15 +56,15 @@ namespace AliExpress.Api.Controllers
 
 
         public AccountController(
-       UserManager<IdentityUser> userManager,
-       SignInManager<IdentityUser> signInManager,
+      UserManager<AppUser> userManager,
+      SignInManager<AppUser> signInManager,
        IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
         }
-
+       
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterModel model)
         {
@@ -72,7 +76,7 @@ namespace AliExpress.Api.Controllers
                     return BadRequest("User already exists.");
                 }
 
-                var newUser = new IdentityUser { UserName = model.Email, Email = model.Email };
+                var newUser = new AppUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(newUser, model.Password);
                 if (result.Succeeded)
                 {

@@ -11,6 +11,6 @@ namespace AliExpress.Dtos.Cart
         public int CartId { get; set; }
         public decimal TotalAmount { get; set; }
         public string AppUserId { get; set; }
-        public ICollection<CartItemDto> CartItemDtos { get; set; }
+        public ICollection<CartItemDto>? CartItemDtos { get; set; }
     }
 }
