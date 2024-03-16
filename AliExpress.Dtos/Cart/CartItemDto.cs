@@ -14,6 +14,6 @@ namespace AliExpress.Dtos.Cart
         public string ProductTitle { get; set; }
         public decimal ProductPrice { get; set; }
 
-       
+       public int CartId { get; set; }
     }
 }

@@ -29,6 +29,7 @@ namespace None.Infrastructure
             }
             else
             {
+                var x = cartItem;
                 await _context.CartItems.AddAsync(cartItem);
                 await _context.SaveChangesAsync();
             }
