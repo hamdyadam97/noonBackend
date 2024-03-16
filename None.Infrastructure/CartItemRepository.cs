@@ -20,15 +20,15 @@ namespace None.Infrastructure
 
         public async Task AddCartItemAsync(CartItem cartItem)
         {
+            
             _context.CartItems.Add(cartItem);
-           await  _context.SaveChangesAsync();
-                
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteCartItemAsync(int cartItemId)
         {
             var cartItem = await _context.CartItems.FindAsync(cartItemId);
-            if(cartItem != null)
+            if (cartItem != null)
             {
                 _context.CartItems.Remove(cartItem);
                 await _context.SaveChangesAsync();
@@ -37,15 +37,16 @@ namespace None.Infrastructure
 
         public async Task<CartItem> GetCartItemByIdAsync(int cartItemId)
         {
-            var cartItem= await _context.CartItems.FindAsync(cartItemId);
-            return cartItem;
+            return await _context.CartItems.FindAsync(cartItemId);
         }
 
         public async Task UpdateCartItemAsync(CartItem cartItem)
         {
-            if(cartItem?.CartItemId !=null)
+            if (cartItem != null && cartItem.CartItemId != null)
+            {
                 _context.CartItems.Update(cartItem);
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

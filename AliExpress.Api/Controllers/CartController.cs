@@ -52,24 +52,39 @@ namespace AliExpress.Api.Controllers
             return Ok();
         }
         //get cart
+      
         [HttpGet]
         public async Task<IActionResult> GetCart()
         {
-            var userId=GetUserId();
+            var userId = GetUserId();
             if (IsLoggedIn())
             {
-                await _cartService.GetCartDtoByUserIdAsync(userId);
+                var cart = await _cartService.GetCartDtoByUserIdAsync(userId);
+                return Ok(cart);
             }
             else
             {
-            string cartSerializer = _httpContextAccessor.HttpContext.Session.GetString("Cart");
-                if(cartSerializer != null)
+                string cartSerializer = _httpContextAccessor.HttpContext.Session.GetString("Cart");
+                if (cartSerializer != null)
                 {
-                    CartDto cart = JsonSerializer.Deserialize<CartDto>(cartSerializer);
+                    var cart = JsonSerializer.Deserialize<CartDto>(cartSerializer);
+                    return Ok(cart);
                 }
+                return NotFound(); 
             }
-            return Ok();
         }
+
+        //[HttpGet("GetCartByUserId")]
+        //public async Task<IActionResult> GetCartByUserId(string userId)
+        //{
+        //    var cartDto = await _cartService.GetCartDtoByUserIdAsync(userId);
+        //    if (cartDto == null)
+        //    {
+        //        return NotFound(); 
+        //    }
+        //    return Ok(cartDto);
+        //}
+
 
         [HttpDelete("{cartId}")]
         public async Task<IActionResult> DeleteCart([FromRoute]int cartId)
