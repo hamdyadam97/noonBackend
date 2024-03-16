@@ -105,8 +105,8 @@ namespace AliExpress.Models
         public string? Functionality { get; set; }
 
         public bool IsDeleted { get; set; } = false;
-
-        public ICollection<Cart> Carts{ get; set; }
+        //relation-many
+        public ICollection<CartItem> CartItems { get; set; }
         public ICollection<ProductCategory> ProductCategories { get; set; }
         public ICollection<Images> Images { get; set; }
     }
