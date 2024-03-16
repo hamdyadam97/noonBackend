@@ -1,6 +1,7 @@
 ﻿using AliExpress.Application.Contract;
 using AliExpress.Context;
 using AliExpress.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,19 @@ namespace None.Infrastructure
 
         public async Task AddCartItemAsync(CartItem cartItem)
         {
-            
-            _context.CartItems.Add(cartItem);
-            await _context.SaveChangesAsync();
+         var existedCartItem = await GetCartItemByCartIdAndProductId(cartItem.CartId,cartItem.ProductId);
+            if (existedCartItem != null)
+            {
+                existedCartItem.Quantity += cartItem.Quantity;
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                await _context.CartItems.AddAsync(cartItem);
+                await _context.SaveChangesAsync();
+            }
+
+
         }
 
         public async Task DeleteCartItemAsync(int cartItemId)
@@ -35,6 +46,11 @@ namespace None.Infrastructure
             }
         }
 
+        public async Task<CartItem> GetCartItemByCartIdAndProductId(int cartId, int productId)
+        {
+            return await _context.CartItems.FirstOrDefaultAsync(ci =>ci.CartId == cartId && ci.ProductId == productId);
+        }
+
         public async Task<CartItem> GetCartItemByIdAsync(int cartItemId)
         {
             return await _context.CartItems.FindAsync(cartItemId);
@@ -42,7 +58,14 @@ namespace None.Infrastructure
 
         public async Task UpdateCartItemAsync(CartItem cartItem)
         {
-            if (cartItem != null && cartItem.CartItemId != null)
+            var existedCartItem = await GetCartItemByCartIdAndProductId(cartItem.CartId, cartItem.ProductId);
+            if (existedCartItem.Quantity != cartItem.Quantity)
+            {
+                existedCartItem.Quantity = cartItem.Quantity;
+                
+                await _context.SaveChangesAsync();
+            }
+            else
             {
                 _context.CartItems.Update(cartItem);
                 await _context.SaveChangesAsync();
