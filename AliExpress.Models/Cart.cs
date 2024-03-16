@@ -16,6 +16,10 @@ namespace AliExpress.Models
 
         //relation-many
         public ICollection<CartItem> CartItems { get; set; }
+        public Cart()
+        {
+            new List<CartItem>();
+        }
 
     }
 }

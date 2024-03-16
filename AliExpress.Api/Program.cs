@@ -30,8 +30,12 @@ namespace AliExpress.Api
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+            //builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddEntityFrameworkStores<AliExpressContext>().AddDefaultTokenProviders();
+
             builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<AliExpressContext>().AddDefaultTokenProviders();
+               .AddEntityFrameworkStores<AliExpressContext>().AddDefaultTokenProviders();
+
             //mapper
             builder.Services.AddAutoMapper(M =>M.AddProfile(new MappingProduct()));
             builder.Services.AddAutoMapper(M => M.AddProfile(typeof(MappingCategory)));
