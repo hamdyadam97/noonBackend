@@ -42,7 +42,7 @@ namespace AliExpress.Application.Services
             
         }
       
-        public async Task<PaginationResult<ProductViewDto>> GetAllProducts(int page, int pageSize,string? searchValue)
+        public async Task<PaginationResult<ProductViewDto>> GetAllProducts(string searchValue, int page, int pageSize)
         {
             var products = await _productRepository.GetAllAsync(searchValue, page, pageSize);
             var productsDto = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewDto>>(products);

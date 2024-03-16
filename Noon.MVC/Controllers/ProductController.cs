@@ -1,5 +1,6 @@
 ﻿using AliExpress.Application.IServices;
 using AliExpress.Application.Services;
+using AliExpress.Dtos.Category;
 using AliExpress.Dtos.Product;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,9 +23,9 @@ namespace Noon.MVC.Controllers
         // GET: ProductController
         public async Task<ActionResult> Index()
         {
-            var product = await _productService.GetAllProducts(1, 1);
+            var product = await _productService.GetAllProducts("",1, 1);
             return View(product.Entities);
-           // return View();
+            //return View();
         }
 
         
@@ -112,23 +113,43 @@ namespace Noon.MVC.Controllers
 
 
         // GET: ProductController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task< ActionResult> Edit(int id)
         {
-            return View();
+            var product=await _productService.GetOne(id);
+            var cat = await (_categoryService.GetAllCategory());
+            ViewBag.Cat = cat;
+            ViewBag.Shipment = new Dictionary<int, string>
+                            {
+                                { 0, "Free Shipping" },
+                                { 1, "Paid Shipping" },
+                                { 2, "Express Shipping" }
+                            };
+            return View(product.Entity);
         }
 
         // POST: ProductController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task< ActionResult> Edit(int id, CreateUpdateDeleteProductDto productDetailsDto)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var result = await _productService.Update(productDetailsDto);
+
+                if (result.IsSuccess)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Error = result.Message;
+                }
+                return View(productDetailsDto);
             }
             catch
             {
-                return View();
+                ViewBag.Error = "An unexpected error occurred.";
+                return View("Error");
             }
         }
 

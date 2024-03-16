@@ -2,6 +2,32 @@
 
 @{
     ViewData["Title"] = "Edit";
+
+
+    SelectList list = null;
+    if (ViewBag.Cat != null)
+    {
+        list = new SelectList(ViewBag.Cat, "Id", "Name");
+        // Use SelectList here
+    }
+
+
+
+    var s = ((Dictionary<int, string>)ViewBag.Shipment).ToList();
+    var a = new SelectList(s, "Key", "Value");
+
+
+
+
+
+    var gender = new Dictionary<int, string>
+            {
+            {0,"NoN"},
+            {1,"Male"},
+            {2,"Female"}
+            };
+
+    var genderList = new SelectList(gender.ToList(), "Key", "Value");
 }
 
 <h1>Edit</h1>
@@ -37,11 +63,21 @@
                 <input asp-for="quantity" class="form-control" />
                 <span asp-validation-for="quantity" class="text-danger"></span>
             </div>
+
+
+@* 
             <div class="form-group">
                 <label asp-for="ShippingMethod" class="control-label"></label>
                 <input asp-for="ShippingMethod" class="form-control" />
                 <span asp-validation-for="ShippingMethod" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="ShippingMethod" class="control-label"></label>
+                <select asp-for="ShippingMethod" asp-items="a"></select>
+                <span asp-validation-for="ShippingMethod" class="text-danger"></span>
             </div>
+
+
             <div class="form-group">
                 <label asp-for="PlaceOfOrigin" class="control-label"></label>
                 <input asp-for="PlaceOfOrigin" class="form-control" />
@@ -72,11 +108,21 @@
                 <input asp-for="Department" class="form-control" />
                 <span asp-validation-for="Department" class="text-danger"></span>
             </div>
-            <div class="form-group">
+
+
+           @*  <div class="form-group">
                 <label asp-for="Gender" class="control-label"></label>
                 <input asp-for="Gender" class="form-control" />
                 <span asp-validation-for="Gender" class="text-danger"></span>
+            </div> *@
+
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label>
+                <select asp-for="Gender" asp-items="@genderList"></select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
+
+
             <div class="form-group">
                 <label asp-for="FrameMaterial" class="control-label"></label>
                 <input asp-for="FrameMaterial" class="form-control" />
@@ -257,11 +303,10 @@
                 <input asp-for="Touchscreen" class="form-control" />
                 <span asp-validation-for="Touchscreen" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <input asp-for="Category" class="form-control" />
-                <span asp-validation-for="Category" class="text-danger"></span>
-            </div>
+
+
+          
+
             <div class="form-group">
                 <label asp-for="AppName" class="control-label"></label>
                 <input asp-for="AppName" class="form-control" />
@@ -407,6 +452,16 @@
                 <input asp-for="Functionality" class="form-control" />
                 <span asp-validation-for="Functionality" class="text-danger"></span>
             </div>
+
+
+            <div>
+                <label asp-for="Category">Category Name</label>
+                <select asp-for="Category" asp-items="list"></select>
+                <span asp-validation-for="Category" style="color:red"></span>
+            </div>
+
+
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

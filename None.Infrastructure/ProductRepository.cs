@@ -26,38 +26,17 @@ namespace None.Infrastructure
 
         public async Task<IEnumerable<Product>> GetAllAsync(string searchValue, int page, int pageSize)
         {
-            // Check if page is negative, and handle it appropriately if needed
-            
-
-            IQueryable<Product> query = _context.Products;
-
-            // Search
-            if (!string.IsNullOrEmpty(searchValue))
+            IQueryable<Product> query=_context.Products;
+            //search
+            if(!string.IsNullOrEmpty(searchValue))
             {
-                query = query.Where(p => p.Title.ToLower().Contains(searchValue.ToLower()));
+                query=query.Where(p => p.Title.ToLower().Contains(searchValue.ToLower()));
             }
-            else
-            {
-                // If searchValue is null or empty, return all products
-                query = query.Where(p => true);
-            }
-            int skip = 0;
-            // Pagination
-            if (page <= 1)
-            {
-                // Handle negative page value (e.g., set it to 1)
-                 skip = 1 * pageSize;
-            }
-            else
-            {
-                skip = (page - 1) * pageSize;
-            }
-             
-            query = query.Skip(skip).Take(2);
-
-            var result = await  query.ToListAsync();
+            int skip=(page-1) * pageSize;
+            //pagination
+            query=query.Skip(skip).Take(pageSize);
+            var result= await query.ToListAsync();
             return result;
         }
-
     }
 }
