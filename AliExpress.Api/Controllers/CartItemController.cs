@@ -38,8 +38,8 @@ namespace AliExpress.Api.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteCartItem(int cartItemId)
+        [HttpDelete("DeleteCartItem")]
+        public async Task<IActionResult> DeleteCartItem([FromBody] int cartItemId)
         {
             if(cartItemId == null)
             {
