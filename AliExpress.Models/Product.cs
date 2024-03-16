@@ -102,5 +102,11 @@ namespace AliExpress.Models
         public ICollection<CartItem> CartItems { get; set; }
         public ICollection<ProductCategory> ProductCategories { get; set; }
         public ICollection<Images> Images { get; set; }
+        public Product()
+        {
+            CartItems = new List<CartItem>();
+            ProductCategories = new List<ProductCategory>();
+            Images = new List<Images>();
+        }
     }
 }
