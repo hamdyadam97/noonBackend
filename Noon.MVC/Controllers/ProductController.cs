@@ -23,26 +23,12 @@ namespace Noon.MVC.Controllers
         // GET: ProductController
         public async Task<ActionResult> Index()
         {
-            var product = await _productService.GetAllProducts("",1, 1);
+            var product = await _productService.GetAllProducts("",1, 50);
             return View(product.Entities);
             //return View();
         }
 
-        
-           
-
-
-
-
-
-
-
-
-
-
-
-
-
+       
         // GET: ProductController/Details/5
         public ActionResult Details(int id)
         {
@@ -162,7 +148,7 @@ namespace Noon.MVC.Controllers
         // POST: ProductController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, CreateUpdateDeleteProductDto productDto)
         {
             try
             {
@@ -173,5 +159,24 @@ namespace Noon.MVC.Controllers
                 return View();
             }
         }
+
+
+        public async Task<ActionResult> SfotDelete(int id)
+        {
+            try
+            {
+               // var cat = await _productService.GetOne(id);
+                await _productService.Delete(id);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+
+                return View("Error");
+            }
+        }
+
+
+
     }
 }
