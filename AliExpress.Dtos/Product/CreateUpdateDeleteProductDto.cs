@@ -97,8 +97,8 @@ namespace AliExpress.Dtos.Product
         public CreateUpdateDeleteProductDto()
         {
             Images = new List<string>();
-            ProductCategories= new List<string>();
-           
+            ProductCategories = new List<string>();
+
         }
     }
 }
