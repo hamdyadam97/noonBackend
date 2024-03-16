@@ -29,9 +29,17 @@ namespace None.Infrastructure
             }
             else
             {
-                var x = cartItem;
-                await _context.CartItems.AddAsync(cartItem);
-                await _context.SaveChangesAsync();
+
+                var existingProduct = await _context.Products.FindAsync(cartItem.ProductId);
+              
+                if (existingProduct != null)
+                {
+                    cartItem.Product = existingProduct;
+                    await _context.CartItems.AddAsync(cartItem);
+                    await _context.SaveChangesAsync();
+                }
+
+
             }
 
 
