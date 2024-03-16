@@ -54,7 +54,16 @@ namespace AliExpress.Api
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<ICartItemService ,CartItemService>();
             builder.Services.AddScoped<ICartService,CartService>();
-          
+
+           
+
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout= TimeSpan.FromSeconds(20);
+                options.Cookie.HttpOnly= true;
+                options.Cookie.IsEssential= true;
+            });
+            builder.Services.AddHttpContextAccessor();
 
             // Add JWT authentication
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -73,12 +82,12 @@ namespace AliExpress.Api
                 });
 
 
-            builder.Services.AddScoped<IProductService, ProductService>();
-            builder.Services.AddScoped<IProductRepository,ProductRepository>();
-            builder.Services.AddScoped<ICategoryService, CategoryService>();
-            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-            builder.Services.AddScoped<ISubCategoryService, SubCategoryService>();
-            builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
+            //builder.Services.AddScoped<IProductService, ProductService>();
+            //builder.Services.AddScoped<IProductRepository,ProductRepository>();
+            //builder.Services.AddScoped<ICategoryService, CategoryService>();
+            //builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            //builder.Services.AddScoped<ISubCategoryService, SubCategoryService>();
+            //builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -87,9 +96,10 @@ namespace AliExpress.Api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseSession();
 
             app.MapControllers();
 
