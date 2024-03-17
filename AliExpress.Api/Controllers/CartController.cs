@@ -16,14 +16,15 @@ namespace AliExpress.Api.Controllers
     {
         private readonly ICartService _cartService;
         private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public CartController(ICartService cartService ,
+        private readonly string _userId ;
+        public CartController(ICartService cartService,
             IHttpContextAccessor httpContextAccessor)
         {
             _cartService = cartService;
             _httpContextAccessor = httpContextAccessor;
+            _userId = GetUserId();
         }
-
+         
         private bool IsLoggedIn()
         {
             return _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
@@ -31,82 +32,94 @@ namespace AliExpress.Api.Controllers
         private string GetUserId()
         {
 
-           //return _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier )?.Value;
-           return _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //return _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier )?.Value;
+            return _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
+
+   
+
         //add cart
+
         [HttpPost]
-        public async Task<IActionResult> AddCart([FromBody]CartDto cartDto)
+        public async Task<IActionResult> AddCart([FromBody] CartItemDto cartItemDto,string _userId)
         {
-           
-            if(IsLoggedIn())
+            if (ModelState.IsValid)
             {
-              await  _cartService.AddCartDtoAsync(cartDto);
+
+                if (IsLoggedIn())
+                {
+
+                    await _cartService.AddOrUpdateCartDtoAsync(cartItemDto, _userId);
+
+                }
+                else
+                {
+                    var sessionCart = _httpContextAccessor.HttpContext.Session;
+                    var serializedCart = JsonSerializer.Serialize(cartItemDto);
+                    sessionCart.SetString("Cart", serializedCart);
+                }
+                return Ok();
             }
-            else
-            {
-                var sessionCart = _httpContextAccessor.HttpContext.Session;
-                var serializedCart=JsonSerializer.Serialize(cartDto);
-                sessionCart.SetString("Cart", serializedCart);
-            }
-            return Ok();
+            return BadRequest();
         }
+
         //get cart
-      
+
         [HttpGet]
-        public async Task<IActionResult> GetCart()
+    public async Task<IActionResult> GetCart()
+    {
+        var userId = GetUserId();
+        if (IsLoggedIn())
         {
-            var userId = GetUserId();
-            if (IsLoggedIn())
+            var cart = await _cartService.GetCartDtoByUserIdAsync(userId);
+            return Ok(cart);
+        }
+        else
+        {
+            string cartSerializer = _httpContextAccessor.HttpContext.Session.GetString("Cart");
+            if (cartSerializer != null)
             {
-                var cart = await _cartService.GetCartDtoByUserIdAsync(userId);
+                var cart = JsonSerializer.Deserialize<CartDto>(cartSerializer);
                 return Ok(cart);
             }
-            else
-            {
-                string cartSerializer = _httpContextAccessor.HttpContext.Session.GetString("Cart");
-                if (cartSerializer != null)
-                {
-                    var cart = JsonSerializer.Deserialize<CartDto>(cartSerializer);
-                    return Ok(cart);
-                }
-                return NotFound(); 
-            }
+            return NotFound();
         }
+    }
 
-        //[HttpGet("GetCartByUserId")]
-        //public async Task<IActionResult> GetCartByUserId(string userId)
+    //[HttpGet("GetCartByUserId")]
+    //public async Task<IActionResult> GetCartByUserId(string userId)
+    //{
+    //    var cartDto = await _cartService.GetCartDtoByUserIdAsync(userId);
+    //    if (cartDto == null)
+    //    {
+    //        return NotFound(); 
+    //    }
+    //    return Ok(cartDto);
+    //}
+
+
+    [HttpDelete("{cartId}")]
+    public async Task<IActionResult> DeleteCart([FromRoute] int cartId)
+    {
+        await _cartService.DeleteCartDtoAsync(cartId);
+        return Ok();
+    }
+
+        //[HttpPut("{cartId}")]
+        //public async Task<IActionResult> UpdateCart([FromBody] CartDto cartDto, int cartId)
         //{
-        //    var cartDto = await _cartService.GetCartDtoByUserIdAsync(userId);
-        //    if (cartDto == null)
+        //    var userId = GetUserId();
+        //    if (string.IsNullOrEmpty(userId))
         //    {
-        //        return NotFound(); 
+        //        return NotFound();
         //    }
-        //    return Ok(cartDto);
+        //    await _cartService.UpdateCartDtoAsync(cartDto, cartId);
+        //    return Ok();
         //}
 
-
-        [HttpDelete("{cartId}")]
-        public async Task<IActionResult> DeleteCart([FromRoute]int cartId)
-        {
-            await _cartService.DeleteCartDtoAsync(cartId);
-            return Ok();
-        }
-        [HttpPut("{cartId}")]
-        public async Task<IActionResult> UpdateCart([FromBody] CartDto cartDto,[FromRoute]int cartId)
-        {
-            var userId= GetUserId();
-            if (string.IsNullOrEmpty(userId))
-            {
-                return NotFound();
-            }
-            await _cartService.UpdateCartDtoAsync(cartDto,cartId);
-            return Ok();
-        }
+     
 
 
 
-
-
-    }
+}
 }

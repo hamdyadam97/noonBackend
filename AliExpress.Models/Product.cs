@@ -19,7 +19,7 @@ namespace AliExpress.Models
         public string Description { get; set; }
         public decimal Price { get; set; }
         public int quantity {  get; set; }
-        public string ShippingMethod { get; set; }
+        public string? ShippingMethod { get; set; }
         public string? PlaceOfOrigin { get; set; }
         public string? ModelNumber { get; set; }
         public string? LensWidth { get; set; }

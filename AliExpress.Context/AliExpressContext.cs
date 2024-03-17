@@ -30,8 +30,8 @@ namespace AliExpress.Context
             modelBuilder.Entity<ProductCategory>()
                 .HasKey(pc => new { pc.ProductId, pc.CategoryId });
             //cartItem
-            modelBuilder.Entity<CartItem>()
-                .HasKey(ci =>new {ci.ProductId,ci.CartId});
+            //modelBuilder.Entity<CartItem>()
+            //    .HasKey(ci =>new {ci.ProductId,ci.CartId});
             //cartItem-cart
             modelBuilder.Entity<CartItem>()
               .HasOne(ci =>ci.Cart)
@@ -50,6 +50,23 @@ namespace AliExpress.Context
                 .HasOne(u => u.Cart)
                 .WithOne(c => c.AppUser)
                 .HasForeignKey<Cart>(C => C.AppUserId);
+
+            modelBuilder.Entity<Cart>()
+       .HasKey(c => c.CartId);
+
+            modelBuilder.Entity<Cart>()
+       .HasMany(c => c.CartItems) 
+       .WithOne(ci => ci.Cart) 
+       .HasForeignKey(ci => ci.CartId); 
+
+            modelBuilder.Entity<Cart>()
+                .HasOne(c => c.AppUser) 
+                .WithOne(u => u.Cart) 
+                .HasForeignKey<Cart>(c => c.AppUserId);
+
+
+
+
 
             base.OnModelCreating(modelBuilder);
         }

@@ -5,7 +5,7 @@
 namespace AliExpress.Context.Migrations
 {
     /// <inheritdoc />
-    public partial class AddCart : Migration
+    public partial class someChangesInCart : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

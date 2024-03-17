@@ -1,4 +1,5 @@
 ﻿using AliExpress.Dtos.User;
+using AliExpress.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +14,13 @@ namespace AliExpress.Api.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
         private readonly IConfiguration _configuration;
 
         public AccountController(
-       UserManager<IdentityUser> userManager,
-       SignInManager<IdentityUser> signInManager,
+       UserManager<AppUser> userManager,
+       SignInManager<AppUser> signInManager,
        IConfiguration configuration)
         {
             _userManager = userManager;
@@ -38,7 +39,7 @@ namespace AliExpress.Api.Controllers
                     return BadRequest("User already exists.");
                 }
 
-                var newUser = new IdentityUser { UserName = model.Email, Email = model.Email };
+                var newUser = new AppUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(newUser, model.Password);
                 if (result.Succeeded)
                 {
@@ -70,7 +71,7 @@ namespace AliExpress.Api.Controllers
         }
 
 
-        private string GenerateJwtToken(IdentityUser user)
+        private string GenerateJwtToken(AppUser user)
         {
             var claims = new List<Claim>
         {
