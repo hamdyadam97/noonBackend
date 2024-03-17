@@ -57,18 +57,13 @@ namespace AliExpress.Context.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ParentCategoryId = table.Column<int>(type: "int", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Categories_Categories_ParentCategoryId",
-                        column: x => x.ParentCategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -80,15 +75,82 @@ namespace AliExpress.Context.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StockQuantity = table.Column<int>(type: "int", nullable: false),
-                    Seller = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ShippingMethod = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ShippingTime = table.Column<int>(type: "int", nullable: false),
-                    ReturnPolicy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Warranty = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    quantity = table.Column<int>(type: "int", nullable: false),
+                    ShippingMethod = table.Column<int>(type: "int", nullable: true),
+                    PlaceOfOrigin = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModelNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LensWidth = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LensHeight = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LensMaterial = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Department = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    FrameMaterial = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LensFeatures = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Style = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BrandName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Origin = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EyewearType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Certification = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FrameColor = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LensColor = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LensAttributes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UsageScope = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SuitableFaceShapes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SunglassesStyle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyHistory = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PackageIncluded = table.Column<bool>(type: "bit", nullable: true),
+                    CommunicationType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SetType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Transmitter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Use = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ChargingTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WorkingHours = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TransmissionDistance = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Features = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Accessories = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BandLength = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BandWidth = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Weight = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SimCardSlot = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BuiltInVoiceAssistant = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BluetoothVersion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WiFi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MeasurementScales = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ActivityTracking = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Touchscreen = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AppName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ScreenMaterial = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CPUModel = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Detachable = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AppDownloadAvailable = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RemovableBattery = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CPUManufacturer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Resolution = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ScreenSize = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MovementType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AgeCategoryApp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ScreenShape = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CaseMaterial = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StrapMaterial = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WaterproofRating = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AvailableSimCard = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Mechanism = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MultiFace = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GPS = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NetworkMode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BatteryCapacity = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RearCamera = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RAM = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ROM = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    System = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Compatibility = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Language = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Functionality = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -204,6 +266,57 @@ namespace AliExpress.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Subcategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subcategories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Subcategories_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cart",
+                columns: table => new
+                {
+                    CartId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    quantity = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cart", x => x.CartId);
+                    table.ForeignKey(
+                        name: "FK_Cart_AspNetUsers_UserId1",
+                        column: x => x.UserId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Cart_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Images",
                 columns: table => new
                 {
@@ -230,7 +343,8 @@ namespace AliExpress.Context.Migrations
                 columns: table => new
                 {
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    SubcategoryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -247,6 +361,11 @@ namespace AliExpress.Context.Migrations
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductCategories_Subcategories_SubcategoryId",
+                        column: x => x.SubcategoryId,
+                        principalTable: "Subcategories",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -289,9 +408,14 @@ namespace AliExpress.Context.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Categories_ParentCategoryId",
-                table: "Categories",
-                column: "ParentCategoryId");
+                name: "IX_Cart_ProductId",
+                table: "Cart",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cart_UserId1",
+                table: "Cart",
+                column: "UserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Images_ProductId",
@@ -301,6 +425,16 @@ namespace AliExpress.Context.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ProductCategories_CategoryId",
                 table: "ProductCategories",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductCategories_SubcategoryId",
+                table: "ProductCategories",
+                column: "SubcategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subcategories_CategoryId",
+                table: "Subcategories",
                 column: "CategoryId");
         }
 
@@ -323,6 +457,9 @@ namespace AliExpress.Context.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Cart");
+
+            migrationBuilder.DropTable(
                 name: "Images");
 
             migrationBuilder.DropTable(
@@ -335,10 +472,13 @@ namespace AliExpress.Context.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Subcategories");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }

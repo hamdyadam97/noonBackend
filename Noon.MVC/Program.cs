@@ -17,8 +17,6 @@ namespace Noon.MVC
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-
-
             //Dependency Injection 
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -40,27 +38,10 @@ namespace Noon.MVC
                         .AddEntityFrameworkStores<AliExpressContext>();
 
 
-
-
             var app = builder.Build();
-
-
-
-
-
-
-           
-
-
-
-
-
-
 
             app.MapRazorPages(); ///
             app.UseAuthentication();
-
-
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

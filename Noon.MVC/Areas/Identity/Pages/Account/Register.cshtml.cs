@@ -153,9 +153,13 @@ namespace Noon.MVC.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
+                        var roles = _aliExpressContext.Roles.Select(r => r).ToList();
+                        ViewData["Roles"] = new SelectList(roles);
                         return LocalRedirect(returnUrl);
                     }
                 }
+                //var roles2 = _aliExpressContext.Roles.Select(r => r).ToList();
+                //ViewData["Roles"] = new SelectList(roles2);
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);

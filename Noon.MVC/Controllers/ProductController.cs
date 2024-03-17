@@ -17,9 +17,6 @@ namespace Noon.MVC.Controllers
             _categoryService = categoryService;
             _productService = productService;
         }
-
-
-
         // GET: ProductController
         public async Task<ActionResult> Index()
         {
@@ -27,15 +24,11 @@ namespace Noon.MVC.Controllers
             return View(product.Entities);
             //return View();
         }
-
-       
         // GET: ProductController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
-
-
         // GET: ProductController/Create
         public async Task<ActionResult> Create()
         {
@@ -49,14 +42,9 @@ namespace Noon.MVC.Controllers
                             };
             return View();
         }
-
         // POST: ProductController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        
-
-
-
         public async Task<ActionResult> Create(CreateUpdateDeleteProductDto createUpdateDeleteProductDto)
         {
             try
@@ -85,19 +73,6 @@ namespace Noon.MVC.Controllers
                 return View(createUpdateDeleteProductDto);
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
         // GET: ProductController/Edit/5
         public async Task< ActionResult> Edit(int id)
         {
@@ -112,7 +87,6 @@ namespace Noon.MVC.Controllers
                             };
             return View(product.Entity);
         }
-
         // POST: ProductController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -138,7 +112,6 @@ namespace Noon.MVC.Controllers
                 return View("Error");
             }
         }
-
         // GET: ProductController/Delete/5
         public ActionResult Delete(int id)
         {
@@ -160,18 +133,15 @@ namespace Noon.MVC.Controllers
             }
         }
 
-
         public async Task<ActionResult> SfotDelete(int id)
         {
             try
             {
-               // var cat = await _productService.GetOne(id);
-                await _productService.Delete(id);
+               var re= await _productService.Delete(id);
                 return RedirectToAction("Index");
             }
             catch
             {
-
                 return View("Error");
             }
         }

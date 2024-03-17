@@ -16,8 +16,6 @@ namespace Noon.MVC.Controllers
             _categoryService = categoryService;
         }
 
-
-
         // GET: CategoryController
         public async Task<ActionResult> Index()
         {
@@ -112,13 +110,11 @@ namespace Noon.MVC.Controllers
                 return View("Error");
             }
         }
-
         // GET: CategoryController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
-
         // POST: CategoryController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -134,16 +130,6 @@ namespace Noon.MVC.Controllers
                 return View();
             }
         }
-
-
-
-
-
-
-
-
-
-
         public async Task<ActionResult> SfotDelete(int id)
         {
             try
@@ -158,14 +144,5 @@ namespace Noon.MVC.Controllers
                 return View("Error");
             }
         }
-
-
-
-
-
-
-
-
-
     }
 }

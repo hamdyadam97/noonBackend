@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AliExpress.Context.Migrations
 {
     [DbContext(typeof(AliExpressContext))]
-    [Migration("20240311214026_init2")]
-    partial class init2
+    [Migration("20240317001204_initail")]
+    partial class initail
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -301,9 +301,8 @@ namespace AliExpress.Context.Migrations
                     b.Property<string>("SetType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ShippingMethod")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ShippingMethod")
+                        .HasColumnType("int");
 
                     b.Property<string>("SimCardSlot")
                         .HasColumnType("nvarchar(max)");
