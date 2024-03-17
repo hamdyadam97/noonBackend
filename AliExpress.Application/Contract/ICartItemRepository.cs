@@ -11,7 +11,8 @@ namespace AliExpress.Application.Contract
     {
         Task<CartItem> GetCartItemByIdAsync(int cartItemId);
         Task AddCartItemAsync(CartItem cartItem);
-        Task UpdateCartItemAsync(CartItem cartItem);
+        //Task UpdateCartItemAsync(CartItem cartItem);
+        Task UpdateCartItemAsync(CartItem cartItem,int cartItemId);
         Task DeleteCartItemAsync(int cartItemId);
         Task<CartItem> GetCartItemByCartIdAndProductId(int cartId,int productId);
 

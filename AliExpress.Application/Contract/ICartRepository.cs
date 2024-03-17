@@ -12,7 +12,7 @@ namespace AliExpress.Application.Contract
         Task<Cart> GetCartByUserId(string userId);
         Task<Cart> GetCartByIdAsync(int cartId);
         Task AddCartAsync(Cart cart);
-        Task UpdateCartAsync(Cart cart);
+        Task UpdateCartAsync(Cart cart ,int cartId);
         Task DeleteCartAsync(int cartId);
     }
 }

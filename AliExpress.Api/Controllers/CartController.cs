@@ -92,15 +92,15 @@ namespace AliExpress.Api.Controllers
             await _cartService.DeleteCartDtoAsync(cartId);
             return Ok();
         }
-        [HttpPut]
-        public async Task<IActionResult> UpdateCart([FromBody] CartDto cartDto)
+        [HttpPut("{cartId}")]
+        public async Task<IActionResult> UpdateCart([FromBody] CartDto cartDto,[FromRoute]int cartId)
         {
             var userId= GetUserId();
             if (string.IsNullOrEmpty(userId))
             {
                 return NotFound();
             }
-            await _cartService.UpdateCartDtoAsync(cartDto);
+            await _cartService.UpdateCartDtoAsync(cartDto,cartId);
             return Ok();
         }
 

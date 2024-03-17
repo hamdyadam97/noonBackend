@@ -51,10 +51,15 @@ namespace None.Infrastructure
                 .FirstOrDefaultAsync(c => c.AppUserId == userId);
         }
 
-        public async Task UpdateCartAsync(Cart cart)
+        public async Task UpdateCartAsync(Cart cart , int cartId)
         {
-            _context.Carts.Update(cart);
-            await _context.SaveChangesAsync();
+            var oldCart = await _context.Carts.FirstOrDefaultAsync(c => c.CartId == cartId);
+            if(oldCart != null)
+            {
+                _context.Carts.Update(cart);
+                await _context.SaveChangesAsync();
+            }
+          
         }
     }
 }
