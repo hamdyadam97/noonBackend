@@ -9,13 +9,16 @@ using System.Threading.Tasks;
 
 namespace AliExpress.Context
 {
-    public class AliExpressContext: IdentityDbContext
+    public class AliExpressContext: IdentityDbContext<AppUser>
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Images> Images { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Subcategory> Subcategories { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        //public DbSet<AppUser> AppUsers { get; set; }
         public AliExpressContext(DbContextOptions dbContextOptions) : base(dbContextOptions) { }
 
         //public AppContext(DbContextOptions<AppContext> options) : base(options)
@@ -26,6 +29,28 @@ namespace AliExpress.Context
         {
             modelBuilder.Entity<ProductCategory>()
                 .HasKey(pc => new { pc.ProductId, pc.CategoryId });
+            //cartItem
+            modelBuilder.Entity<CartItem>()
+                .HasKey(ci =>new {ci.ProductId,ci.CartId});
+            //cartItem-cart
+            modelBuilder.Entity<CartItem>()
+              .HasOne(ci =>ci.Cart)
+              .WithMany(c =>c.CartItems)
+              .HasForeignKey(ci =>ci.CartId);
+
+            //cartitem-product
+              modelBuilder.Entity<CartItem>()
+                .HasOne(ci =>ci.Product)
+                .WithMany(p =>p.CartItems)
+                .HasForeignKey(ci =>ci.ProductId);
+
+
+            //user-cart
+            modelBuilder.Entity<AppUser>()
+                .HasOne(u => u.Cart)
+                .WithOne(c => c.AppUser)
+                .HasForeignKey<Cart>(C => C.AppUserId);
+
             base.OnModelCreating(modelBuilder);
 
             //Ayed 

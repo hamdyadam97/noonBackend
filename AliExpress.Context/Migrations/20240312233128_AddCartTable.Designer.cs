@@ -4,6 +4,7 @@ using AliExpress.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AliExpress.Context.Migrations
 {
     [DbContext(typeof(AliExpressContext))]
-    partial class AliExpressContextModelSnapshot : ModelSnapshot
+    [Migration("20240312233128_AddCartTable")]
+    partial class AddCartTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -266,6 +269,7 @@ namespace AliExpress.Context.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Detachable")
@@ -376,8 +380,9 @@ namespace AliExpress.Context.Migrations
                     b.Property<string>("SetType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ShippingMethod")
-                        .HasColumnType("int");
+                    b.Property<string>("ShippingMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SimCardSlot")
                         .HasColumnType("nvarchar(max)");
