@@ -67,16 +67,18 @@
                 <input asp-for="Input.Email" id="inputEmail" class="form-control" autocomplete="username" aria-describedby="emailHelp" placeholder="name@example.com" required>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
+
             <div class="mb-3">
                 <label for="inputPassword" class="form-label">Password</label>
-                <input asp-for="Input.Password" type="password" id="inputPassword" class="form-control" autocomplete="new-password" placeholder="Password" required>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                <input asp-for="Input.Password" type="password" id="inputPassword" class="form-control" autocomplete="new-password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Password must contain at least one number, one uppercase and one lowercase letter, and at least 8 or more characters" required>
+                <div id="passwordErrors" class="text-danger"></div> <!-- Container for displaying password errors -->
             </div>
             <div class="mb-3">
                 <label for="confirmPassword" class="form-label">Confirm Password</label>
                 <input asp-for="Input.ConfirmPassword" type="password" id="confirmPassword" class="form-control" autocomplete="new-password" placeholder="Confirm Password" required>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+
 
             @* Reuse the select list from the first page *@
 
@@ -97,3 +99,50 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+<!-- Add the following script to your page -->
+
+
+
+<script>
+    // Function to validate password strength
+    function validatePassword() {
+        var password = document.getElementById("inputPassword").value;
+        var confirmPassword = document.getElementById("confirmPassword").value;
+        var passwordErrors = document.getElementById("passwordErrors"); // Container for password errors
+        var errors = ""; // Variable to store error messages
+
+        // Clear previous errors
+        passwordErrors.innerHTML = "";
+
+        // Check if password meets the criteria
+        if (password.length < 8) {
+            errors += "Password must be at least 8 characters long.<br>";
+        }
+
+        // Check for character classes
+        if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/.test(password)) {
+            errors += "Password must contain at least one number, one uppercase and one lowercase letter, and one special character.<br>";
+        }
+
+        // Check if passwords match
+        if (password !== confirmPassword) {
+            errors += "Passwords do not match.<br>";
+        }
+
+        // Display errors in the container
+        if (errors !== "") {
+            passwordErrors.innerHTML = errors;
+            return false;
+        }
+
+        return true;
+    }
+
+    // Add event listener to the form submit event
+    document.getElementById("registerForm").addEventListener("submit", function (event) {
+        if (!validatePassword()) {
+            event.preventDefault(); // Prevent form submission if validation fails
+        }
+    });
+</script>
+

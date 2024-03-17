@@ -2,6 +2,7 @@ using AliExpress.Application.Contract;
 using AliExpress.Application.IServices;
 using AliExpress.Application.Services;
 using AliExpress.Context;
+using AliExpress.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using None.Infrastructure;
@@ -33,7 +34,7 @@ namespace Noon.MVC
                 op.UseSqlServer(builder.Configuration.GetConnectionString("ECommerceContex"));
             }, ServiceLifetime.Scoped);
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = false)
                         .AddRoles<IdentityRole>()
                         .AddEntityFrameworkStores<AliExpressContext>();
 
