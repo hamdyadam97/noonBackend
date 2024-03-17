@@ -30,8 +30,8 @@ namespace AliExpress.Context
             modelBuilder.Entity<ProductCategory>()
                 .HasKey(pc => new { pc.ProductId, pc.CategoryId });
             //cartItem
-            modelBuilder.Entity<CartItem>()
-                .HasKey(ci =>new {ci.ProductId,ci.CartId});
+            //modelBuilder.Entity<CartItem>()
+            //    .HasKey(ci =>new {ci.ProductId,ci.CartId});
             //cartItem-cart
             modelBuilder.Entity<CartItem>()
               .HasOne(ci =>ci.Cart)

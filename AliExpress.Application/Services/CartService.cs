@@ -6,9 +6,11 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-
+using Microsoft.EntityFrameworkCore.Storage.Json;
+using System.Text.Json;
 namespace AliExpress.Application.Services
 {
     public class CartService : ICartService
@@ -39,10 +41,13 @@ namespace AliExpress.Application.Services
             var cartdtoMapped = _mapper.Map<Cart, CartDto>(cart);
             return cartdtoMapped;
         }
-
+        //private readonly IHttpContextAccessor _httpContextAccessor;
         public async Task UpdateCartDtoAsync(CartDto cartDto,int cartId)
         {
             var mappedCart = _mapper.Map<CartDto, Cart>(cartDto);
+          
+            //var appUser = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //mappedCart.AppUser = appUser
             await _cartRepository.UpdateCartAsync(mappedCart, cartId);
         }
 

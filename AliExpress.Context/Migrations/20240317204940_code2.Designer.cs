@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AliExpress.Context.Migrations
 {
     [DbContext(typeof(AliExpressContext))]
-    [Migration("20240312233128_AddCartTable")]
-    partial class AddCartTable
+    [Migration("20240317204940_code2")]
+    partial class code2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace AliExpress.Context.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -115,21 +118,26 @@ namespace AliExpress.Context.Migrations
 
             modelBuilder.Entity("AliExpress.Models.CartItem", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("CartItemId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartItemId"));
 
                     b.Property<int>("CartId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CartItemId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("ProductId", "CartId");
+                    b.HasKey("CartItemId");
 
                     b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("CartItems");
                 });
@@ -269,7 +277,6 @@ namespace AliExpress.Context.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Detachable")
@@ -380,9 +387,8 @@ namespace AliExpress.Context.Migrations
                     b.Property<string>("SetType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ShippingMethod")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ShippingMethod")
+                        .HasColumnType("int");
 
                     b.Property<string>("SimCardSlot")
                         .HasColumnType("nvarchar(max)");

@@ -10,5 +10,7 @@ namespace AliExpress.Models
     public class AppUser:IdentityUser
     {
         public Cart Cart { get; set; }
+
+        public string? Code { get; set; }    
     }
 }

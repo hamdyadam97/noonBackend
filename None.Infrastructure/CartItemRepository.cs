@@ -2,15 +2,10 @@
 using AliExpress.Context;
 using AliExpress.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace None.Infrastructure
 {
-    public class CartItemRepository:ICartItemRepository
+    public class CartItemRepository : ICartItemRepository
     {
         private readonly AliExpressContext _context;
 
@@ -21,7 +16,7 @@ namespace None.Infrastructure
 
         public async Task AddCartItemAsync(CartItem cartItem)
         {
-         var existedCartItem = await GetCartItemByCartIdAndProductId(cartItem.CartId,cartItem.ProductId);
+            var existedCartItem = await GetCartItemByCartIdAndProductId(cartItem.CartId, cartItem.ProductId);
             if (existedCartItem != null)
             {
                 existedCartItem.Quantity += cartItem.Quantity;
@@ -36,11 +31,8 @@ namespace None.Infrastructure
                     await _context.CartItems.AddAsync(cartItem);
                     await _context.SaveChangesAsync();
                 }
-               
-            }
 
             }
-
 
         }
 
@@ -56,7 +48,7 @@ namespace None.Infrastructure
 
         public async Task<CartItem> GetCartItemByCartIdAndProductId(int cartId, int productId)
         {
-            return await _context.CartItems.FirstOrDefaultAsync(ci =>ci.CartId == cartId && ci.ProductId == productId);
+            return await _context.CartItems.FirstOrDefaultAsync(ci => ci.CartId == cartId && ci.ProductId == productId);
         }
 
         public async Task<CartItem> GetCartItemByIdAsync(int cartItemId)
@@ -66,8 +58,8 @@ namespace None.Infrastructure
 
         public async Task UpdateCartItemAsync(CartItem cartItem, int cartItemId)
         {
-          var oldCartItem= _context.CartItems.FirstOrDefaultAsync(item => item.CartItemId == cartItemId);
-            if(oldCartItem != null)
+            var oldCartItem = _context.CartItems.FirstOrDefaultAsync(item => item.CartItemId == cartItemId);
+            if (oldCartItem != null)
             {
                 var existedCartItem = await GetCartItemByCartIdAndProductId(cartItem.CartId, cartItem.ProductId);
                 if (existedCartItem.Quantity != cartItem.Quantity)
@@ -82,7 +74,7 @@ namespace None.Infrastructure
                     await _context.SaveChangesAsync();
                 }
             }
-           
+
         }
     }
 }
