@@ -28,11 +28,11 @@ namespace AliExpress.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateCartItem(CartItemDto cartItemDto)
+        public async Task<IActionResult> UpdateCartItem(CartItemDto cartItemDto,int cartItemId)
         {
             if (ModelState.IsValid)
             {
-               await _cartItemService.UpdateCartItemAsync(cartItemDto);
+               await _cartItemService.UpdateCartItemAsync(cartItemDto, cartItemId);
                 return Ok();
             }
             return BadRequest(ModelState);
