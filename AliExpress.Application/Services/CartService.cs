@@ -43,7 +43,7 @@ namespace AliExpress.Application.Services
         public async Task UpdateCartDtoAsync(CartDto cartDto)
         {
             var mappedCart = _mapper.Map<CartDto, Cart>(cartDto);
-            await _cartRepository.UpdateCartAsync(mappedCart);
+            await _cartRepository.UpdateCartAsync(mappedCart,cartDto.CartId);
         }
 
       

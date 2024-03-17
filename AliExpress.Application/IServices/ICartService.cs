@@ -11,7 +11,7 @@ namespace AliExpress.Application.IServices
     {
         Task<CartDto> GetCartDtoByUserIdAsync(string userId);
         Task AddCartDtoAsync(CartDto cartDto);
-        Task UpdateCartDtoAsync(CartDto cartDto);
+        Task UpdateCartDtoAsync(CartDto cartDto, int cartId);
         Task DeleteCartDtoAsync(int cartId);
 
     }

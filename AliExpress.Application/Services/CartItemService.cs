@@ -33,10 +33,10 @@ namespace AliExpress.Application.Services
            await _cartItemRepository.DeleteCartItemAsync(cartItemId);
         }
 
-        public async Task UpdateCartItemAsync(CartItemDto cartItemDto)
+        public async Task UpdateCartItemAsync(CartItemDto cartItemDto,int cartItemId)
         {
             var mappedCart = _mapper.Map<CartItemDto, CartItem>(cartItemDto);
-            await _cartItemRepository.UpdateCartItemAsync(mappedCart);
+            await _cartItemRepository.UpdateCartItemAsync(mappedCart, cartItemDto.CartItemId);
         }
     }
 }
