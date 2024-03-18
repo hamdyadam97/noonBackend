@@ -98,7 +98,6 @@ namespace None.Infrastructure
         //    return await query.ToListAsync();
         //}
 
-        
         public async Task<TEntity> GetByIdAsync(TId id)
         {
             var entity = await _context.Set<TEntity>().FindAsync(id);
@@ -110,6 +109,9 @@ namespace None.Infrastructure
 
             return entity;
         }
+
+
+
 
         public async Task<int> SaveChangesAsync()
         {
