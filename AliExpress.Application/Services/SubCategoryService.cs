@@ -34,10 +34,16 @@ namespace AliExpress.Application.Services
             
         }
 
-        public async Task Delete(SubCategoryDto subcategoryDto)
+        public async Task<ResultView<SubCategoryDto>> Delete(int id)
         {
-            var subCat = _mapper.Map<SubCategoryDto, Subcategory>(subcategoryDto);
-            await _subCategoryRepository.DeleteAsync(subCat);
+            var subCategory = await _subCategoryRepository.GetByIdAsync(id);
+            if (subCategory == null)
+            {
+                return new ResultView<SubCategoryDto> { IsSuccess = false, Message = "Category not found" };
+            }
+
+            await _subCategoryRepository.DeleteAsync(subCategory);
+            return new ResultView<SubCategoryDto> { IsSuccess = true, Message = "Category deleted successfully" };
         }
 
         public async Task<ResultList<SubCategoryDto>> GetAllCategory()

@@ -18,6 +18,7 @@ namespace AliExpress.Api.Controllers
     {
         private readonly IProductService _productService;
         private readonly AliExpressContext _context;
+
         public ProductController(IProductService productService, AliExpressContext aliExpress)
         {
             _productService = productService;
@@ -25,9 +26,9 @@ namespace AliExpress.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllProducts(int page = 1, string searchTerm = null)
+        public async Task<ActionResult> GetAllProducts(string searchTerm="", int page = 2)
         {
-            const int pageSize = 10;
+            const int pageSize = 2;
             var Prds = await _productService.GetAllProducts(searchTerm,page,pageSize);
 
             return Ok(Prds);
@@ -66,21 +67,7 @@ namespace AliExpress.Api.Controllers
 
             return Ok("Images uploaded successfully");
         }
-        [HttpDelete("DeleteProduct/{id}")]
-        public async Task<ActionResult> DeleteProduct(int id)
-        {
-            var Cat = await _productService.GetOne(id);
-            if (Cat == null)
-            {
-                return NotFound(); // Return 404 if the product is not found
-            }
-            else
-            {
-                _productService.Delete(Cat.Entity);
-
-            }
-            return NoContent();
-        }
+      
 
 
       

@@ -10,12 +10,17 @@ namespace AliExpress.Models
     {
 
         public int CartId { get; set; }
-        public int UserId { get; set; }
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
+        public decimal TotalAmount { get; set; }
+        public string AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
 
-        public IdentityUser User { get; set; }
-        public int quantity { get; set; }
 
+        //relation-many
+        public ICollection<CartItem>? CartItems { get; set; }
+
+        public Cart()
+        {
+            CartItems = new List<CartItem>();
+        }
     }
 }

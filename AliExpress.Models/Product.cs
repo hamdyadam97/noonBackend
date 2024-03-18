@@ -10,16 +10,23 @@ namespace AliExpress.Models
     public enum Gender
     {
         Male,
-        Female
+        Female,
+        Both
+    }
+    public enum ShippingMethod
+    {
+        Free,
+        Buyed,
+        occasion
     }
 
     public class Product: BaseEntity, IDeletedEntity
     {
         public string Title { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public decimal Price { get; set; }
         public int quantity {  get; set; }
-        public string ShippingMethod { get; set; }
+        public ShippingMethod? ShippingMethod { get; set; }
         public string? PlaceOfOrigin { get; set; }
         public string? ModelNumber { get; set; }
         public string? LensWidth { get; set; }
@@ -98,9 +105,15 @@ namespace AliExpress.Models
         public string? Functionality { get; set; }
 
         public bool IsDeleted { get; set; } = false;
-
-        public ICollection<Cart> Carts{ get; set; }
+        //relation-many
+        public ICollection<CartItem> CartItems { get; set; }
         public ICollection<ProductCategory> ProductCategories { get; set; }
         public ICollection<Images> Images { get; set; }
+        public Product()
+        {
+            CartItems = new List<CartItem>();
+            ProductCategories = new List<ProductCategory>();
+            Images = new List<Images>();
+        }
     }
 }
