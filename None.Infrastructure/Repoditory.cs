@@ -98,12 +98,6 @@ namespace None.Infrastructure
         //    return await query.ToListAsync();
         //}
 
-        //public async Task<TEntity> GetByIdAsync(TId id)
-        //{
-        //    return await _context.Set<TEntity>().FindAsync(id);
-        //}
-
-
         public async Task<TEntity> GetByIdAsync(TId id)
         {
             var entity = await _context.Set<TEntity>().FindAsync(id);

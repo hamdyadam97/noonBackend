@@ -6,9 +6,11 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-
+using Microsoft.EntityFrameworkCore.Storage.Json;
+using System.Text.Json;
 namespace AliExpress.Application.Services
 {
     public class CartService : ICartService
@@ -22,9 +24,18 @@ namespace AliExpress.Application.Services
             _cartRepository = cartRepository;
             _mapper = mapper;
         }
-        public async Task AddCartDtoAsync(CartDto cartDto)
+
+        public async Task AddOrUpdateCartDtoAsync(CartItemDto cartItemDto, AppUser userId)
         {
-            var mappedCart=_mapper.Map<CartDto,Cart>(cartDto);
+            var mappedCart = _mapper.Map<CartItemDto, CartItem>(cartItemDto);
+            await _cartRepository.AddOrUpdateCartItem(mappedCart,userId);
+        }
+
+
+
+        public async Task createUserCart(CartDto cartDto)
+        {
+            var mappedCart = _mapper.Map<CartDto, Cart>(cartDto);
             await _cartRepository.AddCartAsync(mappedCart);
         }
 
@@ -40,11 +51,7 @@ namespace AliExpress.Application.Services
             return cartdtoMapped;
         }
 
-        public async Task UpdateCartDtoAsync(CartDto cartDto)
-        {
-            var mappedCart = _mapper.Map<CartDto, Cart>(cartDto);
-            await _cartRepository.UpdateCartAsync(mappedCart);
-        }
+      
 
       
 

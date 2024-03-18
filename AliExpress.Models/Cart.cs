@@ -14,12 +14,13 @@ namespace AliExpress.Models
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
 
+
         //relation-many
-        public ICollection<CartItem> CartItems { get; set; }
+        public ICollection<CartItem>? CartItems { get; set; }
+
         public Cart()
         {
-            new List<CartItem>();
+            CartItems = new List<CartItem>();
         }
-
     }
 }
