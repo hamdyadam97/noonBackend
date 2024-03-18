@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AliExpress.Dtos", "AliExpre
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "None.Infrastructure", "None.Infrastructure\None.Infrastructure.csproj", "{C5F26968-E482-45DE-8012-8B56898F0001}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Noon.MVC", "Noon.MVC\Noon.MVC.csproj", "{C570699F-EFA0-42CD-8DCB-04DDA76184AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Noon.MVC", "Noon.MVC\Noon.MVC.csproj", "{C570699F-EFA0-42CD-8DCB-04DDA76184AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

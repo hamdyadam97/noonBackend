@@ -37,10 +37,10 @@ namespace Noon.MVC
             builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = false)
                         .AddRoles<IdentityRole>()
                         .AddEntityFrameworkStores<AliExpressContext>();
-
+            builder.Services.AddSession();
 
             var app = builder.Build();
-
+            app.UseSession();
             app.MapRazorPages(); ///
             app.UseAuthentication();
 
