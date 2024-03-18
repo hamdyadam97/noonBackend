@@ -75,12 +75,9 @@ namespace Noon.MVC.Controllers
                     var result = await _productService.Create(createUpdateDeleteProductDto);
                     if (result.IsSuccess)
                     {
-                        //TempData["product"] = result.Entity;
-                        TempData["id"] = result.Entity.Id;
                         
-                        
-
-                        return RedirectToAction("Upload",result.Entity.Id);
+                        TempData["id"] = result.Entity.Id;//send to upload iamge action 
+                        return RedirectToAction("Upload");
                     }
                     else
                     {
@@ -103,15 +100,17 @@ namespace Noon.MVC.Controllers
         ////////////////////////////////////////////////////////////////////////////////////////////// //
         public async Task<IActionResult> Upload()
         {
-          
-
-          
+            //int id = (int)TempData["id"];
+            //var r = await _productService.GetOne(id);
+            //CreateUpdateDeleteProductDto product = r.Entity;
             return View();
-        }
 
+        }
         [HttpPost]
         public async Task<IActionResult> Upload(List<IFormFile> files)
         {
+
+            #region Upload Image
             var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
             var uploadsFolder = Path.Combine(_environment.WebRootPath, "photos");
 
@@ -128,7 +127,7 @@ namespace Noon.MVC.Controllers
                 if (file == null || file.Length == 0)
                 {
                     ModelState.AddModelError("files", "One or more files are empty.");
-                    return View(); // Return to the view with error message
+                    return View();
                 }
 
                 var fileExtension = Path.GetExtension(file.FileName).ToLower();
@@ -136,7 +135,7 @@ namespace Noon.MVC.Controllers
                 if (!allowedExtensions.Contains(fileExtension))
                 {
                     ModelState.AddModelError("files", "Only image files (jpg, jpeg, png, gif) are allowed.");
-                    return View(); // Return to the view with error message
+                    return View(); 
                 }
 
                 var uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
@@ -147,52 +146,21 @@ namespace Noon.MVC.Controllers
                     await file.CopyToAsync(stream);
                 }
 
-                // Add the full path of the uploaded file to the list
                 uploadedFilePaths.Add(filePath.Replace(_environment.WebRootPath, "").Replace("\\", "\\\\"));
             }
+            #endregion
 
 
-
-
-
+            #region stroe images lsit in database
             int id = (int)TempData["id"];
             var r = await _productService.GetOne(id);
             CreateUpdateDeleteProductDto product = r.Entity;
-
-            
             product.Images = uploadedFilePaths;
-
-           var result = await _productService.Update(product);
-
-            // Redirect to the index action after successful update
+            var result = await _productService.Update(product);
+            #endregion
+            
             return RedirectToAction("Index");
         }
-
-
-        public async Task<CreateUpdateDeleteProductDto> f(int id)
-        {
-            var resultView = await _productService.GetOne(id);
-            CreateUpdateDeleteProductDto product = resultView.Entity;
-            return product;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         //// //////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: ProductController/Edit/5
