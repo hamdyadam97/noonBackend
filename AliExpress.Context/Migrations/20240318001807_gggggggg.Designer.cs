@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AliExpress.Context.Migrations
 {
     [DbContext(typeof(AliExpressContext))]
-    [Migration("20240317042732_llllad")]
-    partial class llllad
+    [Migration("20240318001807_gggggggg")]
+    partial class gggggggg
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace AliExpress.Context.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()

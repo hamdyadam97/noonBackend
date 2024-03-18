@@ -51,6 +51,23 @@ namespace AliExpress.Context
                 .WithOne(c => c.AppUser)
                 .HasForeignKey<Cart>(C => C.AppUserId);
 
+            modelBuilder.Entity<Cart>()
+       .HasKey(c => c.CartId);
+
+            modelBuilder.Entity<Cart>()
+       .HasMany(c => c.CartItems) 
+       .WithOne(ci => ci.Cart) 
+       .HasForeignKey(ci => ci.CartId); 
+
+            modelBuilder.Entity<Cart>()
+                .HasOne(c => c.AppUser) 
+                .WithOne(u => u.Cart) 
+                .HasForeignKey<Cart>(c => c.AppUserId);
+
+
+
+
+
             base.OnModelCreating(modelBuilder);
 
             //Ayed 
