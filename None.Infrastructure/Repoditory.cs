@@ -98,12 +98,32 @@ namespace None.Infrastructure
         //    return await query.ToListAsync();
         //}
 
+        //public async Task<TEntity> GetByIdAsync(TId id)
+        //{
+        //    var entity = await _context.Set<TEntity>().FindAsync(id);
+
+        //    if (entity != null)
+        //    {
+        //        _context.Entry(entity).State = EntityState.Detached;
+        //    }
+
+        //    return entity;
+        //}
         public async Task<TEntity> GetByIdAsync(TId id)
         {
             var entity = await _context.Set<TEntity>().FindAsync(id);
 
             if (entity != null)
             {
+                if (entity is Product product)
+                {
+                    // Load related images if the entity is a Product
+                    await _context.Entry(product)
+                        .Collection(p => p.Images)
+                        .LoadAsync();
+                }
+
+                // Detach the entity to prevent accidental changes being tracked
                 _context.Entry(entity).State = EntityState.Detached;
             }
 

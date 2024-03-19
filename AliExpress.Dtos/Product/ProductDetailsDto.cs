@@ -92,10 +92,7 @@ namespace AliExpress.Dtos.Product
         public string? Compatibility { get; set; }
         public string? Language { get; set; }
         public string? Functionality { get; set; }
-        public List<ImagesDto> Images { get; set; }
-        public ProductDetailsDto()
-        {
-            Images = new List<ImagesDto>();
-        }
+        public List<string> Images { get; set; }
+       
     }
 }
