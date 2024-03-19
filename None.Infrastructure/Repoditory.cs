@@ -122,7 +122,13 @@ namespace None.Infrastructure
                         .Collection(p => p.Images)
                         .LoadAsync();
                 }
-
+                else if (entity is Category category)
+                {
+                    // Load related specifications if the entity is a Category
+                    await _context.Entry(category)
+                        .Collection(c => c.Specifications)
+                        .LoadAsync();
+                }
                 // Detach the entity to prevent accidental changes being tracked
                 _context.Entry(entity).State = EntityState.Detached;
             }
