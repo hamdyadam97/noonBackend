@@ -1,23 +1,9 @@
 ﻿using AliExpress.Application.IServices;
 using AliExpress.Application.Services;
-using AliExpress.Dtos.Category;
 using AliExpress.Dtos.Product;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using AliExpress.Dtos.ViewResult;
-using Microsoft.AspNetCore.Http;
-using System.Text.Json;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using System.Text.Json;
 //using testNoon.Models;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Noon.MVC.Controllers
 {
@@ -149,8 +135,6 @@ namespace Noon.MVC.Controllers
                 uploadedFilePaths.Add(filePath.Replace(_environment.WebRootPath, "").Replace("\\", "\\\\"));
             }
             #endregion
-
-
             #region stroe images lsit in database
             int id = (int)TempData["id"];
             var r = await _productService.GetOne(id);

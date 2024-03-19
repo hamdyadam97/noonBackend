@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AliExpress.Context
 {
-    public class AliExpressContext: IdentityDbContext<AppUser>
+    public class AliExpressContext : IdentityDbContext<AppUser>
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -25,6 +25,7 @@ namespace AliExpress.Context
         //{
 
         //}
+       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProductCategory>()
@@ -34,15 +35,15 @@ namespace AliExpress.Context
             //    .HasKey(ci =>new {ci.ProductId,ci.CartId});
             //cartItem-cart
             modelBuilder.Entity<CartItem>()
-              .HasOne(ci =>ci.Cart)
-              .WithMany(c =>c.CartItems)
-              .HasForeignKey(ci =>ci.CartId);
+              .HasOne(ci => ci.Cart)
+              .WithMany(c => c.CartItems)
+              .HasForeignKey(ci => ci.CartId);
 
             //cartitem-product
-              modelBuilder.Entity<CartItem>()
-                .HasOne(ci =>ci.Product)
-                .WithMany(p =>p.CartItems)
-                .HasForeignKey(ci =>ci.ProductId);
+            modelBuilder.Entity<CartItem>()
+              .HasOne(ci => ci.Product)
+              .WithMany(p => p.CartItems)
+              .HasForeignKey(ci => ci.ProductId);
 
 
             //user-cart
@@ -55,13 +56,13 @@ namespace AliExpress.Context
        .HasKey(c => c.CartId);
 
             modelBuilder.Entity<Cart>()
-       .HasMany(c => c.CartItems) 
-       .WithOne(ci => ci.Cart) 
-       .HasForeignKey(ci => ci.CartId); 
+       .HasMany(c => c.CartItems)
+       .WithOne(ci => ci.Cart)
+       .HasForeignKey(ci => ci.CartId);
 
             modelBuilder.Entity<Cart>()
-                .HasOne(c => c.AppUser) 
-                .WithOne(u => u.Cart) 
+                .HasOne(c => c.AppUser)
+                .WithOne(u => u.Cart)
                 .HasForeignKey<Cart>(c => c.AppUserId);
 
 
