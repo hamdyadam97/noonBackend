@@ -58,6 +58,7 @@ namespace AliExpress.Application.Services
         {
             var category =await _categoryRepository.GetByIdAsync(Id);
             var ReturnedCategoryDto=_mapper.Map<Category, CategoryDto>(category);
+
             return new ResultView<CategoryDto> { Entity = ReturnedCategoryDto, IsSuccess = true, Message = "create success" };
 
         }
