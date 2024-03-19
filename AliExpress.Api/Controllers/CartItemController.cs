@@ -28,11 +28,11 @@ namespace AliExpress.Api.Controllers
         //}
 
         //[HttpPut]
-        //public async Task<IActionResult> UpdateCartItem(CartItemDto cartItemDto,int cartItemId)
+        //public async Task<IActionResult> UpdateCartItem(CartItemDto cartItemDto, int cartItemId)
         //{
         //    if (ModelState.IsValid)
         //    {
-        //       await _cartItemService.UpdateCartItemAsync(cartItemDto, cartItemId);
+        //        await _cartItemService.UpdateCartItemAsync(cartItemDto, cartItemId);
         //        return Ok();
         //    }
         //    return BadRequest(ModelState);
@@ -45,6 +45,7 @@ namespace AliExpress.Api.Controllers
             {
                 return NotFound();
             }
+
             await _cartItemService.DeleteCartItemAsync(cartItemId);
             return Ok();
         }

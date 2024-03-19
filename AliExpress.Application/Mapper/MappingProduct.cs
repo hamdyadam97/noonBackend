@@ -1,4 +1,5 @@
-﻿using AliExpress.Dtos.Product;
+﻿using AliExpress.Dtos.Images;
+using AliExpress.Dtos.Product;
 using AliExpress.Models;
 using AutoMapper;
 using System;
@@ -23,6 +24,7 @@ namespace AliExpress.Application.Mapper
             CreateMap<CreateUpdateDeleteProductDto, Product>()
                 .ForMember(d => d.Gender, o => o.MapFrom(s => Enum.Parse<Gender>(s.Gender)))
                 .ForMember(d => d.Images, o => o.MapFrom(s => s.Images.Select(img => new Images { Url = img }))).ReverseMap();
+            CreateMap<Images,ImagesDto>().ReverseMap();
         }
     }
 }

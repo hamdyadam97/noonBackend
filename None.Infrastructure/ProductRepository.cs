@@ -30,7 +30,20 @@ namespace None.Infrastructure
  
 public async Task<IEnumerable<Product>> GetAllAsync(string searchValue, int page, int pageSize)
         {
-            IQueryable<Product> query = _context.Products;
+            _context.Subcategories
+                    .Include(s => s.ProductCategories).ThenInclude(pc => pc.Product);
+            //IQueryable<Product> query= _context.Products.Include(p => p.Images);
+            IQueryable<Product> query = from product in _context.Products
+                                        join image in _context.Images on product.Id equals image.ProductId into productImages
+                                        select new Product
+                                        {
+                                            // Copy product properties
+                                            Id = product.Id,
+                                            Title = product.Title,
+                                            // Include images
+                                            Images = productImages.ToList()
+                                        };
+
             //search
             if (!string.IsNullOrEmpty(searchValue))
             {
