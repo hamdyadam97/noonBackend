@@ -120,6 +120,8 @@ namespace AliExpress.Application.Services
         {
             var product=await _productRepository.GetByIdAsync(Id);
             var ProductDto = _mapper.Map<Product, CreateUpdateDeleteProductDto>(product);
+            ProductDto.Images = product.Images.Select(img => img.Url).ToList();
+
             return new ResultView<CreateUpdateDeleteProductDto> { Entity = ProductDto, IsSuccess = true, Message = "create success" };
         }
         public async Task<ResultView<CreateUpdateDeleteProductDto>> Delete(int id)

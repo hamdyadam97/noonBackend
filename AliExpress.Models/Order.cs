@@ -14,13 +14,13 @@ namespace AliExpress.Models
 
 
 
-        public decimal TotalAmount { get; set; }
-        public string Order_Status { get; set; } = "Processing";
+        //public decimal TotalAmount { get; set; }
+        //public string Order_Status { get; set; } = "Processing";
 
-        public string AppUserId { get; set; }
-        public AppUser AppUser { get; set; }
+        //public string AppUserId { get; set; }
+        //public AppUser AppUser { get; set; }
 
-        public ICollection<OrderItems> Items { get; set; }
+        //public ICollection<OrderItems> Items { get; set; }
 
        
 
