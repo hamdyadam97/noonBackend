@@ -4,6 +4,7 @@ using AliExpress.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AliExpress.Context.Migrations
 {
     [DbContext(typeof(AliExpressContext))]
-    partial class AliExpressContextModelSnapshot : ModelSnapshot
+    [Migration("20240318204055_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -534,34 +537,6 @@ namespace AliExpress.Context.Migrations
                     b.ToTable("ProductCategories");
                 });
 
-            modelBuilder.Entity("AliExpress.Models.Specification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Specification");
-                });
-
             modelBuilder.Entity("AliExpress.Models.Subcategory", b =>
                 {
                     b.Property<int>("Id")
@@ -824,17 +799,6 @@ namespace AliExpress.Context.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("AliExpress.Models.Specification", b =>
-                {
-                    b.HasOne("AliExpress.Models.Category", "Category")
-                        .WithMany("Specifications")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("AliExpress.Models.Subcategory", b =>
                 {
                     b.HasOne("AliExpress.Models.Category", "Category")
@@ -913,8 +877,6 @@ namespace AliExpress.Context.Migrations
             modelBuilder.Entity("AliExpress.Models.Category", b =>
                 {
                     b.Navigation("ProductCategories");
-
-                    b.Navigation("Specifications");
 
                     b.Navigation("Subcategories");
                 });

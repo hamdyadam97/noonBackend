@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace AliExpress.Application.Mapper
 {
-    public class MappingProduct :Profile
+    public class MappingProduct : Profile
     {
         public MappingProduct()
         {
-            CreateMap<Product,ProductDetailsDto>()
-                .ForMember(d =>d.Gender,o => o.MapFrom(s =>s.Gender.ToString()))
-                .ForMember(d => d.Images,o => o.MapFrom(s => s.Images.Select(img =>img.Url))).ReverseMap();
+            CreateMap<Product, ProductDetailsDto>()
+                .ForMember(d => d.Gender, o => o.MapFrom(s => s.Gender.ToString()))
+                .ForMember(d => d.Images, o => o.MapFrom(s => s.Images.Select(img => img.Url))).ReverseMap();
 
             CreateMap<Product, ProductViewDto>()
             .ForMember(d => d.Image, o => o.MapFrom(s => s.Images.Select(img => img.Url))).ReverseMap();

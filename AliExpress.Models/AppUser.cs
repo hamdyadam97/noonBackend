@@ -11,6 +11,10 @@ namespace AliExpress.Models
     {
         public Cart Cart { get; set; }
 
-        public string? Code { get; set; }    
+        public string? Code { get; set; }  
+        
+        // Ayed 
+       // public string? Address { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }
