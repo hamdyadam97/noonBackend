@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "_navbarLayout";
 }
 
 <h1>Index</h1>
@@ -53,7 +54,7 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
                         @Html.ActionLink("DetailsProduct", "DetailsProduct", new { id = item.Id }) |
-                        @Html.ActionLink("SfotDelete", "SfotDelete", new { id = item.Id })
+                        @Html.ActionLink("Delete", "SfotDelete", new { id = item.Id })
             </td>
         </tr>
 }

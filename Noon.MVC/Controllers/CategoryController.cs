@@ -39,10 +39,10 @@ namespace Noon.MVC.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task< ActionResult> Create(CategoryDto categoryDto)
+        public async Task< ActionResult> Create(CategoryDto categoryDto )
         {
-            List<string>s= new List<string>() { "asd", "aaa", "qqa" };
-            categoryDto.Specification = s;
+            //List<string>s= new List<string>() { "asd", "aaa", "qqa" };
+            //categoryDto.Specification = s;
 
             try
             {
