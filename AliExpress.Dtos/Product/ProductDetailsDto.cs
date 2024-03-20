@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AliExpress.Dtos.Images;
+using AliExpress.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -90,10 +92,7 @@ namespace AliExpress.Dtos.Product
         public string? Compatibility { get; set; }
         public string? Language { get; set; }
         public string? Functionality { get; set; }
-        public ICollection<string> Images { get; set; }
-        public ProductDetailsDto()
-        {
-            Images=new List<string>();
-        }
+        public List<string> Images { get; set; }
+       
     }
 }

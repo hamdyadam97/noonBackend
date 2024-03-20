@@ -107,12 +107,14 @@ namespace AliExpress.Models
 
         public bool IsDeleted { get; set; } = false;
         //relation-many
-       public ICollection<OrderItem> OrderItems { get; set; }
+        public ICollection<CartItem> CartItems { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
         public ICollection<ProductCategory> ProductCategories { get; set; }
         public ICollection<Images> Images { get; set; }
         public Product()
         {
-            OrderItems=new HashSet<OrderItem>();    
+            OrderItems=new HashSet<OrderItem>();
+            CartItems=new HashSet<CartItem>();
             ProductCategories = new List<ProductCategory>();
             Images = new List<Images>();
         }

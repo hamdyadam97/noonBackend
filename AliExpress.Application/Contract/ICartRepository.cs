@@ -9,10 +9,13 @@ namespace AliExpress.Application.Contract
 {
     public interface ICartRepository
     {
-        Task AddCartToUserAsync(Cart cart);
-        Task<Cart> GetCartByUserIdAsync(string userId, int cartId);
-        Task AddOrUpdateCartAsync(Cart cart);
+        Task<Cart> GetCartByUserId(string userId);
+        Task<Cart> GetCartByIdAsync(int cartId);
+        Task AddCartAsync(Cart cart);
+        //Task AddCartAsync(Cart cart,int cartItemId);
+        //Task UpdateCartAsync(Cart cart ,int cartId);
+        //Task UpdateCartAsync( int cartId, int cartItemId);
+        Task AddOrUpdateCartItem(CartItem cartItem, AppUser userId);
         Task DeleteCartAsync(int cartId);
-        Task DeleteCartItemAsync(int cartItemId);
     }
 }

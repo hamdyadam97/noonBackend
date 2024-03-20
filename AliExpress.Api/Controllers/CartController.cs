@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore.Storage.Json;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using AliExpress.Models;
+
 
 namespace AliExpress.Api.Controllers
 {
@@ -14,19 +17,19 @@ namespace AliExpress.Api.Controllers
     [ApiController]
     public class CartController : ControllerBase
     {
+        private readonly UserManager<AppUser> _userManager;
+
         private readonly ICartService _cartService;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IUserService _userService;
-
+        private readonly string _userId;
         public CartController(ICartService cartService,
-            IHttpContextAccessor httpContextAccessor,
-            IUserService userService)
+            IHttpContextAccessor httpContextAccessor, UserManager<AppUser> userManager)
         {
             _cartService = cartService;
             _httpContextAccessor = httpContextAccessor;
-            _userService = userService;
+            _userManager = userManager;
         }
-         
+
         private bool IsLoggedIn()
         {
             return _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
@@ -40,129 +43,36 @@ namespace AliExpress.Api.Controllers
 
 
 
-        //add cart
-        [HttpPost]
-        public async Task<IActionResult> AddCart([FromBody] CreateCartDto createCartDto,string userId)
+
+        private async Task<AppUser> GetCurrentUserAsync()
         {
-            if (ModelState.IsValid)
-            {
-                if(userId !=null)
-                {
-                    await _cartService.CreateCartAsync(createCartDto);
-                    return Ok();
-
-                }
-
-                else
-                {
-                    var sessionCart = _httpContextAccessor.HttpContext.Session;
-                    var existingCart = sessionCart.GetString("Cart");
-                    if (existingCart != null)
-                    {
-                        sessionCart.SetString("Cart", JsonSerializer.Serialize(createCartDto));
-                    }
-
-
-                    return Ok();
-                }
-            }
-            return BadRequest();
+            return await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
         }
 
+        //add cart
 
-
-
-
-        //[HttpPost]
-        //public async Task<IActionResult> AddCart([FromBody] CreateCartDto createCartDto)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (IsLoggedIn())
-        //        {
-
-        //            await _cartService.CreateCartAsync(createCartDto);
-        //            return Ok();
-        //        }
-        //        else
-        //        {
-        //            var sessionCart = _httpContextAccessor.HttpContext.Session;
-        //            var existingCart = sessionCart.GetString("Cart");
-        //           if(existingCart != null)
-        //            {
-        //                sessionCart.SetString("Cart", JsonSerializer.Serialize(createCartDto));
-        //            }
-
-
-        //            return Ok();
-        //        }
-        //    }
-        //    return BadRequest();
-        //}
-
-
-
-
-        [HttpPost("AddCartItem")]
+        [HttpPost]
         public async Task<IActionResult> AddCart([FromBody] CartItemDto cartItemDto)
         {
             if (ModelState.IsValid)
             {
+
                 if (IsLoggedIn())
                 {
+                    var _userId = await GetCurrentUserAsync();
+                    await _cartService.AddOrUpdateCartDtoAsync(cartItemDto, _userId);
 
-                    var userId = GetUserId();
-                    await _cartService.AddOrUpdateCartItemAsync(userId, cartItemDto);
-                    return Ok();
                 }
                 else
                 {
                     var sessionCart = _httpContextAccessor.HttpContext.Session;
-                    var existingCart = sessionCart.GetString("Cart");
-                    List<CartItemDto> cartItems;
-                    if (!string.IsNullOrEmpty(existingCart))
-                    {
-                        cartItems = JsonSerializer.Deserialize<List<CartItemDto>>(existingCart);
-                    }
-                    else
-                    {
-                        cartItems = new List<CartItemDto>();
-                    }
-                    cartItems.Add(cartItemDto);
-                    sessionCart.SetString("Cart", JsonSerializer.Serialize(cartItems));
-                    return Ok();
+                    var serializedCart = JsonSerializer.Serialize(cartItemDto);
+                    sessionCart.SetString("Cart", serializedCart);
                 }
+                return Ok();
             }
             return BadRequest();
         }
-
-
-
-        //[HttpPost]
-        //public async Task<IActionResult> AddCart([FromBody] CartItemDto cartItemDto)
-        //{
-        //    var userId = GetUserId();
-        //    if (ModelState.IsValid)
-        //    {
-
-        //        if (IsLoggedIn())
-        //        {
-
-
-        //            await _cartService.AddOrUpdateCartItemAsync(userId, cartItemDto);
-        //            return Ok();
-
-        //        }
-        //        else
-        //        {
-        //            var sessionCart = _httpContextAccessor.HttpContext.Session;
-        //            var serializedCart = JsonSerializer.Serialize(cartItemDto);
-        //            sessionCart.SetString("Cart", serializedCart);
-        //        }
-        //        return Ok();
-        //    }
-        //    return BadRequest();
-        //}
 
 
 
@@ -170,57 +80,56 @@ namespace AliExpress.Api.Controllers
         //get cart
 
         [HttpGet]
-    public async Task<IActionResult> GetCart(int cartId)
-    {
+        public async Task<IActionResult> GetCart()
+        {
             var userId = GetUserId();
-
             if (IsLoggedIn())
-        {
-                var cart = await _cartService.GetCartByUserIdAsync(userId, cartId);
-            return Ok(cart);
-        }
-        else
-        {
-            string cartSerializer = _httpContextAccessor.HttpContext.Session.GetString("Cart");
-            if (cartSerializer != null)
             {
-                var cart = JsonSerializer.Deserialize<CartDto>(cartSerializer);
+                var cart = await _cartService.GetCartDtoByUserIdAsync(userId);
                 return Ok(cart);
             }
-            return NotFound();
+            else
+            {
+                string cartSerializer = _httpContextAccessor.HttpContext.Session.GetString("Cart");
+                if (cartSerializer != null)
+                {
+                    var cart = JsonSerializer.Deserialize<CartDto>(cartSerializer);
+                    return Ok(cart);
+                }
+                return NotFound();
+            }
         }
-    }
 
-       
+        //[HttpGet("GetCartByUserId")]
+        //public async Task<IActionResult> GetCartByUserId(string userId)
+        //{
+        //    var cartDto = await _cartService.GetCartDtoByUserIdAsync(userId);
+        //    if (cartDto == null)
+        //    {
+        //        return NotFound(); 
+        //    }
+        //    return Ok(cartDto);
+        //}
 
 
-        [HttpDelete("{userId}/clear")]
-        public async Task<IActionResult> ClearCart(string userId)
+        [HttpDelete("{cartId}")]
+        public async Task<IActionResult> DeleteCart([FromRoute] int cartId)
         {
-            try
-            {
-                await _cartService.ClearCartAsync(userId);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+            await _cartService.DeleteCartDtoAsync(cartId);
+            return Ok();
         }
 
-        [HttpDelete("items/{cartItemId}")]
-        public async Task<IActionResult> RemoveCartItem(int cartItemId)
-        {
-            try
-            {
-                await _cartService.RemoveCartItemAsync(cartItemId);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
+        //[HttpPut("{cartId}")]
+        //public async Task<IActionResult> UpdateCart([FromBody] CartDto cartDto, int cartId)
+        //{
+        //    var userId = GetUserId();
+        //    if (string.IsNullOrEmpty(userId))
+        //    {
+        //        return NotFound();
+        //    }
+        //    await _cartService.UpdateCartDtoAsync(cartDto, cartId);
+        //    return Ok();
+        //}
 
 
 

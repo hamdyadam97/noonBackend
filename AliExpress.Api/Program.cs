@@ -41,7 +41,7 @@ namespace AliExpress.Api
             builder.Services.AddAutoMapper(M => M.AddProfile(typeof(MappingCategory)));
             builder.Services.AddAutoMapper(M => M.AddProfile(typeof(MappingSubCategory)));
             builder.Services.AddAutoMapper(M => M.AddProfile(typeof(MappingCart)));
-            
+            builder.Services.AddAutoMapper(M => M.AddProfile(typeof(MappingOrder)));
 
 
             //Repository
@@ -51,7 +51,7 @@ namespace AliExpress.Api
             builder.Services.AddScoped<ICartItemRepository,CartItemRepository>();
             builder.Services.AddScoped<ICartRepository, CartRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
-
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             //service
             builder.Services.AddScoped<ICategoryService ,CategoryService>();
             builder.Services.AddScoped<ISubCategoryService, SubCategoryService>();
@@ -59,7 +59,7 @@ namespace AliExpress.Api
             builder.Services.AddScoped<ICartItemService ,CartItemService>();
             builder.Services.AddScoped<ICartService,CartService>();
             builder.Services.AddScoped<IUserService, UserService>();
-
+            builder.Services.AddScoped<IOrderService, OrderService>();
 
             builder.Services.AddSession(options =>
             {

@@ -22,23 +22,21 @@ namespace AliExpress.Application.Services
             _cartItemRepository = cartItemRepository;
             _mapper = mapper;
         }
-
-        public async Task AddOrUpdateCartItemAsync(CartItemDto cartItemDto)
-        {
-            var cartItem = _mapper.Map<CartItemDto, CartItem>(cartItemDto);
-            await _cartItemRepository.AddOrUpdateCartItemAsync(cartItem);
-        }
+        //public async Task AddCartItemAsync(CartItemDto cartItemDto)
+        //{
+        //    var mappedCart = _mapper.Map<CartItemDto, CartItem>(cartItemDto);
+        //    await _cartItemRepository.AddCartItemAsync(mappedCart);
+        //}
 
         public async Task DeleteCartItemAsync(int cartItemId)
         {
-           await _cartItemRepository.DeleteCartItemAsync(cartItemId);
+            await _cartItemRepository.DeleteCartItemAsync(cartItemId);
         }
 
-        public async Task<List<CartItemDto>> GetCartItemsByCartIdAsync(int cartId)
-        {
-            var cartItems = await _cartItemRepository.GetCartItemsByCartIdAsync(cartId);
-            var mappedCartItem=  _mapper.Map<List<CartItem>, List<CartItemDto>>(cartItems);
-            return mappedCartItem;
-        }
+        //public async Task UpdateCartItemAsync(CartItemDto cartItemDto,int cartItemId)
+        //{
+        //    var mappedCart = _mapper.Map<CartItemDto, CartItem>(cartItemDto);
+        //    await _cartItemRepository.UpdateCartItemAsync(mappedCart, cartItemDto.CartItemId);
+        //}
     }
 }

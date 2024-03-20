@@ -16,48 +16,41 @@ namespace AliExpress.Api.Controllers
             _cartItemService = cartItemService;
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> AddCartItem(CartItemDto cartItemDto)
+        //{
+        //    if(ModelState.IsValid)
+        //    {
+        //        await _cartItemService.AddCartItemAsync(cartItemDto);
+        //        return Ok();
+        //    }
+        //    return BadRequest(ModelState);
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> AddOrUpdateCartItem([FromBody] CartItemDto cartItemDto)
+        //[HttpPut]
+        //public async Task<IActionResult> UpdateCartItem(CartItemDto cartItemDto, int cartItemId)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        await _cartItemService.UpdateCartItemAsync(cartItemDto, cartItemId);
+        //        return Ok();
+        //    }
+        //    return BadRequest(ModelState);
+        //}
+
+        [HttpDelete("DeleteCartItem")]
+        public async Task<IActionResult> DeleteCartItem([FromBody] int cartItemId)
         {
-            try
+            if (cartItemId == null)
             {
-                await _cartItemService.AddOrUpdateCartItemAsync(cartItemDto);
-                return Ok();
+                return NotFound();
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+
+            await _cartItemService.DeleteCartItemAsync(cartItemId);
+            return Ok();
         }
 
-        [HttpDelete("{cartItemId}")]
-        public async Task<IActionResult> DeleteCartItem(int cartItemId)
-        {
-            try
-            {
-                await _cartItemService.DeleteCartItemAsync(cartItemId);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
 
-        [HttpGet("cart/{cartId}")]
-        public async Task<IActionResult> GetCartItemsByCartId(int cartId)
-        {
-            try
-            {
-                var cartItems = await _cartItemService.GetCartItemsByCartIdAsync(cartId);
-                return Ok(cartItems);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
 
 
     }

@@ -41,15 +41,54 @@ namespace AliExpress.Application.Services
             return new ResultView<CreateUpdateDeleteProductDto> { Entity = UpdatedProductDto, IsSuccess = true, Message = "create success" };
             
         }
-      
+        //public async Task<PaginationResult<ProductViewDto>> GetAllProducts(string searchValue, int page, int pageSize)
+        //{
+        //    var products = await _productRepository.GetAllAsync(searchValue, page, pageSize);
+        //    var productsDto = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewDto>>(products, opts =>
+        //    {
+        //        opts.AfterMap((src, dest) =>
+        //        {
+        //            foreach (var product in dest)
+        //            {
+        //                // Get the first image path or set a default value if there are no images
+        //                product.Image = src.FirstOrDefault(p => p.Id == product.Id)?.Images?.FirstOrDefault()?.Url ?? "defaultImagePath";
+        //            }
+        //        });
+        //    });
+
+        //    var result = new PaginationResult<ProductViewDto>(
+        //        isSuccess: true,
+        //        message: "data return success",
+        //        entities: productsDto,
+        //        pageIndex: page,
+        //        pageSize: pageSize,
+        //        totalCount: products.Count()
+        //    );
+
+        //    return result;
+        //}
+
         public async Task<PaginationResult<ProductViewDto>> GetAllProducts(string searchValue, int page, int pageSize)
         {
             var products = await _productRepository.GetAllAsync(searchValue, page, pageSize);
-            var productsDto = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewDto>>(products);
+            var productsDto = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewDto>>(products, opts =>
+            {
+                opts.AfterMap((src, dest) =>
+                {
+                    foreach (var productDto in dest)
+                    {
+                        var product = src.FirstOrDefault(p => p.Id == productDto.Id);
+                        if (product != null)
+                        {
+                            productDto.Image = product.Images.Select(img => img.Url).ToList();
+                        }
+                    }
+                });
+            });
 
             var result = new PaginationResult<ProductViewDto>(
-                isSuccess : true,
-                message : "data return success",
+                isSuccess: true,
+                message: "data return success",
                 entities: productsDto,
                 pageIndex: page,
                 pageSize: pageSize,
@@ -58,10 +97,31 @@ namespace AliExpress.Application.Services
 
             return result;
         }
+
+
+
+        //public async Task<PaginationResult<ProductViewDto>> GetAllProducts(string searchValue, int page, int pageSize)
+        //{
+        //    var products = await _productRepository.GetAllAsync(searchValue, page, pageSize);
+        //    var productsDto = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewDto>>(products);
+
+        //    var result = new PaginationResult<ProductViewDto>(
+        //        isSuccess : true,
+        //        message : "data return success",
+        //        entities: productsDto,
+        //        pageIndex: page,
+        //        pageSize: pageSize,
+        //        totalCount: products.Count()
+        //    );
+
+        //    return result;
+        //}
         public async Task<ResultView<CreateUpdateDeleteProductDto>> GetOne(int Id)
         {
             var product=await _productRepository.GetByIdAsync(Id);
             var ProductDto = _mapper.Map<Product, CreateUpdateDeleteProductDto>(product);
+            ProductDto.Images = product.Images.Select(img => img.Url).ToList();
+
             return new ResultView<CreateUpdateDeleteProductDto> { Entity = ProductDto, IsSuccess = true, Message = "create success" };
         }
         public async Task<ResultView<CreateUpdateDeleteProductDto>> Delete(int id)

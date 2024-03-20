@@ -10,8 +10,8 @@ namespace AliExpress.Application.IServices
 {
     public interface ICartItemService
     {
-        Task<List<CartItemDto>> GetCartItemsByCartIdAsync(int cartId);
-        Task AddOrUpdateCartItemAsync(CartItemDto cartItemDto);
+        //Task AddCartItemAsync(CartItemDto cartItemDto);
+        //Task UpdateCartItemAsync(CartItemDto cartItemDto , int cartItemId);
         Task DeleteCartItemAsync(int cartItemId);
     }
 }

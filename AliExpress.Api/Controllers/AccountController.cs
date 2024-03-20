@@ -36,7 +36,7 @@ namespace AliExpress.Api.Controllers
             return code.ToString();
         }
 
-        private void SendConfirmationEmail(string email)
+        private string SendConfirmationEmail(string email)
         {
             var mailMessage = new MailMessage();
             mailMessage.From = new MailAddress("hamdyadam543@gmail.com"); // Replace with your sender email
@@ -53,6 +53,7 @@ namespace AliExpress.Api.Controllers
             smtpClient.Credentials = new NetworkCredential("hamdyadam543@gmail.com", "feri kwvj tsim jpst"); // Replace with your SMTP credentials
 
             smtpClient.Send(mailMessage);
+            return verificationCode;
         }
 
 
@@ -82,7 +83,9 @@ namespace AliExpress.Api.Controllers
                 if (result.Succeeded)
                 {
                     var token = GenerateJwtToken(newUser);
-                    SendConfirmationEmail(model.Email);
+                    //SendConfirmationEmail(model.Email);
+                    newUser.Code = SendConfirmationEmail(model.Email);
+                    await _userManager.UpdateAsync(newUser);
                     return Ok(new { Token = token, User  = newUser });
                 }
                 return BadRequest(result.Errors);
@@ -108,9 +111,82 @@ namespace AliExpress.Api.Controllers
             }
             return BadRequest(ModelState);
         }
+        [HttpPost("RestPassword")]
+        public async Task<IActionResult> RestPassword(RestPassword model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null)
+                {
+                    
+                    user.Code = SendConfirmationEmail(model.Email);
+                   await _userManager.UpdateAsync(user);
+                    return Ok(new { messge = "check your mail"});
+                }
+                else
+                {
+                    return Unauthorized("mail not found");
+                }
+            }
+            return BadRequest(ModelState);
+        }
+        [HttpPost("RestChangePassword")]
+        public async Task<IActionResult> RestChangePassword(RestChangePassword model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null && user.Code == model.Code)
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    var result = await _userManager.ResetPasswordAsync(user, token, model.Password);
+                    if (result.Succeeded)
+                    {
+                        return Ok(result);
+                    }
+                    else
+                    {
+                        // Handle password change failure
+                        return BadRequest(new { message = "Failed to change password", errors = result.Errors });
+                    }
+                }
+                else
+                {
+                    return Unauthorized("Email or verification code is incorrect");
+                }
+            }
+            return BadRequest(ModelState);
+        }
 
-
-        private string GenerateJwtToken(AppUser user)
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(ChangePassword model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null &&await _userManager.CheckPasswordAsync(user, model.OldPassword))
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    var result = await _userManager.ResetPasswordAsync(user, token, model.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return Ok( result );
+                    }
+                    else
+                    {
+                        // Handle password change failure
+                        return BadRequest(new { message = "Failed to change password", errors = result.Errors });
+                    }
+                }
+                else
+                {
+                    return Unauthorized("Email or verification code is incorrect");
+                }
+            }
+            return BadRequest(ModelState);
+        }
+        private string GenerateJwtToken(IdentityUser user)
         {
             var claims = new List<Claim>
         {

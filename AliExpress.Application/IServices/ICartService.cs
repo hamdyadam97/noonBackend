@@ -1,4 +1,5 @@
 ﻿using AliExpress.Dtos.Cart;
+using AliExpress.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace AliExpress.Application.IServices
 {
     public interface ICartService
     {
+        Task<CartDto> GetCartDtoByUserIdAsync(string userId);
+        Task createUserCart(CartDto cartDto);
+        Task AddOrUpdateCartDtoAsync(CartItemDto cartItemDto, AppUser userId);
+        //Task UpdateCartDtoAsync(int cartId);
+        Task DeleteCartDtoAsync(int cartId);
 
-        Task<CartDto> GetCartByUserIdAsync(string userId, int cartId);
-        Task AddOrUpdateCartItemAsync(string userId, CartItemDto cartItemDto);
-        Task CreateCartAsync(CreateCartDto createCartDto);
-        Task RemoveCartItemAsync(int cartItemId);
-        Task ClearCartAsync(string userId);
     }
 }

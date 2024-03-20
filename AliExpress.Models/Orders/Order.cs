@@ -8,7 +8,20 @@ namespace AliExpress.Models.Orders
 {
     public class Order:BaseEntity
     {
-       
+        public Order()
+        {
+            
+        }
+        public Order(DeliveryMethod deliveryMethod,AppUser appUser,
+            ICollection<OrderItem> items , decimal subtotal)
+        {
+            DeliveryMethod=deliveryMethod;
+            AppUser=appUser;
+            OrderItems=items;
+            Subtotal=subtotal;
+
+        }
+
         public DateTimeOffset OrderDate { get; set; } = DateTimeOffset.Now;
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
         public int DeliveryMethodId { get; set; }

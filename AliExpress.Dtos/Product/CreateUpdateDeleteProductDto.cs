@@ -92,7 +92,7 @@ namespace AliExpress.Dtos.Product
         public string? Language { get; set; }
         public string? Functionality { get; set; }
      
-        public ICollection<string> Images { get; set; }
+        public List<string> Images { get; set; }
         public ICollection<string> ProductCategories { get; set; }
         public CreateUpdateDeleteProductDto()
         {
