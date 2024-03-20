@@ -146,5 +146,16 @@ namespace Noon.MVC.Controllers
                 return View("Error");
             }
         }
+
+
+
+        //////////////////////////////////////////
+        ///
+        public async Task< ActionResult> GitCatSpecification(int id)
+        {
+            var catergory = await(_categoryService.GetOne(id));
+            var Specification = catergory.Entity.Specification;
+            return Json(Specification);
+        }
     }
 }

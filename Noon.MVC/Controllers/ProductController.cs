@@ -54,10 +54,18 @@ namespace Noon.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreateUpdateDeleteProductDto createUpdateDeleteProductDto)
         {
+            var cat = await (_categoryService.GetAllCategory());
+            ViewBag.Cat = cat;
+            ViewBag.Shipment = new Dictionary<int, string>
+                            {
+                                { 0, "Free Shipping" },
+                                { 1, "Paid Shipping" },
+                                { 2, "Express Shipping" }
+                            };
             try
             {
-                if (ModelState.IsValid)
-                {
+                //if (ModelState.IsValid)
+                //{
                     var result = await _productService.Create(createUpdateDeleteProductDto);
                     if (result.IsSuccess)
                     {
@@ -70,11 +78,11 @@ namespace Noon.MVC.Controllers
                         ViewBag.Error = result.Message;
                         return View(createUpdateDeleteProductDto);
                     }
-                }
-                else
-                {
-                    return View(createUpdateDeleteProductDto);
-                }
+                //}
+                //else
+                //{
+                //    return View(createUpdateDeleteProductDto);
+                //}
             }
             catch (Exception ex)
             {

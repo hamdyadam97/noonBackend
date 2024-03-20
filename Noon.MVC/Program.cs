@@ -43,6 +43,8 @@ namespace Noon.MVC
             app.UseSession();
             app.MapRazorPages(); ///
             app.UseAuthentication();
+            app.UseWebSockets();
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
