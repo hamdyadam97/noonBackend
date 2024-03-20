@@ -18,31 +18,32 @@ namespace None.Infrastructure
         {
             _context = context;
         }
+        public async Task<List<CartItem>> GetCartItemsByCartIdAsync(int cartId)
+        {
+            return await _context.CartItems.Where(ci => ci.CartId == cartId).ToListAsync();
+        }
 
-        //public async Task AddCartItemAsync(CartItem cartItem)
-        //{
-        // var existedCartItem = await GetCartItemByCartIdAndProductId(cartItem.CartId,cartItem.ProductId);
-        //    if (existedCartItem != null)
-        //    {
-        //        existedCartItem.Quantity += cartItem.Quantity;
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    else
-        //    {
-        //        //var existingProduct = await _context.Products.FindAsync(cartItem.ProductId);
-        //        var existingProduct = await _context.Products
-        //        .FirstOrDefaultAsync(p => p.Id == cartItem.ProductId);
+        public async Task AddOrUpdateCartItemAsync(CartItem cartItem)
+        {
+            var existingCartItem = await _context.CartItems
+                                            .FirstOrDefaultAsync(c => c.CartId == cartItem.CartId && c.ProductId == cartItem.ProductId);
 
-        //        if (existingProduct != null)
-        //        {
-        //            cartItem.Product = existingProduct;
-        //            await _context.CartItems.AddAsync(cartItem);
-        //            await _context.SaveChangesAsync();
-        //        }
-               
-        //    }
+            if (existingCartItem == null)
+            {
+                
+               _context.CartItems.Add(cartItem);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
 
-        //}
+                existingCartItem.Quantity += cartItem.Quantity;
+                _context.CartItems.Update(existingCartItem);
+                await _context.SaveChangesAsync();
+            }
+
+           
+        }
 
         public async Task DeleteCartItemAsync(int cartItemId)
         {
@@ -53,36 +54,5 @@ namespace None.Infrastructure
                 await _context.SaveChangesAsync();
             }
         }
-
-        public async Task<CartItem> GetCartItemByCartIdAndProductId(int cartId, int productId)
-        {
-            return await _context.CartItems.FirstOrDefaultAsync(ci =>ci.CartId == cartId && ci.ProductId == productId);
-        }
-
-        public async Task<CartItem> GetCartItemByIdAsync(int cartItemId)
-        {
-            return await _context.CartItems.FindAsync(cartItemId);
-        }
-
-        //public async Task UpdateCartItemAsync(CartItem cartItem, int cartItemId)
-        //{
-        //  var oldCartItem= _context.CartItems.FirstOrDefaultAsync(item => item.CartItemId == cartItemId);
-        //    if(oldCartItem != null)
-        //    {
-        //        var existedCartItem = await GetCartItemByCartIdAndProductId(cartItem.CartId, cartItem.ProductId);
-        //        if (existedCartItem.Quantity != cartItem.Quantity)
-        //        {
-        //            existedCartItem.Quantity = cartItem.Quantity;
-
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        else
-        //        {
-        //            _context.CartItems.Update(cartItem);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //    }
-           
-        //}
     }
 }

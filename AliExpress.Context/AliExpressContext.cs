@@ -29,46 +29,37 @@ namespace AliExpress.Context
         {
             modelBuilder.Entity<ProductCategory>()
                 .HasKey(pc => new { pc.ProductId, pc.CategoryId });
-            //cartItem
-            //modelBuilder.Entity<CartItem>()
-            //    .HasKey(ci =>new {ci.ProductId,ci.CartId});
-            //cartItem-cart
-            modelBuilder.Entity<CartItem>()
-              .HasOne(ci =>ci.Cart)
-              .WithMany(c =>c.CartItems)
-              .HasForeignKey(ci =>ci.CartId);
 
-            //cartitem-product
-              modelBuilder.Entity<CartItem>()
-                .HasOne(ci =>ci.Product)
-                .WithMany(p =>p.CartItems)
-                .HasForeignKey(ci =>ci.ProductId);
-
-
-            //user-cart
             modelBuilder.Entity<AppUser>()
-                .HasOne(u => u.Cart)
-                .WithOne(c => c.AppUser)
-                .HasForeignKey<Cart>(C => C.AppUserId);
+             .HasOne(u => u.Cart)
+             .WithOne(c => c.User)
+             .HasForeignKey<Cart>(c => c.UserId);
 
             modelBuilder.Entity<Cart>()
-       .HasKey(c => c.CartId);
-
-            modelBuilder.Entity<Cart>()
-       .HasMany(c => c.CartItems) 
-       .WithOne(ci => ci.Cart) 
-       .HasForeignKey(ci => ci.CartId); 
-
-            modelBuilder.Entity<Cart>()
-                .HasOne(c => c.AppUser) 
-                .WithOne(u => u.Cart) 
-                .HasForeignKey<Cart>(c => c.AppUserId);
+                .HasMany(c => c.Items)
+                .WithOne(ci => ci.Cart)
+                .HasForeignKey(ci => ci.CartId);
 
 
 
 
 
             base.OnModelCreating(modelBuilder);
+
+            //Ayed 
+            // Configure soft delete behavior for Product entity
+            modelBuilder.Entity<Category>()
+                .Property<bool>("IsDeleted");
+
+            // Apply global query filter to exclude deleted products
+            modelBuilder.Entity<Category>().HasQueryFilter(p => !EF.Property<bool>(p, "IsDeleted"));
+
+            // Configure soft delete behavior for Product entity
+            modelBuilder.Entity<Product>()
+                .Property<bool>("IsDeleted");
+
+            // Apply global query filter to exclude deleted products
+            modelBuilder.Entity<Product>().HasQueryFilter(p => !EF.Property<bool>(p, "IsDeleted"));
         }
 
     }

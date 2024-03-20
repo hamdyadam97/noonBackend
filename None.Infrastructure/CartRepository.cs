@@ -13,76 +13,40 @@ namespace None.Infrastructure
     public class CartRepository:ICartRepository
     {
         private readonly AliExpressContext _context;
-
+       
         public CartRepository(AliExpressContext context)
         {
             _context = context;
+          
         }
 
 
 
-
-        //public async Task AddCartAsync(Cart cart,int cartItemId)
-        //{
-        //    var exitedCart = await _context.Carts.Include(c => c.CartItems).
-        //        FirstOrDefaultAsync(c => c.CartId == cartItemId);
-        //    if (exitedCart == null)
-        //    {
-        //      await  _context.Carts.AddAsync(cart);
-
-        //    }
-        //    else
-        //    {
-        //        cart.TotalAmount = exitedCart.CartItems.Sum(ci => ci.Quantity * ci.Product.Price);
-
-        //    }
-        //    await _context.SaveChangesAsync();
-        //}
-
-        public async Task AddCartAsync(Cart cart)
+        public async Task<Cart> GetCartByUserIdAsync(string userId,int cartId)
         {
-            if (cart == null)
-            {
-                await _context.Carts.AddAsync(cart);
-                _context.SaveChanges();
-            }
-
+            //return await _context.Carts.Include(c => c.Items).FirstOrDefaultAsync(c => c.UserId == userId && c.CartId == cartId);
+            return await _context.Carts
+            .Include(c => c.Items)
+            .FirstOrDefaultAsync(c => c.CartId == cartId && c.UserId == userId);
         }
-
-        public async Task AddOrUpdateCartItem(CartItem cartItem, string userId)
+        public async Task AddOrUpdateCartAsync(Cart cart)
         {
-           
-            var cart = await _context.Carts
-                .Include(c => c.CartItems)
-                .FirstOrDefaultAsync(c => c.CartId == cartItem.CartId);
-            if(cart == null)
+            if (cart.CartId == 0)
             {
-                var NewCart=new Cart();
-                NewCart.AppUser.Id = userId;
-                _context.Carts.Add(NewCart);
-            }
-       
-            var existingCartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == cartItem.ProductId);
-            if (existingCartItem != null)
-            {
-             
-                existingCartItem.Quantity += cartItem.Quantity;
-                existingCartItem.Product.Price = cartItem.Product.Price; 
-
-                _context.CartItems.Update(existingCartItem);
+                cart.TotalAmount = CalculateTotalAmount(cart.Items);
+                _context.Carts.Add(cart);
             }
             else
             {
-              
-                cart.CartItems.Add(cartItem);
+                cart.TotalAmount = CalculateTotalAmount(cart.Items);
+                _context.Carts.Update(cart);
             }
 
-         
-            cart.TotalAmount = cart.CartItems.Sum(ci => ci.Quantity * ci.Product.Price);
+            
+          
 
             await _context.SaveChangesAsync();
         }
-
         public async Task DeleteCartAsync(int cartId)
         {
             var cart = await _context.Carts.FindAsync(cartId);
@@ -93,36 +57,31 @@ namespace None.Infrastructure
             }
         }
 
-        public async Task<Cart> GetCartByIdAsync(int cartId)
+        private decimal CalculateTotalAmount(List<CartItem> items)
         {
-            return await _context.Carts
-                .Include(c => c.CartItems)
-                .ThenInclude(ci => ci.Product)
-                .FirstOrDefaultAsync(c => c.CartId == cartId);
+            
+            decimal totalAmount = 0;
+
+            foreach (var item in items)
+            {
+                var product = _context.Products.FirstOrDefault(p => p.Id == item.ProductId);
+                totalAmount += item.Quantity * product.Price;
+            }
+
+            return totalAmount;
         }
 
-        public async Task<Cart> GetCartByUserId(string userId)
+        public async Task DeleteCartItemAsync(int cartItemId)
         {
-            return await _context.Carts
-                .Include(c => c.CartItems)
-                .ThenInclude(ci => ci.Product)
-                .FirstOrDefaultAsync(c => c.AppUserId == userId);
+           var cartItem = await _context.CartItems.FindAsync(cartItemId);
+             _context.CartItems.Remove(cartItem);
+          await _context.SaveChangesAsync();
         }
 
-
-      
-
-
-
-        //public async Task UpdateCartAsync(Cart cart , int cartId)
-        //{
-        //    var oldCart = await _context.Carts.FirstOrDefaultAsync(c => c.CartId == cartId);
-        //    if(oldCart != null)
-        //    {
-        //        _context.Carts.Update(cart);
-        //        await _context.SaveChangesAsync();
-        //    }
-
-        //}
+        public async Task AddCartToUserAsync(Cart cart)
+        {
+             await _context.Carts.AddAsync(cart);
+            await _context.SaveChangesAsync();
+        }
     }
 }
