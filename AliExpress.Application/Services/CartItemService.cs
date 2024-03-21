@@ -30,7 +30,7 @@ namespace AliExpress.Application.Services
 
         public async Task DeleteCartItemAsync(int cartItemId)
         {
-           await _cartItemRepository.DeleteCartItemAsync(cartItemId);
+            await _cartItemRepository.DeleteCartItemAsync(cartItemId);
         }
 
         //public async Task UpdateCartItemAsync(CartItemDto cartItemDto,int cartItemId)

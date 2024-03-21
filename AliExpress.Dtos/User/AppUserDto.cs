@@ -9,7 +9,7 @@ namespace AliExpress.Dtos.User
 {
     public class AppUserDto
     {
-     public string Id { get; set; }
+     public string UserId { get; set; }
         public CartDto Cart { get; set; }
     }
 }

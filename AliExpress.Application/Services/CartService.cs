@@ -28,7 +28,7 @@ namespace AliExpress.Application.Services
         public async Task AddOrUpdateCartDtoAsync(CartItemDto cartItemDto, AppUser userId)
         {
             var mappedCart = _mapper.Map<CartItemDto, CartItem>(cartItemDto);
-            await _cartRepository.AddOrUpdateCartItem(mappedCart,userId);
+            await _cartRepository.AddOrUpdateCartItem(mappedCart, userId);
         }
 
 
@@ -46,14 +46,14 @@ namespace AliExpress.Application.Services
 
         public async Task<CartDto> GetCartDtoByUserIdAsync(string userId)
         {
-            var cart=await _cartRepository.GetCartByUserId(userId);
+            var cart = await _cartRepository.GetCartByUserId(userId);
             var cartdtoMapped = _mapper.Map<Cart, CartDto>(cart);
             return cartdtoMapped;
         }
 
-      
 
-      
+
+
 
 
     }

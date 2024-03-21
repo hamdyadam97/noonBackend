@@ -15,7 +15,7 @@ namespace AliExpress.Application.Contract
         //Task AddCartAsync(Cart cart,int cartItemId);
         //Task UpdateCartAsync(Cart cart ,int cartId);
         //Task UpdateCartAsync( int cartId, int cartItemId);
-        Task AddOrUpdateCartItem(CartItem cartItem , AppUser userId);
+        Task AddOrUpdateCartItem(CartItem cartItem, AppUser userId);
         Task DeleteCartAsync(int cartId);
     }
 }

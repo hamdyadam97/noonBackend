@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace None.Infrastructure
 {
-    public class CartRepository:ICartRepository
+    public class CartRepository : ICartRepository
     {
         private readonly AliExpressContext _context;
 
@@ -174,7 +174,7 @@ namespace None.Infrastructure
         }
 
 
-      
+
 
 
 

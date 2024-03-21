@@ -13,7 +13,7 @@ namespace AliExpress.Dtos.Product
         public string Title { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
-        public int quantity { get; set; }
+        public int Quantity { get; set; }
         public string ShippingMethod { get; set; }
         public string? PlaceOfOrigin { get; set; }
         public string? ModelNumber { get; set; }
