@@ -36,6 +36,13 @@ namespace AliExpress.Application.Services
             await _orderRepository.DeleteAsync(order);
          }
 
+        public async Task<IEnumerable<OrderReturnDto>> GetAllOrdersAsync()
+        {
+           var orders=await _orderRepository.GetAllAsync();
+           var mappedOrders=_mapper.Map<IEnumerable<Order>,IEnumerable<OrderReturnDto>>(orders);
+            return mappedOrders;
+        }
+
         public async Task<IEnumerable<DeliveryMethod>> GetDeliveryMethods()
         {
             var deliveryMethods = await _orderRepository.GetDeliveryMethods();

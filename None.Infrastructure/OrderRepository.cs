@@ -53,6 +53,12 @@ namespace None.Infrastructure
             await _context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<Order>> GetAllAsync()
+        {
+            var orders=await _context.Orders.Include(o => o.OrderItemId).ToListAsync();
+            return orders;
+        }
+
         public async Task<AppUser> GetAppUserAsync()
         {
             var appUser=await _context.Users.FirstOrDefaultAsync();

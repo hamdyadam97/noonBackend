@@ -23,7 +23,7 @@ namespace AliExpress.Application.Mapper
 
             CreateMap<AppUser, AppUserDto>().ReverseMap();
             CreateMap<Order,OrderDto>().ReverseMap();
-
+          
             CreateMap<OrderItem, OrderItemDto>()
             .ForMember(d => d.ProductName, o => o.MapFrom(s => s.Product.Title))
             .ForMember(d => d.PictureUrl, o => o.MapFrom(s => s.Product.Images.Select(img =>img.Url))).ReverseMap();

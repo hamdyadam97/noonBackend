@@ -33,6 +33,20 @@ namespace AliExpress.Api.Controllers
             return BadRequest();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetOrdersAsync()
+        {
+           var orders= await _orderService.GetAllOrdersAsync();
+            if(orders != null)
+            {
+                return Ok();
+            }
+           return NoContent();
+        }
+
+
+
+
       [HttpDelete("delete/{orderId}")]
     public async Task<ActionResult> DeleteOrderAsync(int orderId)
     {
