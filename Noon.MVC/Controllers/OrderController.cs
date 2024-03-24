@@ -29,7 +29,7 @@ namespace Noon.MVC.Controllers
             return NotFound();
         }
 
-        [HttpPatch]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, OrderStatusDto orderStatusDto)
         { if(id != orderStatusDto.Id)
@@ -40,11 +40,11 @@ namespace Noon.MVC.Controllers
             {
                 try
                 {
-                    var order = await _orderService.GetOrderByIdAsync(orderStatusDto.Id);
-                    if(id != orderStatusDto.Id)
-                    {
-                        return NotFound();
-                    }
+                    //var order = await _orderService.GetOrderByIdAsync(orderStatusDto.Id);
+                    //if(id != orderStatusDto.Id)
+                    //{
+                    //    return NotFound();
+                    //}
                     await _orderService.UpdateOrderByAdminAsync(id, orderStatusDto);
                     return RedirectToAction(nameof(Index));
                     

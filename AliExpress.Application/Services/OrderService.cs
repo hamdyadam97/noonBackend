@@ -3,6 +3,7 @@ using AliExpress.Application.IServices;
 using AliExpress.Dtos.Order;
 using AliExpress.Models.Orders;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,10 +50,10 @@ namespace AliExpress.Application.Services
             return deliveryMethods;
         }
 
-        public async Task<OrderReturnDto> GetOrderByIdAsync(int orderId)
+        public async Task<OrderStatusDto> GetOrderByIdAsync(int orderId)
         {
             var order = await _orderRepository.GetOrderByIdAsync(orderId);
-            var mappedOrder = _mapper.Map<Order, OrderReturnDto>(order);
+            var mappedOrder = _mapper.Map<Order, OrderStatusDto>(order);
             return mappedOrder;
         }
 
@@ -75,18 +76,22 @@ namespace AliExpress.Application.Services
 
         public async Task UpdateOrderByAdminAsync(int orderId, OrderStatusDto orderStatusDto)
         {
-            var order = await _orderRepository.GetOrderByIdAsync(orderId);
-            order.Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), orderStatusDto.Status);
-
-            await _orderRepository.UpdateAsync(order);
+            //var order = await _orderRepository.GetOrderByIdAsync(orderId);
+            //order.Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), orderStatusDto.Status);
+            var mappedOrder = _mapper.Map<OrderStatusDto, Order>(orderStatusDto);
+            await _orderRepository.UpdateAsync(mappedOrder);
+            //await _orderRepository.UpdateAsync(order);
         }
+        
 
-        //public async Task UpdateOrderByAdminAsync(int orderId, OrderReturnDto orderReturnDto)
-        //{
-        //    var order = await _orderRepository.GetOrderByIdAsync(orderId);
-        //    order.Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), orderReturnDto.Status);
 
-        //    await _orderRepository.UpdateAsync(order);
-        //}
+
+            //public async Task UpdateOrderByAdminAsync(int orderId, OrderReturnDto orderReturnDto)
+            //{
+            //    var order = await _orderRepository.GetOrderByIdAsync(orderId);
+            //    order.Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), orderReturnDto.Status);
+
+            //    await _orderRepository.UpdateAsync(order);
+            //}
+        }
     }
-}

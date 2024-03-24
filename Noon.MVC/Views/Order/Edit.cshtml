@@ -9,6 +9,8 @@
 <form asp-action="Edit" asp-route-id="@Model.Id">
     <div asp-validation-summary="All" class="text-danger"></div>
     <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="AppUserId" />
+    <input type="hidden" asp-for="DeliveryMethodId" />
     <div class="form-group">
         <label asp-for="Status" class="control-label"></label>
         <select asp-for="Status" class="form-control">
