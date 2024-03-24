@@ -24,23 +24,46 @@ namespace AliExpress.Application.Services
             _productRepository = productRepository;
             _mapper = mapper;
         }
+
         public async Task<ResultView<CreateUpdateDeleteProductDto>> Create(CreateUpdateDeleteProductDto productDto)
         {
             var product = _mapper.Map<CreateUpdateDeleteProductDto, Product>(productDto);
-            var NewProduct= await _productRepository.CreateAsync(product);
-            var CreatedProductDto = _mapper.Map<Product, CreateUpdateDeleteProductDto>(NewProduct);
-            return new ResultView<CreateUpdateDeleteProductDto> { Entity = CreatedProductDto, IsSuccess = true, Message = "create success" };
-            //return CreatedProductDto;
+            var createdProduct = await _productRepository.CreateAsync(product);
+            var createdProductDto = _mapper.Map<Product, CreateUpdateDeleteProductDto>(createdProduct);
+            return new ResultView<CreateUpdateDeleteProductDto> { Entity = createdProductDto, IsSuccess = true, Message = "Create success" };
         }
-
+        //public async Task<ResultView<CreateUpdateDeleteProductDto>> Create(CreateUpdateDeleteProductDto productDto)
+        //{
+        //    var product = _mapper.Map<CreateUpdateDeleteProductDto, Product>(productDto);
+        //    var NewProduct= await _productRepository.CreateAsync(product);
+        //    var CreatedProductDto = _mapper.Map<Product, CreateUpdateDeleteProductDto>(NewProduct);
+        //    return new ResultView<CreateUpdateDeleteProductDto> { Entity = CreatedProductDto, IsSuccess = true, Message = "create success" };
+        //    //return CreatedProductDto;
+        //}
         public async Task<ResultView<CreateUpdateDeleteProductDto>> Update(CreateUpdateDeleteProductDto productDto)
         {
-            var product = _mapper.Map<CreateUpdateDeleteProductDto, Product>(productDto);
-            var NewProduct = await _productRepository.UpdateAsync(product);
-            var UpdatedProductDto = _mapper.Map<Product, CreateUpdateDeleteProductDto>(NewProduct);
-            return new ResultView<CreateUpdateDeleteProductDto> { Entity = UpdatedProductDto, IsSuccess = true, Message = "create success" };
-            
+            var existingProduct = await _productRepository.GetByIdAsync(productDto.Id);
+            if (existingProduct == null)
+            {
+                // Handle the case where the product with the given Id doesn't exist
+                return new ResultView<CreateUpdateDeleteProductDto> { IsSuccess = false, Message = "Product not found." };
+            }
+
+            _mapper.Map(productDto, existingProduct); // Update existing product with new data
+
+            await _productRepository.UpdateAsync(existingProduct);
+
+            return new ResultView<CreateUpdateDeleteProductDto> { IsSuccess = true, Message = "Product updated successfully." };
         }
+
+        //public async Task<ResultView<CreateUpdateDeleteProductDto>> Update(CreateUpdateDeleteProductDto productDto)
+        //{
+        //    var product = _mapper.Map<CreateUpdateDeleteProductDto, Product>(productDto);
+        //    var NewProduct = await _productRepository.UpdateAsync(product);
+        //    var UpdatedProductDto = _mapper.Map<Product, CreateUpdateDeleteProductDto>(NewProduct);
+        //    return new ResultView<CreateUpdateDeleteProductDto> { Entity = UpdatedProductDto, IsSuccess = true, Message = "create success" };
+
+        //}
         //public async Task<PaginationResult<ProductViewDto>> GetAllProducts(string searchValue, int page, int pageSize)
         //{
         //    var products = await _productRepository.GetAllAsync(searchValue, page, pageSize);

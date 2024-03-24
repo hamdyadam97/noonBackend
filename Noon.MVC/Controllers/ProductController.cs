@@ -3,6 +3,7 @@ using AliExpress.Application.Services;
 using AliExpress.Dtos.Product;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 //using testNoon.Models;
 
 namespace Noon.MVC.Controllers
@@ -37,7 +38,8 @@ namespace Noon.MVC.Controllers
             return View();
         }
         // GET: ProductController/Create
-        public async Task<ActionResult> Create()
+        public async Task<ActionResult> Create(List<IFormFile> files)
+
         {
             var cat = await(_categoryService.GetAllCategory());
             ViewBag.Cat = cat;
@@ -52,7 +54,7 @@ namespace Noon.MVC.Controllers
         // POST: ProductController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CreateUpdateDeleteProductDto createUpdateDeleteProductDto)
+        public async Task<ActionResult> Create(CreateUpdateDeleteProductDto createUpdateDeleteProductDto, List<IFormFile> files)
         {
             var cat = await (_categoryService.GetAllCategory());
             ViewBag.Cat = cat;
@@ -66,13 +68,58 @@ namespace Noon.MVC.Controllers
             {
                 //if (ModelState.IsValid)
                 //{
+                    //var result = await _productService.Create(createUpdateDeleteProductDto);
                     var result = await _productService.Create(createUpdateDeleteProductDto);
-                    if (result.IsSuccess)
+                if (result.IsSuccess)
                     {
-                        
-                        TempData["id"] = result.Entity.Id;//send to upload iamge action 
-                        return RedirectToAction("Upload");
+                    var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                    var uploadsFolder = Path.Combine(_environment.WebRootPath, "photos");
+
+                    // Ensure the directory exists, if not, create it
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
                     }
+
+                    List<string> uploadedFilePaths = new List<string>();
+
+                    foreach (var file in files)
+                    {
+                        if (file == null || file.Length == 0)
+                        {
+                            ModelState.AddModelError("files", "One or more files are empty.");
+                            return View();
+                        }
+
+                        var fileExtension = Path.GetExtension(file.FileName).ToLower();
+
+                        if (!allowedExtensions.Contains(fileExtension))
+                        {
+                            ModelState.AddModelError("files", "Only image files (jpg, jpeg, png, gif) are allowed.");
+                            return View();
+                        }
+
+                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+
+                        uploadedFilePaths.Add(filePath.Replace(_environment.WebRootPath, "").Replace("\\", "\\\\"));
+                    }
+
+                    #region stroe images lsit in database
+                    //int id = (int)TempData["id"];
+                    var product = result.Entity;
+                    product.Images = uploadedFilePaths;
+                    await _productService.Update(product);
+                    
+                    #endregion
+                    TempData["id"] = product.Id; //send to upload image action 
+                    return View();
+                }
                     else
                     {
                         ViewBag.Error = result.Message;
@@ -100,11 +147,14 @@ namespace Noon.MVC.Controllers
             return View();
 
         }
+
+        
+
         [HttpPost]
         public async Task<IActionResult> Upload(List<IFormFile> files)
         {
 
-            #region Upload Image
+            #region s
             var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
             var uploadsFolder = Path.Combine(_environment.WebRootPath, "photos");
 
