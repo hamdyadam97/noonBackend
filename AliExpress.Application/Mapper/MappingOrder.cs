@@ -21,6 +21,9 @@ namespace AliExpress.Application.Mapper
            .ForMember(d => d.Total, o => o.MapFrom(s => s.GetTotal()))
            .ReverseMap();
 
+            CreateMap<Order, OrderStatusDto>().ReverseMap();
+
+
             CreateMap<AppUser, AppUserDto>().ReverseMap();
             CreateMap<Order,OrderDto>().ReverseMap();
           
