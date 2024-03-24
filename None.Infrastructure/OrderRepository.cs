@@ -83,7 +83,7 @@ namespace None.Infrastructure
 
         public async Task<Order> GetOrderByIdAsync(int orderId)
         {
-            var order = await _context.Orders.FindAsync(orderId);
+            var order = await _context.Orders.Include(o => o.DeliveryMethod).FirstOrDefaultAsync(o => o.Id == orderId);
             return order;
             //var order = await _context.Orders
             //                  .Include(o => o.DeliveryMethod)
