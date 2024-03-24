@@ -49,6 +49,13 @@ namespace AliExpress.Application.Services
             return deliveryMethods;
         }
 
+        public async Task<OrderReturnDto> GetOrderByIdAsync(int orderId)
+        {
+            var order = await _orderRepository.GetOrderByIdAsync(orderId);
+            var mappedOrder = _mapper.Map<Order, OrderReturnDto>(order);
+            return mappedOrder;
+        }
+
         public async Task<OrderReturnDto> GetOrderByUserIdAsync(string userId)
         {
             var order=await _orderRepository.GetByUserIdAsync(userId);
@@ -64,6 +71,13 @@ namespace AliExpress.Application.Services
                 var mappedOrder = _mapper.Map<OrderReturnDto, Order>(orderReturnDto);
                 await  _orderRepository.UpdateAsync(mappedOrder);
             }
+        }
+
+        public async Task UpdateOrderByAdminAsync(int orderId, OrderReturnDto orderReturnDto)
+        {
+            var order = await _orderRepository.GetOrderByIdAsync(orderId);
+            order.Status=(OrderStatus) Enum.Parse(typeof(OrderStatus), orderReturnDto.Status);
+            await _orderRepository.UpdateAsync(order);
         }
     }
 }
