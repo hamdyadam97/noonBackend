@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace AliExpress.Application.Contract
 {
-    public interface IProductRepository
+    public interface IProductRepository :IRepository<Product, int>
     {
-        Task<IEnumerable<Product>> GetAll(string searchValue,int page,int pageSize);
+        Task<IEnumerable<Product>> GetAllAsync(string searchValue,int page,int pageSize);
         Task<int> CoutProducts();
     }
 }

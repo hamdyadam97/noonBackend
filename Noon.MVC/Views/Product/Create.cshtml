@@ -1,0 +1,189 @@
+﻿@model AliExpress.Dtos.Product.CreateUpdateDeleteProductDto
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_navbarLayout";
+}
+@{
+    ViewData["Title"] = "Create";
+    List<string> names = new List<string>() { "Ayed", "Hamdy", "Haidy" };
+    // Retrieve categories from ViewBag and create a SelectList
+    SelectList categoryList = null;
+    if (ViewBag.Cat != null)
+    {
+        categoryList = new SelectList(ViewBag.Cat, "Id", "Name");
+    }
+
+    // Retrieve shipment methods from ViewBag and create a SelectList
+    var shipmentMethods = ((Dictionary<int, string>)ViewBag.Shipment).ToList();
+    var shipmentMethodList = new SelectList(shipmentMethods, "Key", "Value");
+
+    // Define gender options and create a SelectList
+    var genderOptions = new Dictionary<int, string>
+    {
+        {0, "NoN"},
+        {1, "Male"},
+        {2, "Female"}
+    };
+    var genderList = new SelectList(genderOptions.ToList(), "Key", "Value");
+}
+
+<h1>Create</h1>
+
+<h4>CreateUpdateDeleteProductDto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="ShippingMethod" class="control-label"></label>
+                <select asp-for="ShippingMethod" class="form-control" asp-items="shipmentMethodList"></select>
+                <span asp-validation-for="ShippingMethod" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label>
+                <select asp-for="Gender" class="form-control" asp-items="@genderList"></select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Category" class="control-label">Category Name</label>
+                <select id="category" class="form-control" asp-for="Category" asp-items="@categoryList">
+                    <option value="1">NoN</option>  
+                </select>
+                <span asp-validation-for="Category" style="color:red"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Title" class="control-label">Title Product</label>
+                <input id="title" class="form-control" asp-for="Title" >
+                <span asp-validation-for="Title" style="color:red"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Quantity" class="control-label">quantity Product</label>
+                <input id="quantity" class="form-control" asp-for="Quantity">
+                <span asp-validation-for="Quantity" style="color:red"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">Description Product</label>
+                <input id="description" class="form-control" asp-for="Description">
+                <span asp-validation-for="Description" style="color:red"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Price" class="control-label">Price Product</label>
+                <input id="price" class="form-control" asp-for="Price">
+                <span asp-validation-for="Price" style="color:red"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="files">Select Image(s):</label>
+                <input type="file" name="files" id="files" class="form-control-file" multiple />
+                <div id="file-error" class="invalid-feedback d-block text-danger"></div>
+                @if (ViewData.ModelState["files"] != null && ViewData.ModelState["files"].Errors.Count > 0)
+                {
+                    <div class="invalid-feedback d-block">@ViewData.ModelState["files"].Errors.FirstOrDefault().ErrorMessage</div>
+                }
+            </div>
+
+            <div id="specifications"></div>
+
+            <div id="output"></div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <span style="color:red">@ViewBag.Error</span>
+</div
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script>
+    function validateForm() {
+        var files = document.getElementById('files').files;
+        var errorDiv = document.getElementById('file-error');
+
+        if (files.length === 0) {
+            errorDiv.innerText = 'Please select at least one file.';
+            return false;
+        } else {
+            errorDiv.innerText = '';
+            return true;
+        }
+    }
+</script>
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+<script>
+    // Get reference to the category dropdown list
+    const categoryDropdown = document.getElementById('category');
+
+    // Event listener for when the category dropdown list selection changes
+    categoryDropdown.addEventListener('change', function () {
+        // Get the selected value (ID)
+        const selectedCategoryId = categoryDropdown.value;
+
+        // Make an AJAX request to the action with selected value (ID)
+        $.ajax({
+            url: '/Category/GitCatSpecification', // Modify the URL with your controller and action name
+            type: 'GET',
+            data: { id: selectedCategoryId }, // Pass the selected category ID
+            success: function (response) {
+                // Handle the response here
+                console.log('Response from server:', response);
+
+                // Clear previous content
+                $('#specifications').empty();
+
+                // Check if specifications exist in the response
+                if (response && response.length > 0) {
+                    // Generate form elements for each specification
+                    response.forEach(function (specification) {
+                        const formGroup = $('<div class="form-group"></div>');
+                        const label = $('<label class="control-label"></label>').text(specification);
+                        const input = $('<input class="form-control" />').attr({
+                            type: 'text',
+                            name: 'specification', // Set the name attribute if needed
+                            value: '', // Set the initial value if needed
+                        });
+                        const validationSpan = $('<span class="text-danger"></span>');
+
+                        // Append elements to form group
+                        formGroup.append(label, input, validationSpan);
+
+                        // Append form group to specifications div
+                        $('#specifications').append(formGroup);
+                    });
+                } else {
+                    // Display "No items" if specification list is null or empty
+                    $('#specifications').append('<p>No items</p>');
+                }
+            },
+            error: function (xhr, status, error) {
+                // Handle errors
+                console.error('Error:', error);
+            }
+        });
+    });
+</script>
+
+}

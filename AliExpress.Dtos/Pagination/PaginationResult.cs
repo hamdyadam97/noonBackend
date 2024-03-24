@@ -8,18 +8,21 @@ namespace AliExpress.Dtos.Pagination
 {
     public class PaginationResult<T>
     {
-       public IEnumerable<T> Entities { get; set; }
+        public IEnumerable<T> Entities { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
         public int TotalCount { get; set; }
-        public PaginationResult(List<T> entities,int page,int pageSize,int count)
-        {
-            Entities = entities;
-            PageIndex = page;
-            PageSize = pageSize;
-            TotalCount = count;
-            
-        }
+        public bool IsSuccess { get; set; }
+        public string Message { get; set; }
 
+        public PaginationResult(IEnumerable<T> entities, int pageIndex, int pageSize, int totalCount,bool isSuccess,string message)
+        {
+            IsSuccess = isSuccess;
+            Message = message;
+            Entities = entities;
+            PageIndex = pageIndex;
+            PageSize = pageSize;
+            TotalCount = totalCount;
+        }
     }
 }

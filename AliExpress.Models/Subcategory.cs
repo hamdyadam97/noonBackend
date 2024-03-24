@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace AliExpress.Models
 {
-    public class Subcategory:BaseEntity
+    public class Subcategory:BaseEntity, IDeletedEntity
     {
 
         public string Name { get; set; }
+        public bool IsDeleted { get; set; } = false;
         public int CategoryId { get; set; }
 
         // Navigation property

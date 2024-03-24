@@ -1,5 +1,6 @@
 ﻿using AliExpress.Dtos.Category;
 using AliExpress.Dtos.Product;
+using AliExpress.Dtos.ViewResult;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,9 @@ namespace AliExpress.Application.IServices
     public interface ICategoryService
     {
         Task<IEnumerable<CategoryDto>> GetAllCategory();
-        Task<CategoryDto> Create(CategoryDto category);
-        Task<CategoryDto> Update(CategoryDto category);
-        Task<CategoryDto> Delete(CategoryDto category);
-        Task<CategoryDto> GetOne(int Id);
+        Task<ResultView<CategoryDto>> Create(CategoryDto categoryDto);
+        Task<ResultView<CategoryDto>> Update(CategoryDto categoryDto);
+        Task<ResultView<CategoryDto>> Delete(int id);
+        Task<ResultView<CategoryDto>> GetOne(int Id);
     }
 }
