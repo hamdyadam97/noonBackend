@@ -55,7 +55,7 @@ namespace None.Infrastructure
 
         public async Task<IEnumerable<Order>> GetAllAsync()
         {
-            var orders=await _context.Orders.Include(o => o.OrderItemId).ToListAsync();
+            var orders=await _context.Orders.Include(o => o.DeliveryMethod).ToListAsync();
             return orders;
         }
 
@@ -85,6 +85,11 @@ namespace None.Infrastructure
         {
             var order = await _context.Orders.FindAsync(orderId);
             return order;
+            //var order = await _context.Orders
+            //                  .Include(o => o.DeliveryMethod)
+            //                  .Include(o => o.OrderItems)
+            //                  .FirstOrDefaultAsync(o => o.Id == orderId);
+            //return order;
         }
 
         public async Task UpdateAsync(Order order)
