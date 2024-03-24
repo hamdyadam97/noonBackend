@@ -39,7 +39,7 @@ namespace AliExpress.Api.Controllers
            var orders= await _orderService.GetAllOrdersAsync();
             if(orders != null)
             {
-                return Ok();
+                return Ok(orders);
             }
            return NoContent();
         }
