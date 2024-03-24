@@ -83,13 +83,13 @@ namespace None.Infrastructure
 
         public async Task<Order> GetOrderByIdAsync(int orderId)
         {
-            var order = await _context.Orders.FindAsync(orderId);
-            return order;
-            //var order = await _context.Orders
-            //                  .Include(o => o.DeliveryMethod)
-            //                  .Include(o => o.OrderItems)
-            //                  .FirstOrDefaultAsync(o => o.Id == orderId);
+            //var order = await _context.Orders.FindAsync(orderId);
             //return order;
+            var order = await _context.Orders
+                              .Include(o => o.DeliveryMethod)
+                              .Include(o => o.OrderItems)
+                              .FirstOrDefaultAsync(o => o.Id == orderId);
+            return order;
         }
 
         public async Task UpdateAsync(Order order)

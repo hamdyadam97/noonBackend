@@ -29,7 +29,7 @@ namespace Noon.MVC.Controllers
             return NotFound();
         }
 
-        [HttpPost]
+        [HttpPatch]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id,OrderReturnDto orderReturnDto)
         { if(id != orderReturnDto.Id)
