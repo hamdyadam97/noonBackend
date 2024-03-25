@@ -80,16 +80,12 @@ namespace AliExpress.Application.Services
 
             if (existingOrder != null)
             {
-
-               
                 if (orderReturnDto.Status== "Payment Received")
                 {
                     existingOrder.Status = OrderStatus.PaymentRecieved;
                 }
                 else if(orderReturnDto.Status == "Payment  Failed") {
                     existingOrder.Status = OrderStatus.PaymentFailed;
-
-
                 }
                 else
                 {

@@ -16,6 +16,15 @@
     <label asp-for="AppUser.City" class="control-label"></label>
     <p>@Model.AppUser.City</p>
 </div>
+@{
+    foreach(var item in Model.OrderItems)
+    {
+        <div class="form-group">
+            <label asp-for="OrderItems" class="control-label"></label>
+            <p>@item.ProductId</p>
+        </div>
+    }
+}
 
 <!-- Display Total -->
 <div class="form-group">

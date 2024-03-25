@@ -42,11 +42,11 @@
                 <span asp-validation-for="ShippingMethod" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="Gender" class="control-label"></label>
                 <select asp-for="Gender" class="form-control" asp-items="@genderList"></select>
                 <span asp-validation-for="Gender" class="text-danger"></span>
-            </div>
+            </div> *@
 
             <div class="form-group">
                 <label asp-for="Category" class="control-label">Category Name</label>
@@ -162,7 +162,7 @@
                         const label = $('<label class="control-label"></label>').text(specification);
                         const input = $('<input class="form-control" />').attr({
                             type: 'text',
-                            name: 'specification', // Set the name attribute if needed
+                            name: text(specification), // Set the name attribute if needed
                             value: '', // Set the initial value if needed
                         });
                         const validationSpan = $('<span class="text-danger"></span>');

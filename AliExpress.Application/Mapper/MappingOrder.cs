@@ -14,13 +14,7 @@ namespace AliExpress.Application.Mapper
     {
         public MappingOrder()
         {
-            // CreateMap<Order, OrderReturnDto>()
-            //.ForMember(d => d.Status, o => o.MapFrom(s => s.Status.ToString()))
-            //.ForMember(d => d.DeliveryMethod, o => o.MapFrom(s => s.DeliveryMethod.Name))
-            //.ForMember(d => d.DeliveryMethodCost, o => o.MapFrom(s => s.DeliveryMethod.Cost))
-            //.ForMember(d => d.Total, o => o.MapFrom(s => s.GetTotal()))
-            //.ReverseMap();
-            CreateMap<Order, OrderReturnDto>()
+         CreateMap<Order, OrderReturnDto>()
         .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
         .ForMember(dest => dest.DeliveryMethod, opt => opt.MapFrom(src => src.DeliveryMethod.Name))
         .ForMember(dest => dest.DeliveryMethodCost, opt => opt.MapFrom(src => src.DeliveryMethod.Cost))
@@ -29,13 +23,7 @@ namespace AliExpress.Application.Mapper
         .ForMember(dest => dest.AppUserId, opt => opt.MapFrom(src => src.AppUserId))
         .ForMember(dest => dest.AppUser, opt => opt.MapFrom(src => src.AppUser))
         .ReverseMap();
-            //CreateMap<Order, OrderReturnDto>()
-            //   .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
-            //   .ForMember(dest => dest.DeliveryMethod, opt => opt.MapFrom(src => src.DeliveryMethod.Name))
-            //   .ForMember(dest => dest.DeliveryMethodCost, opt => opt.MapFrom(src => src.DeliveryMethod.Cost))
-            //   .ForMember(dest => dest.OrderItems, opt => opt.MapFrom(src => src.OrderItems))
-            //   .ForMember(dest => dest.Total, opt => opt.MapFrom(src => src.GetTotal()))
-            //   .ReverseMap();
+            
 
             CreateMap<Order, OrderStatusDto>().ReverseMap();
 
