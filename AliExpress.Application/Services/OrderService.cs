@@ -73,13 +73,14 @@ namespace AliExpress.Application.Services
             }
         }
 
-        public async Task UpdateOrderByAdminAsync(int orderId, OrderStatusDto orderStatusDto)
-        {
-            var order = await _orderRepository.GetOrderByIdAsync(orderId);
-            order.Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), orderStatusDto.Status);
-
-            await _orderRepository.UpdateAsync(order);
-        }
+        //public async Task UpdateOrderByAdminAsync(int orderId, OrderStatusDto OrderStatusDto)
+        //{
+        //    var order = await _orderRepository.GetOrderByIdAsync(orderId);
+        //    //order.Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), orderStatusDto.Status);
+        //    var mappedOrder = _mapper.Map<OrderStatusDto, Order>(OrderStatusDto);
+        //    await _orderRepository.UpdateAsync(mappedOrder);
+        //    //await _orderRepository.UpdateAsync(order);
+        //}
 
         //public async Task UpdateOrderByAdminAsync(int orderId, OrderReturnDto orderReturnDto)
         //{

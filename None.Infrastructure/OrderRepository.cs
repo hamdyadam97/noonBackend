@@ -55,7 +55,13 @@ namespace None.Infrastructure
 
         public async Task<IEnumerable<Order>> GetAllAsync()
         {
-            var orders=await _context.Orders.Include(o => o.DeliveryMethod).ToListAsync();
+            //var orders=await _context.Orders.Include(o => o.DeliveryMethod).ToListAsync();
+            //return orders;
+            var orders = await _context.Orders
+                .Include(o => o.DeliveryMethod)
+                .Include(o => o.OrderItems)
+                .Include(o => o.AppUser)
+                .ToListAsync();
             return orders;
         }
 
@@ -83,19 +89,31 @@ namespace None.Infrastructure
 
         public async Task<Order> GetOrderByIdAsync(int orderId)
         {
-            var order = await _context.Orders.Include(o => o.DeliveryMethod).FirstOrDefaultAsync(o => o.Id == orderId);
-            return order;
-            //var order = await _context.Orders
-            //                  .Include(o => o.DeliveryMethod)
-            //                  .Include(o => o.OrderItems)
-            //                  .FirstOrDefaultAsync(o => o.Id == orderId);
+            //var order = await _context.Orders.Include(o => o.DeliveryMethod).FirstOrDefaultAsync(o => o.Id == orderId);
             //return order;
+            var order = await _context.Orders
+                              .Include(o => o.DeliveryMethod)
+                              .Include(o => o.OrderItems)
+                              .Include(o => o.AppUser)
+                              .FirstOrDefaultAsync(o => o.Id == orderId);
+            return order;
         }
-
         public async Task UpdateAsync(Order order)
         {
-            _context.Orders.Update(order);
-            await _context.SaveChangesAsync();
+           
+                _context.Orders.Update(order);
+                await _context.SaveChangesAsync();
+            
         }
+        //public async Task UpdateAsync(Order order)
+        //{
+        //    var oldOrder = await _context.Orders.FindAsync(order.Id); 
+        //    if (oldOrder != null)
+        //    {
+        //        _context.Entry(oldOrder).Property(o => o.AppUserId).IsModified = false; 
+        //        _context.Entry(oldOrder).CurrentValues.SetValues(order);
+        //        await _context.SaveChangesAsync();
+        //    }
+        //}
     }
 }

@@ -16,7 +16,7 @@ namespace AliExpress.Application.IServices
         Task<OrderReturnDto> GetOrderByIdAsync(int orderId);
         Task<IEnumerable<DeliveryMethod>> GetDeliveryMethods();
         Task UpdateOrderAsync(int orderId, OrderReturnDto orderReturnDto);
-        Task UpdateOrderByAdminAsync(int orderId, OrderStatusDto orderStatusDto);
+        //Task UpdateOrderByAdminAsync(int orderId, OrderStatusDto orderStatusDto);
         Task DeleteOrderAsync(int orderId);
     }
 }

@@ -10,6 +10,7 @@ namespace AliExpress.Dtos.Order
     {
         public int Id { get; set; }
         public string AppUserId { get; set; }
+        public AppUserDto AppUser { get; set; }
         public DateTimeOffset OrderDate { get; set; }
         public string Status { get; set; }
         public string DeliveryMethod { get; set; }
