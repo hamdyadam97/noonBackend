@@ -159,13 +159,15 @@
                     // Generate form elements for each specification
                     response.forEach(function (specification) {
                         const formGroup = $('<div class="form-group"></div>');
-                        const label = $('<label class="control-label"></label>').text(specification);
+                        const label = $('<label class="control-label"></label>').attr('asp-for', specification).text(specification);
                         const input = $('<input class="form-control" />').attr({
                             type: 'text',
-                            name: 'specification', // Set the name attribute if needed
-                            value: '', // Set the initial value if needed
+                            id: specification.toLowerCase(), // Assuming specification is unique, set id attribute
+                            name: specification, // Set name attribute
+                            'data-val': 'true', // Indicate validation is enabled
+                            'data-val-required': specification + ' is required' // Example of data-val- validation attribute
                         });
-                        const validationSpan = $('<span class="text-danger"></span>');
+                        const validationSpan = $('<span style="color:red"></span>').attr('asp-validation-for', specification);
 
                         // Append elements to form group
                         formGroup.append(label, input, validationSpan);
@@ -173,7 +175,18 @@
                         // Append form group to specifications div
                         $('#specifications').append(formGroup);
                     });
-                } else {
+
+
+
+
+
+
+
+
+                } 
+                
+                
+                else {
                     // Display "No items" if specification list is null or empty
                     $('#specifications').append('<p>No items</p>');
                 }
