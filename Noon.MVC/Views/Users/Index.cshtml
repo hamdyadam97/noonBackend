@@ -74,14 +74,10 @@
                         </td>
                     }
                     <td>
-
-                        @* @Html.ActionLink("Activate", "Activate", new { id = item.Id }) |  @* new { @class = "btn btn-warning" } *@
-                        @Html.ActionLink("Activate", "Activate", new { id = item.Id }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Activate", "Activate", new { id = item.Id }, new { @class = "btn btn-success" })
                     </td>
                     <td>
-
-                        
-                        @Html.ActionLink("Deactivate", "Deactivate", new { id = item.Id }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Deactivate", "Deactivate", new { id = item.Id }, new { @class = "btn btn-danger" })
                     </td>
                 </tr>
             }

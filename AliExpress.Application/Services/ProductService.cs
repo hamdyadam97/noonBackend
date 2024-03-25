@@ -27,10 +27,22 @@ namespace AliExpress.Application.Services
 
         public async Task<ResultView<CreateUpdateDeleteProductDto>> Create(CreateUpdateDeleteProductDto productDto)
         {
-            var product = _mapper.Map<CreateUpdateDeleteProductDto, Product>(productDto);
-            var createdProduct = await _productRepository.CreateAsync(product);
-            var createdProductDto = _mapper.Map<Product, CreateUpdateDeleteProductDto>(createdProduct);
-            return new ResultView<CreateUpdateDeleteProductDto> { Entity = createdProductDto, IsSuccess = true, Message = "Create success" };
+
+            var products = await _productRepository.SearchByName(productDto.Title);
+            if (products == null)
+            {
+                var product = _mapper.Map<CreateUpdateDeleteProductDto, Product>(productDto);
+                var createdProduct = await _productRepository.CreateAsync(product);
+                var createdProductDto = _mapper.Map<Product, CreateUpdateDeleteProductDto>(createdProduct);
+                return new ResultView<CreateUpdateDeleteProductDto> { Entity = createdProductDto, IsSuccess = true, Message = "Create success" };
+            }
+            return new ResultView<CreateUpdateDeleteProductDto> { Entity = null, IsSuccess = false, Message = "Product Already Exist before Please change Product Name" };
+
+
+
+
+
+
         }
         //public async Task<ResultView<CreateUpdateDeleteProductDto>> Create(CreateUpdateDeleteProductDto productDto)
         //{
