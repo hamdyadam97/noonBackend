@@ -10,5 +10,6 @@ namespace AliExpress.Application.IServices
    public interface IUserService
     {
         Task<AppUserDto> GetUserByIdAsync(string userId);
+        List<UserDTO> GetUsers();
     }
 }
