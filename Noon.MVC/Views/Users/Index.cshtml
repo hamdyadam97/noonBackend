@@ -1,0 +1,86 @@
+﻿@model IEnumerable<AliExpress.Dtos.User.UserDTO>
+
+@{
+    ViewData["Title"] = "Users Page";
+    Layout = "_navbarLayout";
+}
+
+<h1>Users Page</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                Status
+            </th>
+            <th>Actions1</th>
+            <th>Actions2</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Country)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    @if(item.Deactivate==false)
+                    {
+                        <td>
+                            @* @Html.DisplayFor(modelItem => item.Deactivate) *@
+                            Active
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            Deactivate
+                        </td>
+                    }
+                    <td>
+                        @Html.ActionLink("Activate", "Activate", new { id = item.Id }, new { @class = "btn btn-success" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Deactivate", "Deactivate", new { id = item.Id }, new { @class = "btn btn-danger" })
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
