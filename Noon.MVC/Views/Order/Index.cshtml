@@ -17,6 +17,15 @@
                     @Html.DisplayNameFor(model => model.OrderDate)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.AppUser.Phone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AppUser.Country)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AppUser.City)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.DeliveryMethod)
                 </th>
                 <th>
@@ -38,7 +47,21 @@
                             @Html.DisplayFor(modelItem => item.Id)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.OrderDate)
+                            @{
+                                string formattedOrderDate = item.OrderDate.ToString("M/d/yyyy");
+                            }
+
+                            @Html.DisplayFor(modelItem => formattedOrderDate)
+                           @*  @Html.DisplayFor(modelItem => item.OrderDate.ToString("M/d/yyyy")) *@
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AppUser.Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AppUser.Country)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AppUser.City)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.DeliveryMethod)

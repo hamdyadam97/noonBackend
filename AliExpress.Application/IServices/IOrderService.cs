@@ -13,10 +13,11 @@ namespace AliExpress.Application.IServices
         Task<OrderReturnDto> CreateOrderAsync(int cartId, int deliveryMethodId, string userId);
         Task<IEnumerable<OrderReturnDto>> GetAllOrdersAsync();
         Task<OrderReturnDto> GetOrderByUserIdAsync(string userId);
-        Task<OrderStatusDto> GetOrderByIdAsync(int orderId);
+        Task<OrderReturnDto> GetOrderByIdAsync(int orderId);
         Task<IEnumerable<DeliveryMethod>> GetDeliveryMethods();
         Task UpdateOrderAsync(int orderId, OrderReturnDto orderReturnDto);
-        Task UpdateOrderByAdminAsync(int orderId, OrderStatusDto orderStatusDto);
+        Task UpdateOrderMvcAsync(int orderId, OrderReturnDto orderReturnDto);
+        //Task UpdateOrderByAdminAsync(int orderId, OrderStatusDto orderStatusDto);
         Task DeleteOrderAsync(int orderId);
     }
 }

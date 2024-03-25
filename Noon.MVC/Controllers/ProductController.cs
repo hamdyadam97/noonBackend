@@ -114,7 +114,7 @@ namespace Noon.MVC.Controllers
                     //int id = (int)TempData["id"];
                     var product = result.Entity;
                     product.Images = uploadedFilePaths;
-                    await _productService.Update(product);
+                     await _productService.Update(product);
                     
                     #endregion
                     TempData["id"] = product.Id; //send to upload image action 

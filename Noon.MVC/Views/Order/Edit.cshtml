@@ -1,12 +1,47 @@
-﻿@model OrderStatusDto
+﻿@model OrderReturnDto
 @{
     ViewData["Title"] = "Edit";
     Layout = "_navbarLayout";
 }
 
+<div class="form-group">
+    <label asp-for="AppUser.Phone" class="control-label"></label>
+    <p>@Model.AppUser.Phone</p>
+</div>
+<div class="form-group">
+    <label asp-for="AppUser.Country" class="control-label"></label>
+    <p>@Model.AppUser.Country</p>
+</div>
+<div class="form-group">
+    <label asp-for="AppUser.City" class="control-label"></label>
+    <p>@Model.AppUser.City</p>
+</div>
 
+<!-- Display Total -->
+<div class="form-group">
+    <label asp-for="Total" class="control-label"></label>
+    <p>@Model.Total</p>
+</div>
 
 <form asp-action="Edit" asp-route-id="@Model.Id">
+   
+    
+    <div class="form-group">
+        <label asp-for="Status" class="control-label"></label>
+        <select asp-for="Status" class="form-control">
+            <option value="Pending">Pending</option>
+            <option value="Payment Received">Payment Received</option>
+            <option value="Payment Failed">Payment Failed</option>
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
+
+
+@* <form asp-action="Edit" asp-route-id="@Model.Id">
     <div asp-validation-summary="All" class="text-danger"></div>
     <input type="hidden" asp-for="Id" />
     <input type="hidden" asp-for="AppUserId" />
@@ -24,5 +59,5 @@
         <input type="submit" value="Save" class="btn btn-primary" />
     </div>
 </form>
-
+ *@
 
