@@ -244,6 +244,26 @@ namespace Noon.MVC.Controllers
                 return View("Error");
             }
         }
+
+        // GET: ProductController/DetailsProduct/5
+        public async Task<ActionResult> DetailsProduct(int id)
+        {
+            var product = await _productService.GetOne(id);
+            var cat = await (_categoryService.GetAllCategory());
+            ViewBag.Cat = cat;
+            return View(product.Entity); 
+        }
+        // POST: ProductController/DetailsProduct/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DetailsProduct(int id, CreateUpdateDeleteProductDto updatedProductDetails)
+        {           
+                return View(updatedProductDetails); 
+        }
+
+
+
+
         // GET: ProductController/Delete/5
         public ActionResult Delete(int id)
         {
