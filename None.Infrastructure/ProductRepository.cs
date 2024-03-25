@@ -56,9 +56,9 @@ public async Task<IEnumerable<Product>> GetAllAsync(string searchValue, int page
             return result;
         }
 
-        public async Task<IQueryable<Product>> SearchByName(string name)
+        public async Task<List<Product>> SearchByName(string name)
         {
-            var product =_context.Products.Where(u => u.Title.ToLower().Contains(name));
+            var product =_context.Products.Where(u => u.Title.ToLower().Contains(name)).ToList();
             return product;
         }
 

@@ -29,7 +29,7 @@ namespace AliExpress.Application.Services
         {
 
             var products = await _productRepository.SearchByName(productDto.Title);
-            if (products == null)
+            if (products.Count==0)
             {
                 var product = _mapper.Map<CreateUpdateDeleteProductDto, Product>(productDto);
                 var createdProduct = await _productRepository.CreateAsync(product);

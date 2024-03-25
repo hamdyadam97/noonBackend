@@ -11,6 +11,6 @@ namespace AliExpress.Application.Contract
     {
         Task<IEnumerable<Product>> GetAllAsync(string searchValue,int page,int pageSize);
         Task<int> CoutProducts();
-        Task<IQueryable<Product>> SearchByName(string name);
+        Task<List<Product>> SearchByName(string name);
     }
 }
