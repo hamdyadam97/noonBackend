@@ -25,23 +25,34 @@ namespace AliExpress.Application.Services
             _mapper = mapper;
         }
 
-        public async Task AddOrUpdateCartDtoAsync(CartItemDto cartItemDto, AppUser userId)
+        //public async Task AddOrUpdateCartDtoAsync(CartItemDto cartItemDto, AppUser userId)
+        //{
+        //    var mappedCart = _mapper.Map<CartItemDto, CartItem>(cartItemDto);
+        //    await _cartRepository.AddOrUpdateCartItem(mappedCart, userId);
+        //}
+        public async Task AddOrUpdateCartDtoAsync(CartItemDto cartItemDto, int cartId)
         {
             var mappedCart = _mapper.Map<CartItemDto, CartItem>(cartItemDto);
-            await _cartRepository.AddOrUpdateCartItem(mappedCart, userId);
+            await _cartRepository.AddOrUpdateCartItem(mappedCart, cartId);
         }
 
 
-
-        public async Task createUserCart(CartDto cartDto)
+        public async Task createUserCart(CreateCartDto createCartDto )
         {
-            var mappedCart = _mapper.Map<CartDto, Cart>(cartDto);
+            var mappedCart = _mapper.Map<CreateCartDto, Cart>(createCartDto);
             await _cartRepository.AddCartAsync(mappedCart);
         }
 
         public async Task DeleteCartDtoAsync(int cartId)
         {
             await _cartRepository.DeleteCartAsync(cartId);
+        }
+
+        public async Task<CartDto> GetCartDtoByIdAsync(int cartId)
+        {
+            var cart = await _cartRepository.GetCartByIdAsync(cartId);
+            var cartdtoMapped = _mapper.Map<Cart, CartDto>(cart);
+            return cartdtoMapped;
         }
 
         public async Task<CartDto> GetCartDtoByUserIdAsync(string userId)

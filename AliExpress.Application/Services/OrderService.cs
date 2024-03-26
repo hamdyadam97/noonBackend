@@ -84,7 +84,7 @@ namespace AliExpress.Application.Services
                 {
                     existingOrder.Status = OrderStatus.PaymentRecieved;
                 }
-                else if(orderReturnDto.Status == "Payment  Failed") {
+                else if(orderReturnDto.Status == "Payment Failed") {
                     existingOrder.Status = OrderStatus.PaymentFailed;
                 }
                 else
@@ -93,10 +93,8 @@ namespace AliExpress.Application.Services
                 }
 
 
-
                 await _orderRepository.UpdateAsync(existingOrder);
 
-               
               
             }
         }

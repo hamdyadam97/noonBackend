@@ -10,6 +10,7 @@ namespace AliExpress.Dtos.Order
     {
        public int CartId { get; set; }
         public int DeliveryMethodId { get; set; }
-        public AppUserDto ?ShippingAddress { get; set; }
+        public AppUserDto? ShippingAddress { get; set; }
+
     }
 }

@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace AliExpress.Dtos.Cart
 {
-    public class CartDto
+    public class CartItemIntoDto
     {
+        public int CartItemId { get; set; }
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
         public int CartId { get; set; }
-        public List<CartItemDto> CartItems { get; set; }
-        public decimal TotalAmount { get; set; }
-        public string AppUserId { get; set; }
-
     }
 }
