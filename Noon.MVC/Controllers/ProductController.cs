@@ -1,6 +1,7 @@
 ﻿using AliExpress.Application.IServices;
 using AliExpress.Application.Services;
 using AliExpress.Dtos.Product;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -23,9 +24,10 @@ namespace Noon.MVC.Controllers
             _httpContextAccessor = httpContextAccessor;
         }
 
-      
+
 
         // GET: ProductController
+        [Authorize(Roles = "admin, vendor")]
         public async Task<ActionResult> Index(int?page)
         {
             int pageNumber = (page ?? 1);
