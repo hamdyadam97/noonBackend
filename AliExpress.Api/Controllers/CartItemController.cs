@@ -41,7 +41,7 @@ namespace AliExpress.Api.Controllers
         [HttpDelete("DeleteCartItem")]
         public async Task<IActionResult> DeleteCartItem([FromBody] int cartItemId)
         {
-            if(cartItemId == null)
+            if (cartItemId == null)
             {
                 return NotFound();
             }

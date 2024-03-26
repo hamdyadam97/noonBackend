@@ -9,11 +9,11 @@ namespace AliExpress.Dtos.Product
 {
     public class CreateUpdateDeleteProductDto
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
-        public int quantity { get; set; }
+        public int Quantity { get; set; }
         public string ShippingMethod { get; set; }
         public string? PlaceOfOrigin { get; set; }
         public string? ModelNumber { get; set; }
@@ -92,7 +92,7 @@ namespace AliExpress.Dtos.Product
         public string? Language { get; set; }
         public string? Functionality { get; set; }
      
-        public ICollection<string> Images { get; set; }
+        public List<string> Images { get; set; }
         public ICollection<string> ProductCategories { get; set; }
         public CreateUpdateDeleteProductDto()
         {

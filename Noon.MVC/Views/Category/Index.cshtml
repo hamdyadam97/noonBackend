@@ -2,9 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    
    Layout = "_navbarLayout";
-
 }
 
 <h1>Index</h1>
@@ -38,10 +36,7 @@
             </td>
             <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @* @Html.ActionLink("Delete", "SfotDelete", new { id = item.Id }) *@
-
-                        @Html.ActionLink("Delete", "SfotDelete", new { id = item.Id }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Deactivate", "SfotDelete", new { id = item.Id }, new { @class = "btn btn-warning" })
             </td>
         </tr>
 }

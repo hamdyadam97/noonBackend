@@ -1,0 +1,51 @@
+﻿@model OrderReturnDto
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_navbarLayout";
+}
+
+<h1>More Details </h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Delivery Method</th>
+            <th>Delivery Cost</th>
+            <th>Phone</th>
+            <th>Country</th>
+            <th>City</th>
+            <th>Product Name</th>
+            <th>Product Price</th>
+            <th>Status</th>
+            <th>Total Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.DeliveryMethod</td>
+            <td>@Model.DeliveryMethodCost</td>
+            <td>@Model.AppUser.Phone</td>
+            <td>@Model.AppUser.Country</td>
+            <td>@Model.AppUser.City</td>
+            <td>
+                @foreach (var item in Model.OrderItems)
+                {
+                    @item.ProductName
+
+                    <br />
+                }
+            </td>
+            <td>
+                @foreach (var item in Model.OrderItems)
+                {
+                    @item.Price
+
+                    <br />
+                }
+            </td>
+            <td>@Model.Status</td>
+            <td>@Model.Total</td>
+        </tr>
+    </tbody>
+</table>
+
+

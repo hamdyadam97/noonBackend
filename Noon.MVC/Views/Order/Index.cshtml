@@ -1,0 +1,93 @@
+﻿
+@model IEnumerable<OrderReturnDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_navbarLayout";
+}
+
+@if(Model.Count() > 0)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AppUser.Phone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AppUser.Country)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AppUser.City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeliveryMethod)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+               <th>
+            @Html.DisplayNameFor(model => model.Total)
+            </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @{
+                                string formattedOrderDate = item.OrderDate.ToString("M/d/yyyy");
+                            }
+
+                            @Html.DisplayFor(modelItem => formattedOrderDate)
+                           @*  @Html.DisplayFor(modelItem => item.OrderDate.ToString("M/d/yyyy")) *@
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AppUser.Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AppUser.Country)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AppUser.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DeliveryMethod)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Total)
+                        </td>
+                        <td>
+                       
+                            <a class="btn btn-primary" asp-controller="Order" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        </td>
+                        <td>
+                           
+                            <a class="btn btn-secondary" asp-controller="Order" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table> 
+}
+else
+{
+    <div class="alert alert-danger"><p>No orders</p></div>
+}
+

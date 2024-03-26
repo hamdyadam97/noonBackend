@@ -40,7 +40,7 @@ namespace AliExpress.Application.Services
             var category = await _categoryRepository.GetByIdAsync(id);
             if (category == null)
             {
-                return new ResultView<CategoryDto> { IsSuccess = false, Message = "Category not found" };
+                return new ResultView<CategoryDto> { IsSuccess = false, Message = "Category not here found" };
             }
 
             await _categoryRepository.DeleteAsync(category);
@@ -56,8 +56,11 @@ namespace AliExpress.Application.Services
 
         public async Task<ResultView<CategoryDto>> GetOne(int Id)
         {
+            
             var category =await _categoryRepository.GetByIdAsync(Id);
             var ReturnedCategoryDto=_mapper.Map<Category, CategoryDto>(category);
+
+            ReturnedCategoryDto.Specification = category.Specifications.Select(spec => spec.Name).ToList();
             return new ResultView<CategoryDto> { Entity = ReturnedCategoryDto, IsSuccess = true, Message = "create success" };
 
         }
@@ -68,6 +71,7 @@ namespace AliExpress.Application.Services
             var updatedCategory=await _categoryRepository.UpdateAsync(category);
             var updatedCategoryDto=_mapper.Map<Category,CategoryDto>(updatedCategory);
             return new ResultView<CategoryDto> { Entity = updatedCategoryDto, IsSuccess = true, Message = "create success" };
+
 
         }
 

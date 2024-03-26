@@ -39,8 +39,9 @@ namespace Noon.MVC.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task< ActionResult> Create(CategoryDto categoryDto)
+        public async Task< ActionResult> Create(CategoryDto categoryDto )
         {
+            
 
             try
             {
@@ -143,6 +144,17 @@ namespace Noon.MVC.Controllers
 
                 return View("Error");
             }
+        }
+
+
+
+        //////////////////////////////////////////
+        ///
+        public async Task< ActionResult> GitCatSpecification(int id)
+        {
+            var catergory = await(_categoryService.GetOne(id));
+            var Specification = catergory.Entity.Specification;
+            return Json(Specification);
         }
     }
 }
