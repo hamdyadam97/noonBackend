@@ -118,6 +118,7 @@ namespace Noon.MVC.Controllers
                     
                     #endregion
                     TempData["id"] = product.Id; //send to upload image action 
+                    TempData["SuccessMessage"] = "Product created successfully!";
                     return View();
                 }
                     else
