@@ -137,6 +137,7 @@ namespace Noon.MVC.Controllers
             {
                 var cat = await _categoryService.GetOne(id);
                 await _categoryService.Delete(id);
+               
                 return RedirectToAction("Index");
             }
             catch

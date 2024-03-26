@@ -234,6 +234,15 @@ namespace Noon.MVC.Controllers
         {
             try
             {
+                var product = await _productService.GetOne(id);
+                var cat = await (_categoryService.GetAllCategory());
+                ViewBag.Cat = cat;
+                ViewBag.Shipment = new Dictionary<int, string>
+                            {
+                                { 0, "Free Shipping" },
+                                { 1, "Paid Shipping" },
+                                { 2, "Express Shipping" }
+                            };
                 var result = await _productService.Update(productDetailsDto);
 
                 if (result.IsSuccess)

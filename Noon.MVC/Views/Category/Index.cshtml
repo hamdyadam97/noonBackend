@@ -36,10 +36,24 @@
             </td>
             <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Deactivate", "SfotDelete", new { id = item.Id }, new { @class = "btn btn-warning" })
+                       @*  @Html.ActionLink("Deactivate", "SfotDelete", new { id = item.Id }, new { @class = "btn btn-warning" }) *@
+                        <a href="#" class="btn btn-danger deactivate-btn" data-id="@item.Id">Deactivate</a>
             </td>
         </tr>
 }
         }
     </tbody>
 </table>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.deactivate-btn').click(function (e) {
+                e.preventDefault();
+                var categoryId = $(this).data('id');
+                if (confirm('Are you sure you want to deactivate this category?')) {
+                    window.location.href = '@Url.Action("SfotDelete", "Category")/' + categoryId;
+                }
+            });
+        });
+    </script>
+}
