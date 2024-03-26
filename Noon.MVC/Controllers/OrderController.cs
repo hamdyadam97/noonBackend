@@ -18,6 +18,19 @@ namespace Noon.MVC.Controllers
             var orders =await _orderService.GetAllOrdersAsync();
             return View(orders);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var order = await _orderService.GetOrderByIdAsync(id);
+            if (order.Id == id)
+            {
+                return View(order);
+            }
+            return NotFound();
+        }
+
+
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {

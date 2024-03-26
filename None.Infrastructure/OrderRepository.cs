@@ -20,28 +20,29 @@ namespace None.Infrastructure
             _context = context;
         }
 
+
         public async Task<Order> CreateOrderAsync(int cartId, int deleveryMethodId, AppUser appUser)
         {
             //var cart = await _context.Carts.FirstOrDefaultAsync(c =>c.CartId == cartId);
-            var cart = await _context.Carts.Include(c=>c.CartItems).FirstOrDefaultAsync(c => c.CartId == cartId);
+            var cart = await _context.Carts.Include(c => c.CartItems).FirstOrDefaultAsync(c => c.CartId == cartId);
             var orderItems = new List<OrderItem>();
             if (cart?.CartItems?.Count > 0)
             {
                 foreach (var item in cart.CartItems)
                 {
                     var product = await _context.Products.FindAsync(item.ProductId);
-                    var orderItem=new OrderItem(product,item.Quantity, item.Product.Price);
+                    var orderItem = new OrderItem(product, item.Quantity, item.Product.Price);
                     orderItems.Add(orderItem);
                     await _context.SaveChangesAsync();
                 }
-               
+
             }
 
             //calc subtotal
             var subtotal = orderItems.Sum(item => item.Price * item.Quantity);
             var deliveryMethod = await _context.DeliveryMethods.FirstOrDefaultAsync(d => d.Id == deleveryMethodId);
             //create order
-            var order = new Order(deliveryMethod, appUser,orderItems, subtotal);
+            var order = new Order(deliveryMethod, appUser, orderItems, subtotal);
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
             return order;
@@ -57,12 +58,19 @@ namespace None.Infrastructure
         {
             //var orders=await _context.Orders.Include(o => o.DeliveryMethod).ToListAsync();
             //return orders;
+            //var orders = await _context.Orders
+            //    .Include(o => o.DeliveryMethod)
+            //    .Include(o => o.OrderItems)
+            //    .Include(o => o.AppUser)
+            //    .ToListAsync();
+            //return orders;
             var orders = await _context.Orders
-                .Include(o => o.DeliveryMethod)
-                .Include(o => o.OrderItems)
-                .Include(o => o.AppUser)
-                .ToListAsync();
+        .Include(o => o.DeliveryMethod)
+        .Include(o => o.OrderItems).ThenInclude(oi => oi.Product)
+        .Include(o => o.AppUser)
+        .ToListAsync();
             return orders;
+
         }
 
         public async Task<AppUser> GetAppUserAsync()
@@ -91,9 +99,15 @@ namespace None.Infrastructure
         {
             //var order = await _context.Orders.Include(o => o.DeliveryMethod).FirstOrDefaultAsync(o => o.Id == orderId);
             //return order;
+            //var order = await _context.Orders
+            //                .Include(o => o.DeliveryMethod)
+            //                .Include(o => o.OrderItems)
+            //                .Include(o => o.AppUser)
+            //                .FirstOrDefaultAsync(o => o.Id == orderId);
+            //return order;
             var order = await _context.Orders
                               .Include(o => o.DeliveryMethod)
-                              .Include(o => o.OrderItems)
+                              .Include(o => o.OrderItems).ThenInclude(oi => oi.Product)
                               .Include(o => o.AppUser)
                               .FirstOrDefaultAsync(o => o.Id == orderId);
             return order;

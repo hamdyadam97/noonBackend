@@ -4,24 +4,7 @@
     Layout = "_navbarLayout";
 }
 
-<div class="form-group">
-    <label asp-for="AppUser.Phone" class="control-label"></label>
-    <p>@Model.AppUser.Phone</p>
-</div>
-<div class="form-group">
-    <label asp-for="AppUser.Country" class="control-label"></label>
-    <p>@Model.AppUser.Country</p>
-</div>
-<div class="form-group">
-    <label asp-for="AppUser.City" class="control-label"></label>
-    <p>@Model.AppUser.City</p>
-</div>
 
-<!-- Display Total -->
-<div class="form-group">
-    <label asp-for="Total" class="control-label"></label>
-    <p>@Model.Total</p>
-</div>
 
 <form asp-action="Edit" asp-route-id="@Model.Id">
    
