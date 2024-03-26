@@ -17,13 +17,16 @@ namespace AliExpress.Application.Mapper
             CreateMap<AppUser, AppUserDto>().ReverseMap();
             CreateMap<Cart,CartDto>().ReverseMap();
 
-            CreateMap<CartItem, CartItemDto>()
-             .ReverseMap();
-            CreateMap<AppUser,AppUserDto>().ReverseMap();
-            CreateMap<Cart,CreateCartDto>().ReverseMap();
             //CreateMap<CartItem, CartItemDto>()
-            //    .ForMember(d => d.ProductTitle, o => o.MapFrom(s => s.Product.Title))
-            //    .ForMember(d => d.ProductPrice, o => o.MapFrom(s => s.Product.Price)).ReverseMap();
+            // .ReverseMap();
+          
+            CreateMap<Cart,CreateCartDto>().ReverseMap();
+
+            CreateMap<CartItem, CartItemDto>()
+                .ForMember(d => d.ProductName, o => o.MapFrom(s => s.Product.Title))
+                .ForMember(d => d.ProductPrice, o => o.MapFrom(s => s.Product.Price)).ReverseMap();
+
+
         }
     }
 }

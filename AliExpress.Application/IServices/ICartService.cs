@@ -11,8 +11,10 @@ namespace AliExpress.Application.IServices
     public interface ICartService
     {
         Task<CartDto> GetCartDtoByUserIdAsync(string userId);
-        Task createUserCart(CartDto cartDto);
-        Task AddOrUpdateCartDtoAsync(CartItemDto cartItemDto, AppUser userId);
+        Task<CartDto> GetCartDtoByIdAsync(int cartId);
+        Task createUserCart(CreateCartDto createCartDto);
+        //Task AddOrUpdateCartDtoAsync(CartItemDto cartItemDto, AppUser userId);
+        Task AddOrUpdateCartDtoAsync(CartItemDto cartItemDto, int cartId);
         //Task UpdateCartDtoAsync(int cartId);
         Task DeleteCartDtoAsync(int cartId);
 

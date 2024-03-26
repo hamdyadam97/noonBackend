@@ -9,13 +9,27 @@ namespace AliExpress.Dtos.Order
     public class OrderReturnDto
     {
         public int Id { get; set; }
-        public string AppUserId { get; set; }
+        public string? AppUserId { get; set; }
+        public AppUserDto? AppUser { get; set; }
         public DateTimeOffset OrderDate { get; set; }
         public string Status { get; set; }
-        public string DeliveryMethod { get; set; }
-        public decimal DeliveryMethodCost { get; set; }
-        ICollection<OrderItemDto> OrderItems { get; set; }
-        public decimal Subtotal { get; set; }
-        public decimal Total { get; set; }
+        public int? DeliveryMethodId { get; set; }
+        public string? DeliveryMethod { get; set; }
+        public decimal? DeliveryMethodCost { get; set; }
+        //public int ProductId { get; set; }
+        //public string ProductName { get; set; }
+
+        public ICollection<OrderItemDto>? OrderItems { get; set; }
+        public decimal? Subtotal { get; set; }
+        public decimal? Total { get; set; }
     }
 }
+
+
+  
+
+      
+       
+      
+       
+      

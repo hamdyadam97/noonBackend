@@ -119,10 +119,11 @@ namespace Noon.MVC.Controllers
                     //int id = (int)TempData["id"];
                     var product = result.Entity;
                     product.Images = uploadedFilePaths;
-                    await _productService.Update(product);
+                     await _productService.Update(product);
                     
                     #endregion
                     TempData["id"] = product.Id; //send to upload image action 
+                    TempData["SuccessMessage"] = "Product created successfully!";
                     return View();
                 }
                     else
@@ -254,6 +255,25 @@ namespace Noon.MVC.Controllers
         {
             return View();
         }
+
+        // GET: ProductController/DetailsProduct/5
+        public async Task<ActionResult> DetailsProduct(int id)
+        {
+            var product = await _productService.GetOne(id);
+            var cat = await (_categoryService.GetAllCategory());
+            ViewBag.Cat = cat;
+            return View(product.Entity);
+        }
+        // POST: ProductController/DetailsProduct/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DetailsProduct(int id, CreateUpdateDeleteProductDto updatedProductDetails)
+        {
+            return View(updatedProductDetails);
+        }
+        // POST: ProductController/DetailsProduct/5
+       
+        
 
         // POST: ProductController/Delete/5
         [HttpPost]

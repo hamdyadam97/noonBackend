@@ -41,8 +41,7 @@ namespace Noon.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task< ActionResult> Create(CategoryDto categoryDto )
         {
-            //List<string>s= new List<string>() { "asd", "aaa", "qqa" };
-            //categoryDto.Specification = s;
+            
 
             try
             {

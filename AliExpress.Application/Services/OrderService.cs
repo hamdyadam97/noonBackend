@@ -50,10 +50,10 @@ namespace AliExpress.Application.Services
             return deliveryMethods;
         }
 
-        public async Task<OrderStatusDto> GetOrderByIdAsync(int orderId)
+        public async Task<OrderReturnDto> GetOrderByIdAsync(int orderId)
         {
             var order = await _orderRepository.GetOrderByIdAsync(orderId);
-            var mappedOrder = _mapper.Map<Order, OrderStatusDto>(order);
+            var mappedOrder = _mapper.Map<Order, OrderReturnDto>(order);
             return mappedOrder;
         }
 
@@ -67,31 +67,54 @@ namespace AliExpress.Application.Services
         public async Task UpdateOrderAsync(int orderId, OrderReturnDto orderReturnDto)
         {
             var order = await _orderRepository.GetOrderByIdAsync(orderId);
-            if(order.Id == orderReturnDto.Id)
+            if (order.Id == orderReturnDto.Id)
             {
                 var mappedOrder = _mapper.Map<OrderReturnDto, Order>(orderReturnDto);
-                await  _orderRepository.UpdateAsync(mappedOrder);
+                await _orderRepository.UpdateAsync(mappedOrder);
             }
         }
 
-        public async Task UpdateOrderByAdminAsync(int orderId, OrderStatusDto orderStatusDto)
+        public async Task UpdateOrderMvcAsync(int orderId, OrderReturnDto orderReturnDto)
         {
-            //var order = await _orderRepository.GetOrderByIdAsync(orderId);
-            //order.Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), orderStatusDto.Status);
-            var mappedOrder = _mapper.Map<OrderStatusDto, Order>(orderStatusDto);
-            await _orderRepository.UpdateAsync(mappedOrder);
-            //await _orderRepository.UpdateAsync(order);
+            var existingOrder = await _orderRepository.GetOrderByIdAsync(orderId);
+
+            if (existingOrder != null)
+            {
+                if (orderReturnDto.Status== "Payment Received")
+                {
+                    existingOrder.Status = OrderStatus.PaymentRecieved;
+                }
+                else if(orderReturnDto.Status == "Payment Failed") {
+                    existingOrder.Status = OrderStatus.PaymentFailed;
+                }
+                else
+                {
+                    existingOrder.Status = OrderStatus.Pending;
+                }
+
+
+                await _orderRepository.UpdateAsync(existingOrder);
+
+              
+            }
         }
-        
 
 
+        //public async Task UpdateOrderByAdminAsync(int orderId, OrderStatusDto OrderStatusDto)
+        //{
+        //    var order = await _orderRepository.GetOrderByIdAsync(orderId);
+        //    //order.Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), orderStatusDto.Status);
+        //    var mappedOrder = _mapper.Map<OrderStatusDto, Order>(OrderStatusDto);
+        //    await _orderRepository.UpdateAsync(mappedOrder);
+        //    //await _orderRepository.UpdateAsync(order);
+        //}
 
-            //public async Task UpdateOrderByAdminAsync(int orderId, OrderReturnDto orderReturnDto)
-            //{
-            //    var order = await _orderRepository.GetOrderByIdAsync(orderId);
-            //    order.Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), orderReturnDto.Status);
+        //public async Task UpdateOrderByAdminAsync(int orderId, OrderReturnDto orderReturnDto)
+        //{
+        //    var order = await _orderRepository.GetOrderByIdAsync(orderId);
+        //    order.Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), orderReturnDto.Status);
 
-            //    await _orderRepository.UpdateAsync(order);
-            //}
-        }
+        //    await _orderRepository.UpdateAsync(order);
+        //}
     }
+}

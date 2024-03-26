@@ -17,14 +17,7 @@
     var shipmentMethods = ((Dictionary<int, string>)ViewBag.Shipment).ToList();
     var shipmentMethodList = new SelectList(shipmentMethods, "Key", "Value");
 
-    // Define gender options and create a SelectList
-    var genderOptions = new Dictionary<int, string>
-    {
-        {0, "NoN"},
-        {1, "Male"},
-        {2, "Female"}
-    };
-    var genderList = new SelectList(genderOptions.ToList(), "Key", "Value");
+    
 }
 
 <h1>Create</h1>
@@ -32,6 +25,7 @@
 <h4>CreateUpdateDeleteProductDto</h4>
 <hr />
 <div class="row">
+   
     <div class="col-md-4">
         <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -42,11 +36,7 @@
                 <span asp-validation-for="ShippingMethod" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
-                <select asp-for="Gender" class="form-control" asp-items="@genderList"></select>
-                <span asp-validation-for="Gender" class="text-danger"></span>
-            </div>
+            
 
             <div class="form-group">
                 <label asp-for="Category" class="control-label">Category Name</label>
@@ -70,7 +60,7 @@
 
             <div class="form-group">
                 <label asp-for="Description" class="control-label">Description Product</label>
-                <input id="description" class="form-control" asp-for="Description">
+                <textarea id="description" class="form-control" asp-for="Description"></textarea>
                 <span asp-validation-for="Description" style="color:red"></span>
             </div>
 
@@ -134,6 +124,14 @@
     }
 
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+         @if (TempData["SuccessMessage"] != null)
+         {
+             <text>
+                 alert('@TempData["SuccessMessage"]');
+             </text>
+         }
+     });
     // Get reference to the category dropdown list
     const categoryDropdown = document.getElementById('category');
 

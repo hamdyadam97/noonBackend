@@ -34,7 +34,7 @@ namespace AliExpress.Models
         public string? LensHeight { get; set; }
         public string? LensMaterial { get; set; }
         public string? Department { get; set; }
-        public Gender Gender { get; set; }
+        public string? Gender { get; set; }
         public string? FrameMaterial { get; set; }
         public string? LensFeatures { get; set; }
         public string? Style { get; set; }

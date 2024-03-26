@@ -18,6 +18,19 @@ namespace Noon.MVC.Controllers
             var orders =await _orderService.GetAllOrdersAsync();
             return View(orders);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var order = await _orderService.GetOrderByIdAsync(id);
+            if (order.Id == id)
+            {
+                return View(order);
+            }
+            return NotFound();
+        }
+
+
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -31,8 +44,8 @@ namespace Noon.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, OrderStatusDto orderStatusDto)
-        { if(id != orderStatusDto.Id)
+        public async Task<IActionResult> Edit(int id, OrderReturnDto orderReturnDto)
+        { if(id != orderReturnDto.Id)
             {
                 return NotFound();
             }
@@ -40,12 +53,13 @@ namespace Noon.MVC.Controllers
             {
                 try
                 {
-                    //var order = await _orderService.GetOrderByIdAsync(orderStatusDto.Id);
-                    //if(id != orderStatusDto.Id)
-                    //{
-                    //    return NotFound();
-                    //}
-                    await _orderService.UpdateOrderByAdminAsync(id, orderStatusDto);
+                    var order = await _orderService.GetOrderByIdAsync(orderReturnDto.Id);
+                    if(id != orderReturnDto.Id)
+                    {
+                        return NotFound();
+                    }
+                    //await _orderService.UpdateOrderByAdminAsync(id, orderStatusDto);
+                    await _orderService.UpdateOrderMvcAsync(id, orderReturnDto);
                     return RedirectToAction(nameof(Index));
                     
                 }
@@ -55,7 +69,7 @@ namespace Noon.MVC.Controllers
                     return RedirectToAction(nameof(Edit));
                 }
             }
-            return View(orderStatusDto);
+            return View(orderReturnDto);
         }
 
     }
