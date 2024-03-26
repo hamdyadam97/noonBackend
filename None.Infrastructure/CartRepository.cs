@@ -18,6 +18,126 @@ namespace None.Infrastructure
         {
             _context = context;
         }
+        public async Task AddCartAsync(Cart cart)
+        {
+            await _context.Carts.AddAsync(cart);
+            _context.SaveChanges();
+
+        }
+
+        public async Task AddOrUpdateCartItem(CartItem cartItem, int cartId)
+        {
+
+            var cart = await _context.Carts
+             .Include(c => c.CartItems)
+             .ThenInclude(ci => ci.Product) 
+             .FirstOrDefaultAsync(c => c.CartId == cartId);
+
+            var existingProduct = await _context.Products.FindAsync(cartItem.ProductId);
+            if (existingProduct == null)
+            {
+             
+                throw new ArgumentException($"Product with Id {cartItem.ProductId} does not exist.");
+            }
+
+          
+            cartItem.Product = existingProduct;
+
+            var existingCartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == cartItem.ProductId);
+            if (existingCartItem != null)
+            {
+             
+                existingCartItem.Quantity += cartItem.Quantity;
+                _context.CartItems.Update(existingCartItem);
+            }
+            else
+            {
+             
+                cart.CartItems.Add(cartItem);
+            }
+            cart.TotalAmount = cart.CartItems.Sum(ci => ci.Quantity * ci.Product.Price);
+
+          
+            await _context.SaveChangesAsync();
+
+        }
+
+
+
+        //public async Task AddOrUpdateCartItem(CartItem cartItem, int cartId)
+        //{
+        //    //var cart = await _context.Carts.FirstOrDefaultAsync(c => c.CartId == cartId);
+
+
+        //    if (cartItem == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(cartItem));
+        //    }
+
+        //    try
+        //    {
+        //        var existingCartItem = await _context.CartItems
+        //            .Include(ci => ci.Product)
+        //            .FirstOrDefaultAsync(ci => ci.Cart.CartId == cartId && ci.ProductId == cartItem.ProductId);
+
+
+
+        //        if (existingCartItem != null)
+        //        {
+
+        //            existingCartItem.Quantity += cartItem.Quantity;
+        //            _context.CartItems.Update(existingCartItem);
+        //        }
+        //        else
+        //        {
+
+        //            _context.CartItems.Add(cartItem);
+        //        }
+        //        //var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == cartItem.ProductId);
+        //        //cart.TotalAmount = cart.CartItems.Sum(ci => ci.Quantity * ci.Product.Price);
+
+        //        //cart.TotalAmount = cart.CartItems.Sum(ci => ci.Quantity * product.Price);
+
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        Console.WriteLine($"{ex.Message}");
+        //        throw;
+        //    }
+        //}
+
+
+        public async Task DeleteCartAsync(int cartId)
+        {
+            var cart = await _context.Carts.FindAsync(cartId);
+            if (cart != null)
+            {
+                _context.Carts.Remove(cart);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<Cart> GetCartByIdAsync(int cartId)
+        {
+            return await _context.Carts
+                .Include(c => c.CartItems)
+                .ThenInclude(ci => ci.Product)
+                .FirstOrDefaultAsync(c => c.CartId == cartId);
+        }
+
+        public async Task<Cart> GetCartByUserId(string userId)
+        {
+            var cart = await _context.Carts
+             .Include(c => c.CartItems)
+             .ThenInclude(ci =>ci.Product)
+             .FirstOrDefaultAsync(c => c.AppUserId == userId);
+         
+            return cart;
+           
+        }
+
 
 
 
@@ -39,66 +159,60 @@ namespace None.Infrastructure
         //    await _context.SaveChangesAsync();
         //}
 
-        public async Task AddCartAsync(Cart cart)
-        {
-            if (cart == null)
-            {
-                await _context.Carts.AddAsync(cart);
-                _context.SaveChanges();
-            }
 
-        }
-        public async Task AddOrUpdateCartItem(CartItem cartItem, AppUser userId)
-        {
-            // Find the cart associated with the provided userId
-            var cart = await _context.Carts
-                .Include(c => c.CartItems)
-                    .ThenInclude(ci => ci.Product) // Include the Product navigation property
-                .FirstOrDefaultAsync(c => c.AppUserId == userId.Id);
 
-            if (cart == null)
-            {
-                // If the cart doesn't exist, create a new one
-                var newCart = new Cart { AppUser = userId };
-                _context.Carts.Add(newCart);
-                await _context.SaveChangesAsync();
 
-                // Retrieve the newly created cart
-                cart = await _context.Carts
-                    .Include(c => c.CartItems)
-                        .ThenInclude(ci => ci.Product) // Include the Product navigation property
-                    .FirstOrDefaultAsync(c => c.AppUserId == userId.Id);
-            }
+        //public async Task AddOrUpdateCartItem(CartItem cartItem, AppUser userId)
+        //{
+        //    // Find the cart associated with the provided userId
+        //    var cart = await _context.Carts
+        //        .Include(c => c.CartItems)
+        //        .ThenInclude(ci => ci.Product) // Include the Product navigation property
+        //        .FirstOrDefaultAsync(c => c.AppUserId == userId.Id);
 
-            // Check if the provided productId exists in the Products table
-            var existingProduct = await _context.Products.FindAsync(cartItem.ProductId);
-            if (existingProduct == null)
-            {
-                // If the product doesn't exist, return with an error
-                throw new ArgumentException($"Product with Id {cartItem.ProductId} does not exist.");
-            }
+        //    if (cart == null)
+        //    {
+        //        // If the cart doesn't exist, create a new one
+        //        var newCart = new Cart { AppUser = userId };
+        //        _context.Carts.Add(newCart);
+        //        await _context.SaveChangesAsync();
 
-            // Associate the existing product with the cartItem
-            cartItem.Product = existingProduct;
+        //        // Retrieve the newly created cart
+        //        cart = await _context.Carts
+        //            .Include(c => c.CartItems)
+        //             .ThenInclude(ci => ci.Product) // Include the Product navigation property
+        //            .FirstOrDefaultAsync(c => c.AppUserId == userId.Id);
+        //    }
 
-            // Check if the cart already contains an item with the same productId
-            var existingCartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == cartItem.ProductId);
-            if (existingCartItem != null)
-            {
-                // If the cart already contains the product, update the quantity
-                existingCartItem.Quantity += cartItem.Quantity;
-                _context.CartItems.Update(existingCartItem);
-            }
-            else
-            {
-                // If the cart doesn't contain the product, add it as a new cart item
-                cart.CartItems.Add(cartItem);
-            }
-            cart.TotalAmount = cart.CartItems.Sum(ci => ci.Quantity * ci.Product.Price);
+        //    // Check if the provided productId exists in the Products table
+        //    var existingProduct = await _context.Products.FindAsync(cartItem.ProductId);
+        //    if (existingProduct == null)
+        //    {
+        //        // If the product doesn't exist, return with an error
+        //        throw new ArgumentException($"Product with Id {cartItem.ProductId} does not exist.");
+        //    }
 
-            // Save changes to the database
-            await _context.SaveChangesAsync();
-        }
+        //    // Associate the existing product with the cartItem
+        //    cartItem.Product = existingProduct;
+
+        //    // Check if the cart already contains an item with the same productId
+        //    var existingCartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == cartItem.ProductId);
+        //    if (existingCartItem != null)
+        //    {
+        //        // If the cart already contains the product, update the quantity
+        //        existingCartItem.Quantity += cartItem.Quantity;
+        //        _context.CartItems.Update(existingCartItem);
+        //    }
+        //    else
+        //    {
+        //        // If the cart doesn't contain the product, add it as a new cart item
+        //        cart.CartItems.Add(cartItem);
+        //    }
+        //    cart.TotalAmount = cart.CartItems.Sum(ci => ci.Quantity * ci.Product.Price);
+
+        //    // Save changes to the database
+        //    await _context.SaveChangesAsync();
+        //}
 
 
 
@@ -146,32 +260,6 @@ namespace None.Infrastructure
 
         //    await _context.SaveChangesAsync();
         //}
-
-        public async Task DeleteCartAsync(int cartId)
-        {
-            var cart = await _context.Carts.FindAsync(cartId);
-            if (cart != null)
-            {
-                _context.Carts.Remove(cart);
-                await _context.SaveChangesAsync();
-            }
-        }
-
-        public async Task<Cart> GetCartByIdAsync(int cartId)
-        {
-            return await _context.Carts
-                .Include(c => c.CartItems)
-                .ThenInclude(ci => ci.Product)
-                .FirstOrDefaultAsync(c => c.CartId == cartId);
-        }
-
-        public async Task<Cart> GetCartByUserId(string userId)
-        {
-            return await _context.Carts
-                .Include(c => c.CartItems)
-                .ThenInclude(ci => ci.Product)
-                .FirstOrDefaultAsync(c => c.AppUserId == userId);
-        }
 
 
 

@@ -17,8 +17,9 @@ namespace AliExpress.Models
         public string PostalCode { get; set; } = string.Empty;
         public string specialPlace { get; set; } = string.Empty;
         public Cart Cart { get; set; }
-        
-       
+        public bool Deactivate { get; set; }
+
+
         public ICollection<Order> Orders { get; set; }=new HashSet<Order>();
     }
 }

@@ -19,6 +19,10 @@ namespace Noon.MVC
             builder.Services.AddControllersWithViews();
 
             //Dependency Injection 
+            //builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+            //builder.Services.AddScoped<IUserService, UserService>();
+
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
@@ -26,6 +30,7 @@ namespace Noon.MVC
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IOrderService, OrderService>();
+            
 
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

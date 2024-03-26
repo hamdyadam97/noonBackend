@@ -9,9 +9,9 @@ namespace AliExpress.Dtos.Cart
     public class CartDto
     {
         public int CartId { get; set; }
-        public List<CartItemDto> Items { get; set; } = new List<CartItemDto>();
+        public List<CartItemDto> CartItems { get; set; }
         public decimal TotalAmount { get; set; }
-        public string UserId { get; set; }
+        public string AppUserId { get; set; }
 
     }
 }

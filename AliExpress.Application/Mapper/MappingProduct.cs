@@ -15,14 +15,14 @@ namespace AliExpress.Application.Mapper
         public MappingProduct()
         {
             CreateMap<Product, ProductDetailsDto>()
-                .ForMember(d => d.Gender, o => o.MapFrom(s => s.Gender.ToString()))
+               
                 .ForMember(d => d.Images, o => o.MapFrom(s => s.Images.Select(img => img.Url))).ReverseMap();
 
             CreateMap<Product, ProductViewDto>()
             .ForMember(d => d.Image, o => o.MapFrom(s => s.Images.Select(img => img.Url))).ReverseMap();
 
             CreateMap<CreateUpdateDeleteProductDto, Product>()
-                .ForMember(d => d.Gender, o => o.MapFrom(s => Enum.Parse<Gender>(s.Gender)))
+               
                 .ForMember(d => d.Images, o => o.MapFrom(s => s.Images.Select(img => new Images { Url = img }))).ReverseMap();
             CreateMap<Images,ImagesDto>().ReverseMap();
         }

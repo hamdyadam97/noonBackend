@@ -7,7 +7,7 @@
 
 @if(Model.Count() > 0)
 {
-    <table class="table"> 
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>
@@ -15,6 +15,15 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.OrderDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AppUser.Phone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AppUser.Country)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AppUser.City)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.DeliveryMethod)
@@ -38,7 +47,21 @@
                             @Html.DisplayFor(modelItem => item.Id)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.OrderDate)
+                            @{
+                                string formattedOrderDate = item.OrderDate.ToString("M/d/yyyy");
+                            }
+
+                            @Html.DisplayFor(modelItem => formattedOrderDate)
+                           @*  @Html.DisplayFor(modelItem => item.OrderDate.ToString("M/d/yyyy")) *@
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AppUser.Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AppUser.Country)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AppUser.City)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.DeliveryMethod)
@@ -50,8 +73,12 @@
                             @Html.DisplayFor(modelItem => item.Total)
                         </td>
                         <td>
-                          @*   @Html.ActionLink("Edit", "Edit", new { id = item.Id }) | *@
-                            <a class="btn btn-warning" asp-controller="Order" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                       
+                            <a class="btn btn-primary" asp-controller="Order" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        </td>
+                        <td>
+                           
+                            <a class="btn btn-secondary" asp-controller="Order" asp-action="Details" asp-route-id="@item.Id">Details</a>
                         </td>
                     </tr>
                 }
