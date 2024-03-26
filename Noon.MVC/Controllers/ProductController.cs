@@ -26,9 +26,14 @@ namespace Noon.MVC.Controllers
       
 
         // GET: ProductController
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int?page)
         {
-            var product = await _productService.GetAllProducts("",1, 50);
+            int pageNumber = (page ?? 1);
+
+            // Store the current page number in the session
+            HttpContext.Session.SetInt32("CurrentPageNumber", pageNumber);
+
+            var product = await _productService.GetAllProducts("", pageNumber, 10);
             return View(product.Entities);
             //return View();
         }
@@ -278,7 +283,41 @@ namespace Noon.MVC.Controllers
             }
         }
 
+        public async Task<ActionResult> Next()
+        {
+            
+            var numProducts = await _productService.countProducts();
+
+
+            int currentPageNumber = HttpContext.Session.GetInt32("CurrentPageNumber") ?? 1;
+            int nextPageNumber = currentPageNumber;
+
+            if ((numProducts / 10)+1>currentPageNumber) 
+                nextPageNumber = currentPageNumber + 1;
+
+            // Redirect to the Index action with the next page number
+            return RedirectToAction("Index", new { page = nextPageNumber });
+        }
+
+        public async Task<ActionResult> Previous()
+        {
+            var numProducts = await _productService.countProducts();
+
+
+            int currentPageNumber = HttpContext.Session.GetInt32("CurrentPageNumber") ?? 1;
+            int nextPageNumber = currentPageNumber;
+
+            if (currentPageNumber>1)
+                nextPageNumber = currentPageNumber - 1;
+
+            // Redirect to the Index action with the next page number
+            return RedirectToAction("Index", new { page = nextPageNumber });
+        }
+
 
 
     }
 }
+
+
+

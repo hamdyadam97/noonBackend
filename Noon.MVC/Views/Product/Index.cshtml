@@ -1,11 +1,52 @@
 ﻿@model IEnumerable<AliExpress.Dtos.Product.ProductViewDto>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Products";
     Layout = "_navbarLayout";
 }
 
-<h1>Index</h1>
+
+<style>
+    .btn-custom {
+        display: inline-block;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .btn-success-custom {
+        color: #fff;
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    .btn-danger-custom {
+        color: #fff;
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    /* Adjust margin and padding as needed */
+    .my-5-custom {
+        margin-top: 1.25rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .my-10-custom {
+        margin-top: 2.5rem;
+        margin-bottom: 2.5rem;
+    }
+
+</style>
+
+
+
+<h1>Products Pag</h1>
+
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -32,32 +73,42 @@
         </tr>
     </thead>
     <tbody>
-        @if(Model !=null)
+        @if (Model != null)
         {
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Image)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
                         @Html.ActionLink("DetailsProduct", "DetailsProduct", new { id = item.Id }) |
                         @Html.ActionLink("Delete", "SfotDelete", new { id = item.Id })
-            </td>
-        </tr>
-}
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>
+
+<div class="btn-group">
+    @Html.ActionLink("Next", "Next", null, new { @class = "btn btn-success", style = "margin-top: 20px; margin-bottom: 20px;" })
+</div>
+
+<div class="btn-group">   
+    @Html.ActionLink("Previous", "Previous", null, new { @class = "btn btn-danger", style = "margin-top: 20px; margin-bottom: 20px;" })
+</div>
+
+

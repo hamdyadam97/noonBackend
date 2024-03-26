@@ -19,6 +19,9 @@ namespace None.Infrastructure
         {
             _context = context;
         }
+
+      
+
         public async Task<int> CoutProducts()
         {
             int counts = await _context.Products.CountAsync();
