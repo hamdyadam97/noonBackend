@@ -38,11 +38,6 @@ namespace AliExpress.Application.Services
             }
             return new ResultView<CreateUpdateDeleteProductDto> { Entity = null, IsSuccess = false, Message = "Product Already Exist before Please change Product Name" };
 
-
-
-
-
-
         }
         //public async Task<ResultView<CreateUpdateDeleteProductDto>> Create(CreateUpdateDeleteProductDto productDto)
         //{
@@ -169,6 +164,14 @@ namespace AliExpress.Application.Services
 
             await _productRepository.DeleteAsync(prod);
             return new ResultView<CreateUpdateDeleteProductDto> { IsSuccess = true, Message = "product deleted successfully" };
+        }
+
+
+
+
+        public async Task<int>countProducts()
+        {
+            return await _productRepository.CoutProducts();
         }
 
 
