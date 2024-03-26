@@ -32,6 +32,7 @@
 
         dl.row dd {
             margin-left: 0;
+            
         }
 
     .back-btn {
@@ -52,6 +53,23 @@
             .back-btn a:hover {
                 background-color: #0056b3;
             }
+              .product-images {
+        width: 50%;
+        text-align: center;
+    }
+
+    .product-image {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+        margin-left:55px;
+    }
+
+        .product-details,
+        .product-images {
+            width: 100%;
+        }
+    }
 </style>
 
 
@@ -98,6 +116,15 @@
                 @Html.DisplayFor(model => model.Price)
             </dd>
         }
+        <div class="product-images">
+            @if (Model.Images != null && Model.Images.Any())
+            {
+                foreach (var imagePath in Model.Images)
+                {
+                    <img src="@Url.Content(imagePath)" class="product-image" alt="Product Image" />
+                }
+            }
+        </div>
 
         @if (Model.Quantity != null)
         {
