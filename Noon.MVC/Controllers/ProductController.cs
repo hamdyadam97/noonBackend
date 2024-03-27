@@ -121,11 +121,10 @@ namespace Noon.MVC.Controllers
                     //int id = (int)TempData["id"];
                     var product = result.Entity;
                     product.Images = uploadedFilePaths;
-                     await _productService.Update(product);
+                    await _productService.Update(product);
                     
                     #endregion
                     TempData["id"] = product.Id; //send to upload image action 
-                    TempData["SuccessMessage"] = "Product created successfully!";
                     return View();
                 }
                     else
@@ -155,8 +154,6 @@ namespace Noon.MVC.Controllers
             return View();
 
         }
-
-        
 
         [HttpPost]
         public async Task<IActionResult> Upload(List<IFormFile> files)
@@ -267,25 +264,6 @@ namespace Noon.MVC.Controllers
             return View();
         }
 
-        // GET: ProductController/DetailsProduct/5
-        public async Task<ActionResult> DetailsProduct(int id)
-        {
-            var product = await _productService.GetOne(id);
-            var cat = await (_categoryService.GetAllCategory());
-            ViewBag.Cat = cat;
-            return View(product.Entity);
-        }
-        // POST: ProductController/DetailsProduct/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DetailsProduct(int id, CreateUpdateDeleteProductDto updatedProductDetails)
-        {
-            return View(updatedProductDetails);
-        }
-        // POST: ProductController/DetailsProduct/5
-       
-        
-
         // POST: ProductController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -329,12 +307,22 @@ namespace Noon.MVC.Controllers
             // Redirect to the Index action with the next page number
             return RedirectToAction("Index", new { page = nextPageNumber });
         }
-
+        public async Task<ActionResult> DetailsProduct(int id)
+        {
+            var product = await _productService.GetOne(id);
+            var cat = await (_categoryService.GetAllCategory());
+            ViewBag.Cat = cat;
+            return View(product.Entity);
+        }
+        // POST: ProductController/DetailsProduct/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DetailsProduct(int id, CreateUpdateDeleteProductDto updatedProductDetails)
+        {
+            return View(updatedProductDetails);
+        }
         public async Task<ActionResult> Previous()
         {
-            var numProducts = await _productService.countProducts();
-
-
             int currentPageNumber = HttpContext.Session.GetInt32("CurrentPageNumber") ?? 1;
             int nextPageNumber = currentPageNumber;
 
@@ -344,8 +332,6 @@ namespace Noon.MVC.Controllers
             // Redirect to the Index action with the next page number
             return RedirectToAction("Index", new { page = nextPageNumber });
         }
-
-
 
     }
 }

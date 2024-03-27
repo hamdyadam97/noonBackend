@@ -7,7 +7,7 @@
 
 
 <style>
-    .btn-custom {
+    .tt {
         display: inline-block;
         padding: 0.375rem 0.75rem;
         font-size: 1rem;
@@ -109,15 +109,21 @@
     </tbody>
 </table>
 
+<div class="btn-group @Html.Raw("btn btn-success")">
+    @Html.ActionLink("Next", "Next")
+</div>
 
+<div class="btn-group @Html.Raw("btn btn-success")">
+    @Html.ActionLink("Previous", "Previous")
+</div>
 
-<div class="btn-group">   
+@* <div class="btn-group">   
     @Html.ActionLink("Previous", "Previous", null, new { @class = "btn btn-danger", style = "margin-top: 20px; margin-bottom: 20px;" })
 </div>
 
 <div class="btn-group">
     @Html.ActionLink("Next", "Next", null, new { @class = "btn btn-success", style = "margin-top: 20px; margin-bottom: 20px;" })
-</div>
+</div> *@
 
 @section Scripts {
     <script>
