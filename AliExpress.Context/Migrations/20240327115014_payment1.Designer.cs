@@ -4,6 +4,7 @@ using AliExpress.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AliExpress.Context.Migrations
 {
     [DbContext(typeof(AliExpressContext))]
-    partial class AliExpressContextModelSnapshot : ModelSnapshot
+    [Migration("20240327115014_payment1")]
+    partial class payment1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -348,9 +351,6 @@ namespace AliExpress.Context.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -360,7 +360,7 @@ namespace AliExpress.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentMethods");
+                    b.ToTable("PaymentMethod");
                 });
 
             modelBuilder.Entity("AliExpress.Models.Product", b =>
@@ -713,9 +713,6 @@ namespace AliExpress.Context.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<int>("OrderID")
                         .HasColumnType("int");
 
@@ -738,7 +735,7 @@ namespace AliExpress.Context.Migrations
 
                     b.HasIndex("PaymentMethodID");
 
-                    b.ToTable("Transactions");
+                    b.ToTable("Transaction");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

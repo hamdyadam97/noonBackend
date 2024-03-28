@@ -4,6 +4,7 @@ using AliExpress.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,13 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AliExpress.Context.Migrations
 {
     [DbContext(typeof(AliExpressContext))]
-    partial class AliExpressContextModelSnapshot : ModelSnapshot
+    [Migration("20240326185151_adsdasdasdas")]
+    partial class adsdasdasdas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -328,39 +331,6 @@ namespace AliExpress.Context.Migrations
                     b.HasIndex("ProductId1");
 
                     b.ToTable("OrderItems");
-                });
-
-            modelBuilder.Entity("AliExpress.Models.PaymentMethod", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PaymentMethods");
                 });
 
             modelBuilder.Entity("AliExpress.Models.Product", b =>
@@ -699,48 +669,6 @@ namespace AliExpress.Context.Migrations
                     b.ToTable("Subcategories");
                 });
 
-            modelBuilder.Entity("AliExpress.Models.Transaction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("OrderID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PaymentMethodID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TransactionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TransactionStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderID");
-
-                    b.HasIndex("PaymentMethodID");
-
-                    b.ToTable("Transactions");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -1006,25 +934,6 @@ namespace AliExpress.Context.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("AliExpress.Models.Transaction", b =>
-                {
-                    b.HasOne("AliExpress.Models.Orders.Order", "Order")
-                        .WithMany("Transactions")
-                        .HasForeignKey("OrderID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AliExpress.Models.PaymentMethod", "PaymentMethod")
-                        .WithMany("Transactions")
-                        .HasForeignKey("PaymentMethodID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("PaymentMethod");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1101,13 +1010,6 @@ namespace AliExpress.Context.Migrations
             modelBuilder.Entity("AliExpress.Models.Orders.Order", b =>
                 {
                     b.Navigation("OrderItems");
-
-                    b.Navigation("Transactions");
-                });
-
-            modelBuilder.Entity("AliExpress.Models.PaymentMethod", b =>
-                {
-                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("AliExpress.Models.Product", b =>

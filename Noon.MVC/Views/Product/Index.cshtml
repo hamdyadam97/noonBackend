@@ -23,8 +23,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
+           
             <th>
                 @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
             </th>
             @* <th>
                 @Html.DisplayNameFor(model => model.Image)
@@ -53,9 +57,11 @@
                         @Html.DisplayFor(modelItem => item.Image)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                        |
                         @Html.ActionLink("DetailsProduct", "DetailsProduct", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "SfotDelete", new { id = item.Id })
+                     @*    @Html.ActionLink("Delete", "SfotDelete", new { id = item.Id }) *@
+                        <a href="#" class="btn btn-danger deactivate-btn" data-id="@item.Id">Delete</a>
                     </td>
                 </tr>
             }
@@ -63,10 +69,14 @@
     </tbody>
 </table>
 
-<div class="btn-group @Html.Raw("btn btn-success")">
-    @Html.ActionLink("Next", "Next")
+
+
+<div class="btn-group">   
+    @Html.ActionLink("Previous", "Previous", null, new { @class = "btn btn-danger", style = "margin-top: 20px; margin-bottom: 20px;" })
 </div>
 
-<div class="btn-group @Html.Raw("btn btn-success")" >
-    @Html.ActionLink("Previous", "Previous")
+<div class="btn-group">   
+    @Html.ActionLink("Previous", "Previous", null, new { @class = "btn btn-danger", style = "margin-top: 20px; margin-bottom: 20px;" })
 </div>
+
+

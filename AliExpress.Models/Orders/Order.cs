@@ -33,5 +33,7 @@ namespace AliExpress.Models.Orders
         public decimal Subtotal { get; set; }
         public decimal GetTotal()
            => Subtotal + DeliveryMethod.Cost;
+        //public int TransactionsID { get; set; }
+        public ICollection<Transaction> Transactions { get; set; }
     }
 }
