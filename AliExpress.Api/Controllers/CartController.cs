@@ -54,14 +54,14 @@ namespace AliExpress.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCart([FromBody] CartItemDto cartItemDto)
         {
-           
+
             if (ModelState.IsValid)
             {
 
                 if (IsLoggedIn())
                 {
-                    
-                    await _cartService.AddOrUpdateCartDtoAsync(cartItemDto,cartItemDto.CartId);
+
+                    await _cartService.AddOrUpdateCartDtoAsync(cartItemDto, cartItemDto.CartId);
 
                 }
                 else
@@ -82,7 +82,7 @@ namespace AliExpress.Api.Controllers
             {
                 if (IsLoggedIn())
                 {
-                   
+
                     await _cartService.createUserCart(createCartDto);
 
                 }
@@ -109,7 +109,7 @@ namespace AliExpress.Api.Controllers
 
                 return Ok(cart);
             }
-           return NotFound();
+            return NotFound();
         }
 
         //[HttpGet]

@@ -19,6 +19,9 @@ namespace None.Infrastructure
         {
             _context = context;
         }
+
+      
+
         public async Task<int> CoutProducts()
         {
             int counts = await _context.Products.CountAsync();
@@ -40,6 +43,13 @@ public async Task<IEnumerable<Product>> GetAllAsync(string searchValue, int page
                                             // Copy product properties
                                             Id = product.Id,
                                             Title = product.Title,
+                                            Price = product.Price,
+                                            Description = product.Description,
+                                            Accessories = product.Accessories,
+                                            ActivityTracking = product.ActivityTracking,
+                                            AgeCategoryApp  = product.AgeCategoryApp,
+                                            AppName = product.AppName,
+                                            
                                             // Include images
                                             Images = productImages.ToList()
                                         };

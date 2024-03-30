@@ -17,5 +17,6 @@ namespace AliExpress.Application.Services
         Task<ResultView<CreateUpdateDeleteProductDto>> Update(CreateUpdateDeleteProductDto productDto);
         Task<ResultView<CreateUpdateDeleteProductDto>> Delete(int id);
         Task<ResultView<CreateUpdateDeleteProductDto>> GetOne(int Id);
+        Task<int> countProducts();
     }
 }
