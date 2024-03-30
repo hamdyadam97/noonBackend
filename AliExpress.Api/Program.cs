@@ -13,8 +13,7 @@ using None.Infrastructure;
 using System.Text;
 
 namespace AliExpress.Api
-{
-    public class Program
+{  public class Program
     {
         public static void Main(string[] args)
         {
@@ -73,7 +72,16 @@ namespace AliExpress.Api
                 options.Cookie.IsEssential= true;
             });
             builder.Services.AddHttpContextAccessor();
-
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularDev",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
             // Add JWT authentication
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -105,9 +113,11 @@ namespace AliExpress.Api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            app.UseAuthentication();
-            app.UseAuthorization();
 
+            app.UseAuthentication();
+            app.UseCors("AllowAngularDev");
+            app.UseAuthorization();
+            
             app.UseSession();
 
             app.MapControllers();
