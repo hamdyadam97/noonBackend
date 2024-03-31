@@ -68,6 +68,7 @@ namespace None.Infrastructure
         .Include(o => o.DeliveryMethod)
         .Include(o => o.OrderItems).ThenInclude(oi => oi.Product)
         .Include(o => o.AppUser)
+        .OrderByDescending(o => o.CreatedAt)
         .ToListAsync();
             return orders;
 
@@ -87,7 +88,7 @@ namespace None.Infrastructure
             .ThenInclude(i => i.Images)// Include the related Product entity
         .Include(o => o.DeliveryMethod)
         .Where(o => o.AppUserId == userId)
-        
+        .OrderByDescending(o => o.CreatedAt)
         .FirstOrDefaultAsync();
             return order;
         }
