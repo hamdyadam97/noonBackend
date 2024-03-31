@@ -82,10 +82,13 @@ namespace None.Infrastructure
         public async Task<Order> GetByUserIdAsync(string userId)
         {
             var order = await _context.Orders
-            .Include(o => o.OrderItems)
-            .Include(o => o.DeliveryMethod)
-            .Where(o => o.AppUserId == userId)
-            .FirstOrDefaultAsync();
+        .Include(o => o.OrderItems)
+            .ThenInclude(oi => oi.Product)
+            .ThenInclude(i => i.Images)// Include the related Product entity
+        .Include(o => o.DeliveryMethod)
+        .Where(o => o.AppUserId == userId)
+        
+        .FirstOrDefaultAsync();
             return order;
         }
 
