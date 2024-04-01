@@ -42,7 +42,10 @@ namespace AliExpress.Api
             builder.Services.AddAutoMapper(M => M.AddProfile(typeof(MappingCart)));
             builder.Services.AddAutoMapper(M => M.AddProfile(typeof(MappingOrder)));
             builder.Services.AddAutoMapper(M => M.AddProfile(typeof(MappingPayment)));
-            
+
+            builder.Services.AddAutoMapper(M => M.AddProfile(typeof(MappingUser)));
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUserService, UserService>();
 
             //Repository
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();

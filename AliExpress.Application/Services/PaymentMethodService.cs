@@ -93,7 +93,7 @@ namespace AliExpress.Application.Services
             {
                 var pay = _mapper.Map<PaymentMethodDTO, PaymentMethod>(paymentMethodDTO);
                 await _paymentMethod.UpdateAsync(pay);
-                return new ResultView<PaymentMethodDTO> {Entity=paymentMethodDTO, IsSuccess = false, Message = "payment updated successfully" };
+                return new ResultView<PaymentMethodDTO> {Entity=paymentMethodDTO, IsSuccess = true, Message = "payment updated successfully" };
             }
             
 

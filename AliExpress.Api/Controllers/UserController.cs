@@ -1,4 +1,7 @@
 ﻿using AliExpress.Application.IServices;
+using AliExpress.Application.Services;
+using AliExpress.Dtos.Payment;
+using AliExpress.Dtos.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +34,24 @@ namespace AliExpress.Api.Controllers
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(APIUserDTO aPIUserDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userService.Update(aPIUserDTO);
+                if (user == null)
+                    return BadRequest("Error in Update Try Agin Later ");
+                else
+                {
+                    var updateURL = Url.Link("GetID", new { id = user.Entity.Id });
+                    return Ok("User updated successfully.");
+
+                }
+            }
+            return BadRequest(ModelState);
         }
     }
 }
