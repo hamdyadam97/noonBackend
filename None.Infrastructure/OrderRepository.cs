@@ -74,9 +74,9 @@ namespace None.Infrastructure
 
         }
 
-        public async Task<AppUser> GetAppUserAsync()
+        public async Task<AppUser> GetAppUserAsync(string userId)
         {
-            var appUser=await _context.Users.FirstOrDefaultAsync();
+            var appUser=await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
             return appUser;
         }
 

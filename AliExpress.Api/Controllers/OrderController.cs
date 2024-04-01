@@ -61,7 +61,8 @@ namespace AliExpress.Api.Controllers
         }
 
 
-        [HttpGet("user/{userId}")]
+        //[HttpGet("user/{userId}")]
+        [HttpGet("user")]
         public async Task<ActionResult<OrderReturnDto>> GetOrderByUserIdAsync()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
