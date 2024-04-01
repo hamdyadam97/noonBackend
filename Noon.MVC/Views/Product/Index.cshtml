@@ -1,11 +1,15 @@
 ﻿@model IEnumerable<AliExpress.Dtos.Product.ProductViewDto>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Products";
     Layout = "_navbarLayout";
 }
 
-<h1>Index</h1>
+<style>
+    /* Your custom styles */
+</style>
+
+<h1>Products Page</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -25,39 +29,39 @@
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            @* <th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th> *@
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        @if(Model !=null)
+        @foreach (var item in Model)
         {
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                        @Html.ActionLink("DetailsProduct", "DetailsProduct", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "SfotDelete", new { id = item.Id })
-            </td>
-        </tr>
-}
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("DetailsProduct", "DetailsProduct", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "SfotDelete", new { id = item.Id })
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+
+<div class="btn-group">
+    @Html.ActionLink("Next", "Next", null, new { @class = "btn btn-success", style = "margin-top: 20px; margin-bottom: 20px;" })
+</div>
+
+<div class="btn-group">
+    @Html.ActionLink("Previous", "Previous", null, new { @class = "btn btn-danger", style = "margin-top: 20px; margin-bottom: 20px;" })
+</div>

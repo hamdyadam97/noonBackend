@@ -8,35 +8,38 @@
 <style>
     .container {
         max-width: 800px;
-        margin: 0 auto;
+        margin: 20px auto;
         padding: 20px;
-        background-color: #f8f9fa;
-        border: 1px solid #dee2e6;
-        border-radius: 5px;
-        background-repeat: no-repeat;
+        background-color: #f9f9f9;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     h1 {
-        color: #343a40;
+        color: #333;
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     dl.row {
-        margin-bottom: 20px;
+        margin-bottom: 30px;
     }
 
         dl.row dt {
             font-weight: bold;
+            margin-bottom: 10px;
         }
 
         dl.row dd {
             margin-left: 0;
-            
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #555;
         }
 
     .back-btn {
-        display: block;
         text-align: center;
         margin-top: 20px;
     }
@@ -45,30 +48,32 @@
             text-decoration: none;
             color: #fff;
             background-color: #007bff;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 5px;
             transition: background-color 0.3s ease;
+            font-size: 16px;
+            font-weight: bold;
+            display: inline-block;
         }
 
             .back-btn a:hover {
                 background-color: #0056b3;
             }
-              .product-images {
-        width: 50%;
-        text-align: center;
+
+    .product-images-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 20px;
     }
 
     .product-image {
-        max-width: 100%;
-        height: auto;
-        margin-bottom: 20px;
-        margin-left:55px;
-    }
-
-        .product-details,
-        .product-images {
-            width: 100%;
-        }
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        margin: 5px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
     }
 </style>
 
@@ -78,7 +83,19 @@
 <div>
     <hr />
     <dl class="row">
-        
+        <div class="product-images">
+            @if (Model.Images != null && Model.Images.Any())
+            {
+                foreach (var imagePath in Model.Images)
+                {
+                    string formattedImagePath = "http://localhost:5108" + imagePath.Replace("\\", "/");
+                    <img src="@Url.Content(formattedImagePath)" class="product-image" alt="Product Image" />
+
+                }
+
+
+            }
+        </div>
             <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.Id)
             </dt>
@@ -116,19 +133,7 @@
                 @Html.DisplayFor(model => model.Price)
             </dd>
         }
-        <div class="product-images">
-            @if (Model.Images != null && Model.Images.Any())
-            {
-                foreach (var imagePath in Model.Images)
-                {
-                    string formattedImagePath = "http://localhost:5108"+imagePath.Replace("\\", "/");
-                    <img src="@Url.Content(formattedImagePath)" class="product-image" alt="Product Image" />
-
-                }
-               
-
-            }
-        </div>
+        
 
         @if (Model.Quantity != null)
         {
@@ -563,7 +568,7 @@
         </dd>
         }
 
-        @if (!string.IsNullOrEmpty(Model.Category))
+      @*   @if (!string.IsNullOrEmpty(Model.Category))
         {
         <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.Category)
@@ -571,7 +576,7 @@
         <dd class="col-sm-8">
               @Cat{model => model.Category)
         </dd>
-        }
+        } *@
 
         @if (!string.IsNullOrEmpty(Model.AppName))
         {
