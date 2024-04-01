@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Data\" />
+    <Folder Include="wwwroot\assets\images\" />
     <Folder Include="wwwroot\photos\" />
   </ItemGroup>
 

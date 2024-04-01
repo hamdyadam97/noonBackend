@@ -13,8 +13,7 @@ using None.Infrastructure;
 using System.Text;
 
 namespace AliExpress.Api
-{
-    public class Program
+{  public class Program
     {
         public static void Main(string[] args)
         {
@@ -42,7 +41,11 @@ namespace AliExpress.Api
             builder.Services.AddAutoMapper(M => M.AddProfile(typeof(MappingSubCategory)));
             builder.Services.AddAutoMapper(M => M.AddProfile(typeof(MappingCart)));
             builder.Services.AddAutoMapper(M => M.AddProfile(typeof(MappingOrder)));
+            builder.Services.AddAutoMapper(M => M.AddProfile(typeof(MappingPayment)));
 
+            builder.Services.AddAutoMapper(M => M.AddProfile(typeof(MappingUser)));
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUserService, UserService>();
 
             //Repository
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -52,6 +55,8 @@ namespace AliExpress.Api
             builder.Services.AddScoped<ICartRepository, CartRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<IPaymentRepository,PaymentRepository>();
+            builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
             //service
             builder.Services.AddScoped<ICategoryService ,CategoryService>();
             builder.Services.AddScoped<ISubCategoryService, SubCategoryService>();
@@ -60,6 +65,8 @@ namespace AliExpress.Api
             builder.Services.AddScoped<ICartService,CartService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IPaymentMethodService,PaymentMethodService>();
+            builder.Services.AddScoped<ITransactionService, TransactionService>();
 
             builder.Services.AddSession(options =>
             {
@@ -68,7 +75,16 @@ namespace AliExpress.Api
                 options.Cookie.IsEssential= true;
             });
             builder.Services.AddHttpContextAccessor();
-
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularDev",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
             // Add JWT authentication
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -100,9 +116,11 @@ namespace AliExpress.Api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            app.UseAuthentication();
-            app.UseAuthorization();
 
+            app.UseAuthentication();
+            app.UseCors("AllowAngularDev");
+            app.UseAuthorization();
+            
             app.UseSession();
 
             app.MapControllers();

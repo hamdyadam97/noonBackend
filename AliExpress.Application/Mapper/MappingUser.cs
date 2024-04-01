@@ -14,6 +14,10 @@ namespace AliExpress.Application.Mapper
         public MappingUser() 
         {
             CreateMap<UserDTO,AppUser>().ReverseMap();
+            CreateMap<APIUserDTO, AppUser>()
+            // .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.PhoneNumber))
+             .ReverseMap();
+
         }
     }
 }

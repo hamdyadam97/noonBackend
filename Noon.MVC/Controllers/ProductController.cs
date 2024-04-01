@@ -16,7 +16,7 @@ namespace Noon.MVC.Controllers
         private ICategoryService _categoryService;
         private IProductService _productService;
         private readonly IWebHostEnvironment _environment;
-        public ProductController(ICategoryService categoryService ,IProductService productService, IWebHostEnvironment environment, IHttpContextAccessor httpContextAccessor)
+        public ProductController(ICategoryService categoryService, IProductService productService, IWebHostEnvironment environment, IHttpContextAccessor httpContextAccessor)
         {
             _categoryService = categoryService;
             _productService = productService;
@@ -28,7 +28,7 @@ namespace Noon.MVC.Controllers
 
         // GET: ProductController
         [Authorize(Roles = "admin, vendor")]
-        public async Task<ActionResult> Index(int?page)
+        public async Task<ActionResult> Index(int? page)
         {
             int pageNumber = (page ?? 1);
 
@@ -48,7 +48,7 @@ namespace Noon.MVC.Controllers
         public async Task<ActionResult> Create(List<IFormFile> files)
 
         {
-            var cat = await(_categoryService.GetAllCategory());
+            var cat = await (_categoryService.GetAllCategory());
             ViewBag.Cat = cat;
             ViewBag.Shipment = new Dictionary<int, string>
                             {
@@ -75,10 +75,10 @@ namespace Noon.MVC.Controllers
             {
                 //if (ModelState.IsValid)
                 //{
-                    //var result = await _productService.Create(createUpdateDeleteProductDto);
-                    var result = await _productService.Create(createUpdateDeleteProductDto);
+                //var result = await _productService.Create(createUpdateDeleteProductDto);
+                var result = await _productService.Create(createUpdateDeleteProductDto);
                 if (result.IsSuccess)
-                    {
+                {
                     var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
                     var uploadsFolder = Path.Combine(_environment.WebRootPath, "photos");
 
@@ -121,18 +121,17 @@ namespace Noon.MVC.Controllers
                     //int id = (int)TempData["id"];
                     var product = result.Entity;
                     product.Images = uploadedFilePaths;
-                     await _productService.Update(product);
-                    
+                    await _productService.Update(product);
+
                     #endregion
                     TempData["id"] = product.Id; //send to upload image action 
-                    TempData["SuccessMessage"] = "Product created successfully!";
                     return View();
                 }
-                    else
-                    {
-                        ViewBag.Error = result.Message;
-                        return View(createUpdateDeleteProductDto);
-                    }
+                else
+                {
+                    ViewBag.Error = result.Message;
+                    return View(createUpdateDeleteProductDto);
+                }
                 //}
                 //else
                 //{
@@ -155,8 +154,6 @@ namespace Noon.MVC.Controllers
             return View();
 
         }
-
-        
 
         [HttpPost]
         public async Task<IActionResult> Upload(List<IFormFile> files)
@@ -187,7 +184,7 @@ namespace Noon.MVC.Controllers
                 if (!allowedExtensions.Contains(fileExtension))
                 {
                     ModelState.AddModelError("files", "Only image files (jpg, jpeg, png, gif) are allowed.");
-                    return View(); 
+                    return View();
                 }
 
                 var uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
@@ -208,15 +205,15 @@ namespace Noon.MVC.Controllers
             product.Images = uploadedFilePaths;
             var result = await _productService.Update(product);
             #endregion
-            
+
             return RedirectToAction("Index");
         }
 
         //// //////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: ProductController/Edit/5
-        public async Task< ActionResult> Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var product=await _productService.GetOne(id);
+            var product = await _productService.GetOne(id);
             var cat = await (_categoryService.GetAllCategory());
             ViewBag.Cat = cat;
             ViewBag.Shipment = new Dictionary<int, string>
@@ -230,10 +227,19 @@ namespace Noon.MVC.Controllers
         // POST: ProductController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task< ActionResult> Edit(int id, CreateUpdateDeleteProductDto productDetailsDto)
+        public async Task<ActionResult> Edit(int id, CreateUpdateDeleteProductDto productDetailsDto)
         {
             try
             {
+                var product = await _productService.GetOne(id);
+                var cat = await (_categoryService.GetAllCategory());
+                ViewBag.Cat = cat;
+                ViewBag.Shipment = new Dictionary<int, string>
+                            {
+                                { 0, "Free Shipping" },
+                                { 1, "Paid Shipping" },
+                                { 2, "Express Shipping" }
+                            };
                 var result = await _productService.Update(productDetailsDto);
 
                 if (result.IsSuccess)
@@ -258,25 +264,6 @@ namespace Noon.MVC.Controllers
             return View();
         }
 
-        // GET: ProductController/DetailsProduct/5
-        public async Task<ActionResult> DetailsProduct(int id)
-        {
-            var product = await _productService.GetOne(id);
-            var cat = await (_categoryService.GetAllCategory());
-            ViewBag.Cat = cat;
-            return View(product.Entity);
-        }
-        // POST: ProductController/DetailsProduct/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DetailsProduct(int id, CreateUpdateDeleteProductDto updatedProductDetails)
-        {
-            return View(updatedProductDetails);
-        }
-        // POST: ProductController/DetailsProduct/5
-       
-        
-
         // POST: ProductController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -296,7 +283,7 @@ namespace Noon.MVC.Controllers
         {
             try
             {
-               var re= await _productService.Delete(id);
+                var re = await _productService.Delete(id);
                 return RedirectToAction("Index");
             }
             catch
@@ -307,39 +294,44 @@ namespace Noon.MVC.Controllers
 
         public async Task<ActionResult> Next()
         {
-            
+
             var numProducts = await _productService.countProducts();
 
 
             int currentPageNumber = HttpContext.Session.GetInt32("CurrentPageNumber") ?? 1;
             int nextPageNumber = currentPageNumber;
 
-            if ((numProducts / 10)+1>currentPageNumber) 
+            if ((numProducts / 10) + 1 > currentPageNumber)
                 nextPageNumber = currentPageNumber + 1;
 
             // Redirect to the Index action with the next page number
             return RedirectToAction("Index", new { page = nextPageNumber });
         }
-
+        public async Task<ActionResult> DetailsProduct(int id)
+        {
+            var product = await _productService.GetOne(id);
+            var cat = await (_categoryService.GetAllCategory());
+            ViewBag.Cat = cat;
+            return View(product.Entity);
+        }
+        // POST: ProductController/DetailsProduct/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DetailsProduct(int id, CreateUpdateDeleteProductDto updatedProductDetails)
+        {
+            return View(updatedProductDetails);
+        }
         public async Task<ActionResult> Previous()
         {
-            var numProducts = await _productService.countProducts();
-
-
             int currentPageNumber = HttpContext.Session.GetInt32("CurrentPageNumber") ?? 1;
             int nextPageNumber = currentPageNumber;
 
-            if (currentPageNumber>1)
+            if (currentPageNumber > 1)
                 nextPageNumber = currentPageNumber - 1;
 
             // Redirect to the Index action with the next page number
             return RedirectToAction("Index", new { page = nextPageNumber });
         }
 
-
-
     }
 }
-
-
-
