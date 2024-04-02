@@ -24,7 +24,6 @@ namespace AliExpress.Application.Services
             _productRepository = productRepository;
             _mapper = mapper;
         }
-
         public async Task<ResultView<CreateUpdateDeleteProductDto>> Create(CreateUpdateDeleteProductDto productDto)
         {
 
@@ -39,14 +38,6 @@ namespace AliExpress.Application.Services
             return new ResultView<CreateUpdateDeleteProductDto> { Entity = null, IsSuccess = false, Message = "Product Already Exist before Please change Product Name" };
 
         }
-        //public async Task<ResultView<CreateUpdateDeleteProductDto>> Create(CreateUpdateDeleteProductDto productDto)
-        //{
-        //    var product = _mapper.Map<CreateUpdateDeleteProductDto, Product>(productDto);
-        //    var NewProduct= await _productRepository.CreateAsync(product);
-        //    var CreatedProductDto = _mapper.Map<Product, CreateUpdateDeleteProductDto>(NewProduct);
-        //    return new ResultView<CreateUpdateDeleteProductDto> { Entity = CreatedProductDto, IsSuccess = true, Message = "create success" };
-        //    //return CreatedProductDto;
-        //}
         public async Task<ResultView<CreateUpdateDeleteProductDto>> Update(CreateUpdateDeleteProductDto productDto)
         {
             var existingProduct = await _productRepository.GetByIdAsync(productDto.Id);
@@ -62,42 +53,6 @@ namespace AliExpress.Application.Services
 
             return new ResultView<CreateUpdateDeleteProductDto> { IsSuccess = true, Message = "Product updated successfully." };
         }
-
-        //public async Task<ResultView<CreateUpdateDeleteProductDto>> Update(CreateUpdateDeleteProductDto productDto)
-        //{
-        //    var product = _mapper.Map<CreateUpdateDeleteProductDto, Product>(productDto);
-        //    var NewProduct = await _productRepository.UpdateAsync(product);
-        //    var UpdatedProductDto = _mapper.Map<Product, CreateUpdateDeleteProductDto>(NewProduct);
-        //    return new ResultView<CreateUpdateDeleteProductDto> { Entity = UpdatedProductDto, IsSuccess = true, Message = "create success" };
-
-        //}
-        //public async Task<PaginationResult<ProductViewDto>> GetAllProducts(string searchValue, int page, int pageSize)
-        //{
-        //    var products = await _productRepository.GetAllAsync(searchValue, page, pageSize);
-        //    var productsDto = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewDto>>(products, opts =>
-        //    {
-        //        opts.AfterMap((src, dest) =>
-        //        {
-        //            foreach (var product in dest)
-        //            {
-        //                // Get the first image path or set a default value if there are no images
-        //                product.Image = src.FirstOrDefault(p => p.Id == product.Id)?.Images?.FirstOrDefault()?.Url ?? "defaultImagePath";
-        //            }
-        //        });
-        //    });
-
-        //    var result = new PaginationResult<ProductViewDto>(
-        //        isSuccess: true,
-        //        message: "data return success",
-        //        entities: productsDto,
-        //        pageIndex: page,
-        //        pageSize: pageSize,
-        //        totalCount: products.Count()
-        //    );
-
-        //    return result;
-        //}
-
         public async Task<PaginationResult<ProductViewDto>> GetAllProducts(string searchValue, int page, int pageSize)
         {
             var products = await _productRepository.GetAllAsync(searchValue, page, pageSize);
@@ -127,25 +82,6 @@ namespace AliExpress.Application.Services
 
             return result;
         }
-
-
-
-        //public async Task<PaginationResult<ProductViewDto>> GetAllProducts(string searchValue, int page, int pageSize)
-        //{
-        //    var products = await _productRepository.GetAllAsync(searchValue, page, pageSize);
-        //    var productsDto = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewDto>>(products);
-
-        //    var result = new PaginationResult<ProductViewDto>(
-        //        isSuccess : true,
-        //        message : "data return success",
-        //        entities: productsDto,
-        //        pageIndex: page,
-        //        pageSize: pageSize,
-        //        totalCount: products.Count()
-        //    );
-
-        //    return result;
-        //}
         public async Task<ResultView<CreateUpdateDeleteProductDto>> GetOne(int Id)
         {
             var product=await _productRepository.GetByIdAsync(Id);
@@ -165,15 +101,14 @@ namespace AliExpress.Application.Services
             await _productRepository.DeleteAsync(prod);
             return new ResultView<CreateUpdateDeleteProductDto> { IsSuccess = true, Message = "product deleted successfully" };
         }
-
-
-
-
         public async Task<int>countProducts()
         {
             return await _productRepository.CoutProducts();
         }
+       //public Task<ResultView<ProductViewDto>> Search(string name)
+       // {
 
+       // }
 
     }
 }
