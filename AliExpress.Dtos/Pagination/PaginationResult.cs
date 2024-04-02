@@ -14,6 +14,7 @@ namespace AliExpress.Dtos.Pagination
         public int TotalCount { get; set; }
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
+        public int numberOfPages { get; set; }
 
         public PaginationResult(IEnumerable<T> entities, int pageIndex, int pageSize, int totalCount,bool isSuccess,string message)
         {

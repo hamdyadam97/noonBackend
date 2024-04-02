@@ -29,7 +29,8 @@ namespace AliExpress.Context
         //{
 
         //}
-
+        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProductCategory>()
@@ -92,6 +93,28 @@ namespace AliExpress.Context
                 .HasOne(oi => oi.Product)
                 .WithMany()
                 .HasForeignKey(oi => oi.ProductId);
+
+
+            //payment
+            ///////////////////////////////////////////////////////
+                modelBuilder.Entity<Order>()
+                    .HasOne(o => o.AppUser)
+                    .WithMany(c => c.Orders)
+                    .HasForeignKey(o => o.AppUserId);
+
+                modelBuilder.Entity<Transaction>()
+                    .HasOne(t => t.Order)
+                    .WithMany(o => o.Transactions)
+                    .HasForeignKey(t => t.OrderID);
+
+                modelBuilder.Entity<Transaction>()
+                    .HasOne(t => t.PaymentMethod)
+                    .WithMany(p => p.Transactions)
+                    .HasForeignKey(t => t.PaymentMethodID);
+            ///////////////////////////////////////////////////////////
+
+
+
 
 
 
