@@ -18,6 +18,14 @@ namespace AliExpress.Models
         public string specialPlace { get; set; } = string.Empty;
         public Cart Cart { get; set; }
         public bool Deactivate { get; set; }
+        
+        /// //////////
+        
+        public string? FName { get; set; } =string.Empty;
+        public string? LName { get;set; } =string.Empty;
+        public string? Gender { get; set; } = string.Empty;
+        public DateTime? BirthDate { get; set; }=DateTime.Now;
+        public string? National { get; set; } = string.Empty;
 
 
         public ICollection<Order> Orders { get; set; }=new HashSet<Order>();

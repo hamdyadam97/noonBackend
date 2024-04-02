@@ -56,14 +56,7 @@ namespace None.Infrastructure
 
         public async Task<IEnumerable<Order>> GetAllAsync()
         {
-            //var orders=await _context.Orders.Include(o => o.DeliveryMethod).ToListAsync();
-            //return orders;
-            //var orders = await _context.Orders
-            //    .Include(o => o.DeliveryMethod)
-            //    .Include(o => o.OrderItems)
-            //    .Include(o => o.AppUser)
-            //    .ToListAsync();
-            //return orders;
+           
             var orders = await _context.Orders
         .Include(o => o.DeliveryMethod)
         .Include(o => o.OrderItems).ThenInclude(oi => oi.Product)

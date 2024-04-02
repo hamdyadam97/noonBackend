@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AliExpress.Context\AliExpress.Context.csproj" />
     <ProjectReference Include="..\AliExpress.Dtos\AliExpress.Dtos.csproj" />
     <ProjectReference Include="..\AliExpress.Models\AliExpress.Models.csproj" />
   </ItemGroup>
