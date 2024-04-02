@@ -5,7 +5,9 @@ using AliExpress.Dtos.Product;
 using AliExpress.Dtos.ViewResult;
 using AliExpress.Models;
 using AutoMapper;
+using Azure;
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -105,10 +107,11 @@ namespace AliExpress.Application.Services
         {
             return await _productRepository.CoutProducts();
         }
-       //public Task<ResultView<ProductViewDto>> Search(string name)
-       // {
-
-       // }
+        //public async Task<List<ProductViewDto>> Search(string name)
+        //{
+        //    var products = await _productRepository.GetAllAsync(name, 1, 24);
+        //    var pdto=_mapper.Map<Product,ProductViewDto>(products.ToList());
+        //}
 
     }
 }
