@@ -26,13 +26,13 @@ namespace AliExpress.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllProducts(string searchTerm="", int page = 1)
+        public async Task<ActionResult> GetAllProducts(string searchTerm = "", int page = 1)
         {
             const int pageSize = 24;
-            var Prds = await _productService.GetAllProducts(searchTerm,page,pageSize);
+            var Prds = await _productService.GetAllProducts(searchTerm, page, pageSize);
             // Calculate total pages number
-            int count =await _productService.countProducts();
-            int totalPages = count /24;
+            int count = await _productService.countProducts();
+            int totalPages = count / 24;
             if (count % 24 != 0)
             {
                 totalPages++;
@@ -41,7 +41,7 @@ namespace AliExpress.Api.Controllers
             return Ok(Prds);
         }
 
-       
+
         [HttpGet("DetailsProduct/{id}")]
         public async Task<ActionResult> DetailsProduct(int id)
         {
@@ -54,7 +54,7 @@ namespace AliExpress.Api.Controllers
             return Ok(product);
         }
 
-       
+
         [HttpPost("{productId}/images")]
         public async Task<IActionResult> AddImages(int productId, List<IFormFile> files)
         {
@@ -74,10 +74,8 @@ namespace AliExpress.Api.Controllers
 
             return Ok("Images uploaded successfully");
         }
-      
 
 
-      
         [HttpPost]
         public async Task<ActionResult<CreateUpdateDeleteProductDto>> Create(CreateUpdateDeleteProductDto product)
         {
@@ -85,13 +83,11 @@ namespace AliExpress.Api.Controllers
             {
 
                 var prd = await _productService.Create(product);
-                
+
                 return Created("http://localhost:5164/api/Product/" + product.Id, "Saved");
             }
             return BadRequest(ModelState);
         }
-
-
 
         [HttpDelete("DeleteProduct/{id}")]
         public async Task<ActionResult> DeleteSubCategory(int id)
@@ -104,5 +100,15 @@ namespace AliExpress.Api.Controllers
             await _context.SaveChangesAsync();
             return Ok(result);
         }
-    }
+
+
+
+
+        //[HttpGet]
+        //public async Task<IActionResult]>Search(string name)
+        //{
+
+        //}
+
+    } 
 }
