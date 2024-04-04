@@ -9,6 +9,6 @@ namespace AliExpress.Application.Contract
 {
     public interface ICategoryRepository:IRepository<Category,int>
     {
-        
+        Task<IEnumerable<Product>> getProductByCategoryName(int cateId);
     }
 }

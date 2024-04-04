@@ -54,6 +54,19 @@ namespace AliExpress.Application.Services
             return categoriesDto;
         }
 
+        //public async Task<IEnumerable<ResultView<ProductViewDto>>> GetAllProductsByCategory(string catName)
+        //{
+        //    var products = await _categoryRepository.getProductByCategoryName(catName);
+        //    var mappedProducts = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewDto>>(products);
+        //    var resultViews = mappedProducts.Select(p => new ResultView<ProductViewDto> { IsSuccess = true, Message = "Product in this Category" });
+        //    return resultViews;
+        //}
+        public async Task<IEnumerable<ProductViewDto>> GetAllProductsByCategory(int cateId)
+        {
+            var products = await _categoryRepository.getProductByCategoryName(cateId);
+            var mappedProducts = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewDto>>(products);
+             return mappedProducts;
+        }
         public async Task<ResultView<CategoryDto>> GetOne(int Id)
         {
             
@@ -75,6 +88,6 @@ namespace AliExpress.Application.Services
 
         }
 
-      
+        
     }
 }
