@@ -56,8 +56,6 @@ namespace AliExpress.Api.Controllers
             return BadRequest(ModelState);  
         }
 
-
-
         [HttpDelete("{id:int}")]
         public async Task<IActionResult>DeleteTransaction(int id)
         {
