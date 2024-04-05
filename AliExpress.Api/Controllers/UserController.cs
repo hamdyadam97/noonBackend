@@ -4,6 +4,11 @@ using AliExpress.Dtos.Payment;
 using AliExpress.Dtos.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AliExpress.Api.Controllers
 {
@@ -17,12 +22,16 @@ namespace AliExpress.Api.Controllers
         {
            _userService = userService;
         }
-        //[HttpGet("{userId}")]
+        
+
         [HttpGet]
-        public async Task<IActionResult> GetUserById(string userId)
+        [Authorize]
+        public async Task<IActionResult> GetUserById()
         {
+
             try
             {
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 var user = await _userService.GetUserByIdAsync(userId);
                 if (user == null)
                 {
@@ -36,6 +45,8 @@ namespace AliExpress.Api.Controllers
             }
         }
 
+
+
         [HttpPut]
         public async Task<IActionResult> Update(APIUserDTO aPIUserDTO)
         {
@@ -46,7 +57,7 @@ namespace AliExpress.Api.Controllers
                     return BadRequest("Error in Update Try Agin Later ");
                 else
                 {
-                    var updateURL = Url.Link("GetID", new { id = user.Entity.Id });
+                    //var updateURL = Url.Link("GetID", new { id = user.Entity.Id });
                     return Ok("User updated successfully.");
 
                 }
