@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AliExpress.Dtos.Images;
+using AliExpress.Dtos.Product;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +12,8 @@ namespace AliExpress.Dtos.Cart
     {
         public int CartItemId { get; set; }
         public int ProductId { get; set; }
+        public ProductDetailsDto product { get; set; }
+        public ImagesDto images { get; set; }
         public string? ProductName { get; set; }
         public decimal? ProductPrice { get; set; }
         public int Quantity { get; set; }

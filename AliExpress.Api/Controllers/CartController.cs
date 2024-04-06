@@ -105,6 +105,7 @@ namespace AliExpress.Api.Controllers
             var userId = GetUserId();
             if (IsLoggedIn())
             {
+                
                 var cart = await _cartService.GetCartDtoByUserIdAsync(userId);
 
                 return Ok(cart);
