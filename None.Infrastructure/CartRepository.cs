@@ -132,6 +132,7 @@ namespace None.Infrastructure
             var cart = await _context.Carts
              .Include(c => c.CartItems)
              .ThenInclude(ci => ci.Product)
+             .ThenInclude(i=>i.Images)
              .FirstOrDefaultAsync(c => c.AppUserId == userId);
 
             return cart;
