@@ -15,7 +15,7 @@ namespace AliExpress.Application.Contract
         Task<IEnumerable<Order>> GetAllAsync();
         Task<Order> GetOrderByIdAsync(int orderId);
         Task<Order> GetByUserIdAsync(string userId);
-        Task<AppUser> GetAppUserAsync();
+        Task<AppUser> GetAppUserAsync(string userId);
         Task<IEnumerable<DeliveryMethod>> GetDeliveryMethods();
         Task UpdateAsync(Order order);
         Task DeleteAsync(Order order);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AliExpress.Dtos.Cart;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace AliExpress.Dtos.User
         public string? UserName { get; set; }
         public string ?Email { get; set; }
         public string? Phone { get; set; } // Make sure there is a setter for PhoneNumber
-
+        public CartDto Cart { get; set; }
         public string? FName { get; set; }
         public string? LName { get; set; }
         public string? Gender { get; set; }

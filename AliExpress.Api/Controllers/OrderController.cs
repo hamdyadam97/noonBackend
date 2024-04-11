@@ -1,5 +1,7 @@
 ﻿using AliExpress.Application.IServices;
+using AliExpress.Application.Services;
 using AliExpress.Dtos.Order;
+using AliExpress.Models;
 using AliExpress.Models.Orders;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -14,11 +16,12 @@ namespace AliExpress.Api.Controllers
     {
         private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
+        private readonly ICartService _cartService;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService, ICartService cartService)
         {
             _orderService = orderService;
-           
+            _cartService = cartService;
         }
         [HttpPost]
         public async Task<ActionResult<OrderReturnDto>> CreateOderAsync(OrderDto orderDto)
@@ -27,6 +30,7 @@ namespace AliExpress.Api.Controllers
             {
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 var mappedOrder = await _orderService.CreateOrderAsync(orderDto.CartId, orderDto.DeliveryMethodId, userId);
+                await _cartService.DeleteCartDtoAsync(mappedOrder.AppUser.Cart.CartId);
 
                 return Ok(mappedOrder);
             }

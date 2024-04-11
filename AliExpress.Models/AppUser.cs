@@ -16,6 +16,7 @@ namespace AliExpress.Models
         public string Code {  get; set; } =  string.Empty;
         public string PostalCode { get; set; } = string.Empty;
         public string specialPlace { get; set; } = string.Empty;
+        public int CartId { get; set; }
         public Cart Cart { get; set; }
         public bool Deactivate { get; set; }
         

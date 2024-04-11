@@ -17,8 +17,8 @@ namespace AliExpress.Dtos.Payment
 
         // Navigation properties
         public int OrderID { get; set; }
-        public OrderDto Order { get; set; }
+        public OrderDto? Order { get; set; }
         public int PaymentMethodID { get; set; }
-        public PaymentMethodDTO PaymentMethod { get; set; }
+        public PaymentMethodDTO? PaymentMethod { get; set; }
     }
 }
