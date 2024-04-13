@@ -73,77 +73,48 @@ namespace None.Infrastructure
         //}
 
 
-        public async Task<IEnumerable<Product>> GetAllAsync(string searchValue, string category, int page, int pageSize, decimal? minPrice, decimal? maxPrice, string brandName)
+        public async Task<IEnumerable<Product>> GetAllAsync(string searchValue, string category, int page, int pageSize, decimal minPrice, decimal maxPrice, string brandName)
         {
-            IQueryable<Product> query = _context.Products.Include(p => p.Images);
+            IQueryable<Product> query = _context.Products;
 
-            // Search by product title
+            // Include images
+            query = query.Include(product => product.Images);
+
             if (!string.IsNullOrEmpty(searchValue))
             {
                 query = query.Where(p => p.Title.ToLower().Contains(searchValue.ToLower()));
             }
-
-            // Filter by category using a subquery to avoid fetching full category objects
-            if (!string.IsNullOrEmpty(category))
+            else if (!string.IsNullOrEmpty(category))
             {
-                query = query.Where(p => p.CategoryId == _context.Categories.Where(c => c.Name.ToLower() == category.ToLower()).Select(c => c.Id).FirstOrDefault());
+                var cat = _context.Categories.FirstOrDefault(c => c.Name.ToLower() == category.ToLower());
+                if (cat != null)
+                {
+                    query = query.Where(p => p.Category == cat.Id.ToString());
+                }
             }
 
-            // Filter by minimum price
-            if (minPrice.HasValue)
+            if(minPrice!=-1) 
             {
-                query = query.Where(p => p.Price >= minPrice.Value);
+                query = query.Where(p => p.Price >= minPrice);
             }
 
-            // Filter by maximum price
-            if (maxPrice.HasValue)
+            if(maxPrice!=-1) 
             {
-                query = query.Where(p => p.Price <= maxPrice.Value);
+                query=query.Where(p => p.Price <= maxPrice);
             }
 
-            // Filter by brand
-            if (!string.IsNullOrEmpty(brandName))
+
+            if(!string.IsNullOrEmpty(brandName))
             {
-                query = query.Where(p => p.Brand == brandName);
+                query=query.Where(p=>p.Brand==brandName);
             }
 
-            // Apply pagination
-            query = query.Skip((page - 1) * pageSize).Take(pageSize);
+            int skip = (page - 1) * pageSize;
+            query = query.Skip(skip).Take(pageSize);
 
-            // Execute the query
             var result = await query.ToListAsync();
             return result;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
