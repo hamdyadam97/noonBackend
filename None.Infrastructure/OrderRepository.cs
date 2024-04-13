@@ -73,13 +73,26 @@ namespace None.Infrastructure
             return appUser;
         }
 
+        //public async Task<Order> GetByUserIdAsync(string userId)
+        //{
+        //    var order = await _context.Orders
+        //.Include(o => o.OrderItems)
+        //    .ThenInclude(oi => oi.Product)
+        //    .ThenInclude(i => i.Images)// Include the related Product entity
+        //.Include(o => o.DeliveryMethod)
+        //.Where(o => o.AppUserId == userId)
+        //.OrderByDescending(o => o.CreatedAt)
+        //.FirstOrDefaultAsync();
+        //    return order;
+        //}
         public async Task<Order> GetByUserIdAsync(string userId)
         {
-            var order = await _context.Orders
+          var order = await _context.Orders
         .Include(o => o.OrderItems)
-            .ThenInclude(oi => oi.Product)
-            .ThenInclude(i => i.Images)// Include the related Product entity
+        .ThenInclude(oi => oi.Product)
+        .ThenInclude(i => i.Images)// Include the related Product entity
         .Include(o => o.DeliveryMethod)
+        .Include(o => o.AppUser)
         .Where(o => o.AppUserId == userId)
         .OrderByDescending(o => o.CreatedAt)
         .FirstOrDefaultAsync();
