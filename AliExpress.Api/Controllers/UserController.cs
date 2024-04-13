@@ -57,7 +57,7 @@ namespace AliExpress.Api.Controllers
                     return BadRequest("Error in Update Try Agin Later ");
                 else
                 {
-                    var updateURL = Url.Link("GetID", new { id = user.Entity.Id });
+                    //var updateURL = Url.Link("GetID", new { id = user.Entity.Id });
                     return Ok("User updated successfully.");
 
                 }

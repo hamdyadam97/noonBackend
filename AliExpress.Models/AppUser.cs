@@ -11,11 +11,18 @@ namespace AliExpress.Models
     public class AppUser:IdentityUser
     {
         public string City { get; set; }=string.Empty;
+
         public string Country { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
         public string Code {  get; set; } =  string.Empty;
         public string PostalCode { get; set; } = string.Empty;
         public string specialPlace { get; set; } = string.Empty;
+        public string City_AR { get; set; }=string.Empty;
+        public string Country_AR { get; set; } = string.Empty;
+        
+     
+
+        public int CartId { get; set; }
         public Cart Cart { get; set; }
         public bool Deactivate { get; set; }
         
@@ -24,8 +31,12 @@ namespace AliExpress.Models
         public string? FName { get; set; } =string.Empty;
         public string? LName { get;set; } =string.Empty;
         public string? Gender { get; set; } = string.Empty;
+        public string? FName_AR { get; set; } =string.Empty;
+        public string? LName_AR { get;set; } =string.Empty;
+        public string? Gender_AR { get; set; } = string.Empty;
         public DateTime? BirthDate { get; set; }=DateTime.Now;
         public string? National { get; set; } = string.Empty;
+        public string? National_AR { get; set; } = string.Empty;
 
 
         public ICollection<Order> Orders { get; set; }=new HashSet<Order>();
