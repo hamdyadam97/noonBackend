@@ -24,7 +24,9 @@ namespace AliExpress.Models
     public class Product: BaseEntity, IDeletedEntity
     {
         public string Title { get; set; }
+        public string Title_AR { get; set; }
         public string? Description { get; set; }
+        public string? Description_AR { get; set; }
         public decimal Price { get; set; }
         public int quantity {  get; set; }
         public ShippingMethod? ShippingMethod { get; set; }
