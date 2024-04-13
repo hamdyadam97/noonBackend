@@ -14,8 +14,6 @@ namespace AliExpress.Dtos.Payment
         public DateTime TransactionDate { get; set; }
         public decimal Amount { get; set; }
         public string TransactionStatus { get; set; }
-
-        // Navigation properties
         public int OrderID { get; set; }
         public OrderDto? Order { get; set; }
         public int PaymentMethodID { get; set; }

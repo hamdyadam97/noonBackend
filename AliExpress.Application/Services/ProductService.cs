@@ -55,9 +55,9 @@ namespace AliExpress.Application.Services
 
             return new ResultView<CreateUpdateDeleteProductDto> { IsSuccess = true, Message = "Product updated successfully." };
         }
-        public async Task<PaginationResult<ProductViewDto>> GetAllProducts(string searchValue, int page, int pageSize)
+        public async Task<PaginationResult<ProductViewDto>> GetAllProducts(string searchValue,string category, int page, int pageSize)
         {
-            var products = await _productRepository.GetAllAsync(searchValue, page, pageSize);
+            var products = await _productRepository.GetAllAsync(searchValue, category, page, pageSize);
             var productsDto = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewDto>>(products, opts =>
             {
                 opts.AfterMap((src, dest) =>

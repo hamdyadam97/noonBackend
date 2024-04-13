@@ -33,7 +33,7 @@ namespace AliExpress.Api.Controllers
                     else
                     {
                         var createdUrl = Url.Link("GetID", new { id = pay.Entity.Id });
-                        return Created(createdUrl, pay);
+                        return Created(createdUrl, pay.Entity);
                     }
                 }
                

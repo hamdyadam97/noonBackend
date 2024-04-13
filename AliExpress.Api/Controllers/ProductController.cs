@@ -26,10 +26,10 @@ namespace AliExpress.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllProducts(string searchTerm = "", int page = 1)
+        public async Task<ActionResult> GetAllProducts(string searchTerm = "",string category="", int page = 1)
         {
             const int pageSize = 24;
-            var Prds = await _productService.GetAllProducts(searchTerm, page, pageSize);
+            var Prds = await _productService.GetAllProducts(searchTerm,category, page, pageSize);
             // Calculate total pages number
             int count = await _productService.countProducts();
             int totalPages = count / 24;
