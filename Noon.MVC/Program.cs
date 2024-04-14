@@ -4,8 +4,11 @@ using AliExpress.Application.Services;
 using AliExpress.Context;
 using AliExpress.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using None.Infrastructure;
+using System.Globalization;
 
 namespace Noon.MVC
 {
@@ -47,7 +50,24 @@ namespace Noon.MVC
                         .AddEntityFrameworkStores<AliExpressContext>();
             builder.Services.AddSession();
 
+
+            builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+            builder.Services.AddControllersWithViews()
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+            builder.Services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+        new CultureInfo("en-US"),
+        new CultureInfo("ar-EG"),
+    };
+                options.DefaultRequestCulture = new RequestCulture("en-US");
+                options.SupportedUICultures = supportedCultures;
+            });
+
+
             var app = builder.Build();
+            app.UseRequestLocalization();
             app.UseSession();
             app.MapRazorPages(); ///
             app.UseAuthentication();
@@ -68,6 +88,7 @@ namespace Noon.MVC
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Product}/{action=Index}/{id?}");
+
 
             app.Run();
         }
