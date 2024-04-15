@@ -117,37 +117,67 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Actions" xml:space="preserve">
-    <value>عمليات</value>
+  <data name="Contact Phone" xml:space="preserve">
+    <value>Contact Phone</value>
   </data>
-  <data name="Create" xml:space="preserve">
-    <value>اضافة منتج جديد</value>
+  <data name="Delivery Cost" xml:space="preserve">
+    <value>Delivery Cost</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>مسح</value>
+  <data name="Delivery Method" xml:space="preserve">
+    <value>Delivery Method</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>الوصف</value>
+  <data name="DeliveryMethodCost" xml:space="preserve">
+    <value>DeliveryMethodCost</value>
   </data>
-  <data name="DetailsProduct" xml:space="preserve">
-    <value>تفاصبل</value>
+  <data name="More Details" xml:space="preserve">
+    <value>More Details</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>تعديل</value>
+  <data name="Order Details" xml:space="preserve">
+    <value>Order Details</value>
   </data>
-  <data name="Next" xml:space="preserve">
-    <value>التالى</value>
+  <data name="OrderItems" xml:space="preserve">
+    <value>OrderItems</value>
   </data>
-  <data name="Previous" xml:space="preserve">
-    <value>السابق</value>
+  <data name="Payment Failed" xml:space="preserve">
+    <value>Payment Failed</value>
+  </data>
+  <data name="Payment Received" xml:space="preserve">
+    <value>Payment Received</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Pending</value>
   </data>
   <data name="Price" xml:space="preserve">
-    <value>السعر</value>
+    <value>Price</value>
   </data>
-  <data name="Products" xml:space="preserve">
-    <value>المنتجات</value>
+  <data name="Product Name" xml:space="preserve">
+    <value>Product Name</value>
   </data>
-  <data name="Title" xml:space="preserve">
-    <value>اسم </value>
+  <data name="ProductName" xml:space="preserve">
+    <value>ProductName</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Shipping Address" xml:space="preserve">
+    <value>Shipping Address</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Total Amount" xml:space="preserve">
+    <value>Total Amount</value>
+  </data>
+  <data name="UserCity" xml:space="preserve">
+    <value>UserCity</value>
+  </data>
+  <data name="UserCountry" xml:space="preserve">
+    <value>UserCountry</value>
+  </data>
+  <data name="UserPhone" xml:space="preserve">
+    <value>UserPhone</value>
   </data>
 </root>

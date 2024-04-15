@@ -1,7 +1,6 @@
 ﻿
 @using Microsoft.Extensions.Localization
 @using Noon.MVC.Controllers
-@* @inject IStringLocalizer<ProductController> localizer *@
 @using Microsoft.AspNetCore.Mvc.Localization
 @using System.Globalization
 @inject IViewLocalizer _localizer
@@ -12,46 +11,47 @@
     Layout = "_navbarLayout";
     var lan = "";
     var direction = "";
-    if (CultureInfo.CurrentCulture.Name.StartsWith("ar"))
-    {
-        lan = "ar";
-        direction = "rtl";
-    }
+    var sessionData = Context.Session.GetString("Culture");
+    var culture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+    System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US"); ;
+    if (!string.IsNullOrEmpty(culture))
+         {
+
+        if (culture.StartsWith("ar"))
+                  {
+
+                      lan = "ar";
+                      direction = "rtl";
+                  }
     else
     {
         lan = "en";
         direction = "ltr";
     }
+         }
 }
-
-<h1>Products Pag</h1>
-
-
+<h1>@_localizer["Products"]</h1>
 <p>
     <a asp-action="Create">@_localizer["Create"]</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            
             <th>
-               @*  @Html.DisplayNameFor(model => model.Title) *@
+               
                 @_localizer["Title"]
-               
-               
             </th>
             <th>
                 @_localizer["Description"]
-                @* @Html.DisplayNameFor(model => model.Description) *@
             </th>
-           
             <th>
                 @_localizer["Price"]
-                @* @Html.DisplayNameFor(model => model.Price) *@
             </th>
-           
-            @_localizer["Actions"]
-            @* <th>Actions</th> *@
+            <th>
+                @_localizer["Actions"]
+            </th>
+            
+            
         </tr>
     </thead>
     <tbody>
@@ -60,26 +60,16 @@
             @foreach (var item in Model) {
                 <tr>
                    
-                    @* <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td> *@
                     @{
-                        // Get the culture from the query string
-                        var Request = ViewData["Request"] as HttpRequest;
-                        string culture1 = Request.Query["culture"].ToString();
-
-                        if (!string.IsNullOrEmpty(culture1))
+                        if (!string.IsNullOrEmpty(culture))
                         {
-                            if (culture1.StartsWith("en"))
+                            if (culture.StartsWith("en"))
                             {
                                 // Display English properties
                                 <td>@Html.DisplayFor(modelItem => item.Title)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Description)</td>
                             }
-                            else if (culture1.StartsWith("ar"))
+                            else if (culture.StartsWith("ar"))
                             {
                                 // Display Arabic properties
                                 <td>@Html.DisplayFor(modelItem => item.Title_AR)</td>
@@ -113,14 +103,15 @@
                         }
 
                         @Html.ActionLink(editLocalized.Value, "Edit", new { id = item.Id })
+
                        
                         |@{
                             var DetailsProduct = _localizer["DetailsProduct"];
                         }
 
                         @Html.ActionLink(DetailsProduct.Value, "DetailsProduct", new { id = item.Id })|
-                        @* @Html.ActionLink("Delete", "Delete", new { id = item.Id }) *@
-                        <a href="Product/Delete" class="btn btn-danger deactivate-btn" data-id="@item.Id">Delete</a>
+
+                        <a href="Product/Delete" class="btn btn-danger deactivate-btn" data-id="@item.Id">@_localizer["Delete"]</a>
                     </td>
                 </tr>
             }
@@ -128,23 +119,23 @@
     </tbody>
 </table>
 
-@* <div class="btn-group @Html.Raw("btn btn-success")">
-    @Html.ActionLink("Next", "Next")
-</div>
 
-<div class="btn-group @Html.Raw("btn btn-success")">
-    @Html.ActionLink("Previous", "Previous")
-</div> *@
 @{
-    var culture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+    // var culture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
     int currentPage = ViewBag.CurrentPage ?? 1;
+}
+ |@{
+    var Next = _localizer["Next"];
+}
+@{
+    var Previous = _localizer["Previous"];
 }
 
 <div class="btn-group btn btn-success">
-    @Html.ActionLink("Next", "Next", new { page = currentPage + 1, culture = culture }, new { @class = "btn btn-success" })
+    @Html.ActionLink(Next.Value, "Next", new { page = currentPage + 1, culture = culture }, new { @class = "btn btn-success" })
 </div>
 
 <div class="btn-group btn btn-success">
-    @Html.ActionLink("Previous", "Previous", new { page = currentPage - 1, culture = culture }, new { @class = "btn btn-success" })
+    @Html.ActionLink(Previous.Value, "Previous", new { page = currentPage - 1, culture = culture }, new { @class = "btn btn-success" })
 </div>
 

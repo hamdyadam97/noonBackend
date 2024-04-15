@@ -117,37 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Actions" xml:space="preserve">
-    <value>عمليات</value>
+  <data name="create" xml:space="preserve">
+    <value>اضاقة نوع جديد</value>
   </data>
-  <data name="Create" xml:space="preserve">
-    <value>اضافة منتج جديد</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
+  <data name="Deactivate" xml:space="preserve">
     <value>مسح</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>الوصف</value>
-  </data>
-  <data name="DetailsProduct" xml:space="preserve">
-    <value>تفاصبل</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>تعديل</value>
   </data>
-  <data name="Next" xml:space="preserve">
-    <value>التالى</value>
+  <data name="id" xml:space="preserve">
+    <value>الرقم المميز</value>
   </data>
-  <data name="Previous" xml:space="preserve">
-    <value>السابق</value>
-  </data>
-  <data name="Price" xml:space="preserve">
-    <value>السعر</value>
-  </data>
-  <data name="Products" xml:space="preserve">
-    <value>المنتجات</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>اسم </value>
+  <data name="name" xml:space="preserve">
+    <value>الاسم</value>
   </data>
 </root>

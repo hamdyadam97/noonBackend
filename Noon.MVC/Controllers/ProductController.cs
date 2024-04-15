@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using System.Globalization;
 using System.Linq;
 //using testNoon.Models;
 
@@ -37,10 +38,6 @@ namespace Noon.MVC.Controllers
         public async Task<ActionResult> Index(int? page)
         {
             int pageNumber = (page ?? 1);
-           
-
-
-
             // Store the current page number in the session
             HttpContext.Session.SetInt32("CurrentPageNumber", pageNumber);
 
@@ -317,7 +314,7 @@ namespace Noon.MVC.Controllers
                 nextPageNumber = currentPageNumber + 1;
 
             // Redirect to the Index action with the next page number
-            return RedirectToAction("Index", new { page = nextPageNumber });
+            return RedirectToAction("Index", new { page = nextPageNumber, CultureInfo.CurrentCulture });
         }
         public async Task<ActionResult> DetailsProduct(int id)
         {
@@ -342,7 +339,7 @@ namespace Noon.MVC.Controllers
                 nextPageNumber = currentPageNumber - 1;
 
             // Redirect to the Index action with the next page number
-            return RedirectToAction("Index", new { page = nextPageNumber });
+            return RedirectToAction("Index", new { page = nextPageNumber, CultureInfo.CurrentCulture });
         }
 
     }

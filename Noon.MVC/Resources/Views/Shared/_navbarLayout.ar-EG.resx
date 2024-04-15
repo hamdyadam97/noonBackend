@@ -117,37 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Actions" xml:space="preserve">
-    <value>عمليات</value>
+  <data name="Category" xml:space="preserve">
+    <value>عرض اللاصناف</value>
   </data>
-  <data name="Create" xml:space="preserve">
-    <value>اضافة منتج جديد</value>
+  <data name="copy" xml:space="preserve">
+    <value> حقوق النشر</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>مسح</value>
+  <data name="CreateCategory" xml:space="preserve">
+    <value>اضاقة صنف</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>الوصف</value>
+  <data name="CreateProducts" xml:space="preserve">
+    <value>اضاقة منتج</value>
   </data>
-  <data name="DetailsProduct" xml:space="preserve">
-    <value>تفاصبل</value>
+  <data name="logout" xml:space="preserve">
+    <value>خروج</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>تعديل</value>
-  </data>
-  <data name="Next" xml:space="preserve">
-    <value>التالى</value>
-  </data>
-  <data name="Previous" xml:space="preserve">
-    <value>السابق</value>
-  </data>
-  <data name="Price" xml:space="preserve">
-    <value>السعر</value>
+  <data name="Orders" xml:space="preserve">
+    <value>عرض طلبات</value>
   </data>
   <data name="Products" xml:space="preserve">
     <value>المنتجات</value>
   </data>
-  <data name="Title" xml:space="preserve">
-    <value>اسم </value>
+  <data name="Users" xml:space="preserve">
+    <value> المستخدمين</value>
   </data>
 </root>

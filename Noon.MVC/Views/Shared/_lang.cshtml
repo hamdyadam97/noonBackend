@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.Extensions.Localization
+@using Microsoft.AspNetCore.Http.Features
+@using Microsoft.Extensions.Options
+
+@inject IViewLocalizer loclizer
+@inject IOptions<RequestLocalizationOptions> locOptions
+
+@{
+    var requestCulture = System.Threading.Thread.CurrentThread.CurrentCulture;
+    var CultureItems = locOptions.Value.SupportedCultures
+                        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+                        .ToList();
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "/" : $"{Context.Request.Path.Value}";
+}
+
+
+
+
+<form id="selectLanguage" method="post" asp-controller="Product" asp-action="SetLanguage"
+      asp-route-returnUrl="@returnUrl">
+
+    <select class="selectLanguage-div" id="selectLang" name="culture" asp-for="@requestCulture.Name" asp-items="CultureItems" onchange="this.form.submit();">
+    </select>
+</form>
+

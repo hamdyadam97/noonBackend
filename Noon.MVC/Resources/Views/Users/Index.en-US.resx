@@ -118,36 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Actions" xml:space="preserve">
-    <value>عمليات</value>
+    <value>Actions</value>
   </data>
-  <data name="Create" xml:space="preserve">
-    <value>اضافة منتج جديد</value>
+  <data name="Actions1" xml:space="preserve">
+    <value>Actions1</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>مسح</value>
+  <data name="Actions2" xml:space="preserve">
+    <value>Actions2</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>الوصف</value>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
   </data>
-  <data name="DetailsProduct" xml:space="preserve">
-    <value>تفاصبل</value>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>تعديل</value>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
   </data>
-  <data name="Next" xml:space="preserve">
-    <value>التالى</value>
+  <data name="Deactivate" xml:space="preserve">
+    <value>Deactivate</value>
   </data>
-  <data name="Previous" xml:space="preserve">
-    <value>السابق</value>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
   </data>
-  <data name="Price" xml:space="preserve">
-    <value>السعر</value>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
   </data>
-  <data name="Products" xml:space="preserve">
-    <value>المنتجات</value>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>PhoneNumber</value>
   </data>
-  <data name="Title" xml:space="preserve">
-    <value>اسم </value>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>UserName</value>
+  </data>
+  <data name="Users Page" xml:space="preserve">
+    <value>Users Page</value>
   </data>
 </root>
