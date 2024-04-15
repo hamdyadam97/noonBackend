@@ -7,7 +7,9 @@ using AliExpress.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 using System.Runtime.InteropServices;
+using System.Web;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace AliExpress.Api.Controllers
@@ -27,7 +29,7 @@ namespace AliExpress.Api.Controllers
 
         [HttpGet]
         public async Task<ActionResult> GetAllProducts(string searchTerm = "",string category="", int page = 1
-            ,decimal minPrice=-1, decimal maxPrice =-1,string brandName="")
+            ,decimal minPrice=-1, decimal maxPrice =-1,string brandName="",string language="en")
         {
             const int pageSize = 24;
             var Prds = await _productService.GetAllProducts(searchTerm,category, page, pageSize,minPrice,maxPrice,brandName);
@@ -39,17 +41,37 @@ namespace AliExpress.Api.Controllers
                 totalPages++;
             }
             Prds.numberOfPages = totalPages;
+
+
+            if(language != "en") 
+            {
+                foreach (var p in Prds.Entities)
+                {
+                    p.Title = Translate.translate(p.Title);
+                    p.Description = Translate.translate(p.Description);
+                }
+            }
+
+
+
+
             return Ok(Prds);
         }
 
 
         [HttpGet("DetailsProduct/{id}")]
-        public async Task<ActionResult> DetailsProduct(int id)
+        public async Task<ActionResult> DetailsProduct(int id, string language = "en")
         {
             var product = await _productService.GetOne(id);
             if (product == null)
             {
                 return NotFound(); // Return 404 if the product is not found
+            }
+
+            if (language != "en")
+            {
+                product.Entity.Title = Translate.translate(product.Entity.Title);
+                product.Entity.Description = Translate.translate(product.Entity.Description);
             }
 
             return Ok(product);
@@ -121,5 +143,5 @@ namespace AliExpress.Api.Controllers
         //    return Ok(Prds);
         //}
 
-    } 
+    }
 }

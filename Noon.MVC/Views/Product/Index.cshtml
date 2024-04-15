@@ -60,8 +60,12 @@
                         @Html.ActionLink("Edit", "Edit", new { id = item.Id })
                         |
                         @Html.ActionLink("DetailsProduct", "DetailsProduct", new { id = item.Id }) |
-                     @*    @Html.ActionLink("Delete", "SfotDelete", new { id = item.Id }) *@
-                        <a href="#" class="btn btn-danger deactivate-btn" data-id="@item.Id">Delete</a>
+                       @* @Html.ActionLink("Delete", "SfotDelete", new { id = item.Id }) *@
+                       @* <a href="#" class="btn btn-danger deactivate-btn" data-id="@item.Id">Delete</a> *@
+
+                        @Html.ActionLink("Delete", "SfotDelete", new { id = item.Id }, new { @class = "btn btn-danger" })
+
+
                     </td>
                 </tr>
             }

@@ -2,6 +2,7 @@
 using AliExpress.Application.Services;
 using AliExpress.Context;
 using AliExpress.Dtos.Product;
+using AliExpress.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,10 +22,20 @@ namespace AliExpress.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllCategory()
+        public async Task<ActionResult> GetAllCategory(string language = "en")
         {
           
             var Cats = await _categoryService.GetAllCategory();
+
+
+            if(language !="en")
+            {
+                foreach(var cat in Cats) 
+                {
+                    cat.Name=Translate.translate(cat.Name);
+                }
+            }
+
 
             return Ok(Cats);
         }
