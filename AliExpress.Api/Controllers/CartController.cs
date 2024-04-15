@@ -23,7 +23,7 @@ namespace AliExpress.Api.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly string _userId;
         public CartController(ICartService cartService,
-            IHttpContextAccessor httpContextAccessor, UserManager<AppUser> userManager)
+           IHttpContextAccessor httpContextAccessor, UserManager<AppUser> userManager)
         {
             _cartService = cartService;
             _httpContextAccessor = httpContextAccessor;
