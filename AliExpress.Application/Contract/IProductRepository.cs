@@ -9,7 +9,7 @@ namespace AliExpress.Application.Contract
 {
     public interface IProductRepository :IRepository<Product, int>
     {
-        Task<IEnumerable<Product>> GetAllAsync(string searchValue,int page,int pageSize);
+        Task<IEnumerable<Product>> GetAllAsync(string searchValue, string category, int page, int pageSize, decimal minPrice, decimal maxPrice, string brandName);
         Task<int> CoutProducts();
         Task<List<Product>> SearchByName(string name);
         

@@ -67,19 +67,32 @@ namespace None.Infrastructure
 
         }
 
-        public async Task<AppUser> GetAppUserAsync()
+        public async Task<AppUser> GetAppUserAsync(string userId)
         {
-            var appUser=await _context.Users.FirstOrDefaultAsync();
+            var appUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
             return appUser;
         }
 
+        //public async Task<Order> GetByUserIdAsync(string userId)
+        //{
+        //    var order = await _context.Orders
+        //.Include(o => o.OrderItems)
+        //    .ThenInclude(oi => oi.Product)
+        //    .ThenInclude(i => i.Images)// Include the related Product entity
+        //.Include(o => o.DeliveryMethod)
+        //.Where(o => o.AppUserId == userId)
+        //.OrderByDescending(o => o.CreatedAt)
+        //.FirstOrDefaultAsync();
+        //    return order;
+        //}
         public async Task<Order> GetByUserIdAsync(string userId)
         {
-            var order = await _context.Orders
+          var order = await _context.Orders
         .Include(o => o.OrderItems)
-            .ThenInclude(oi => oi.Product)
-            .ThenInclude(i => i.Images)// Include the related Product entity
+        .ThenInclude(oi => oi.Product)
+        .ThenInclude(i => i.Images)// Include the related Product entity
         .Include(o => o.DeliveryMethod)
+        .Include(o => o.AppUser)
         .Where(o => o.AppUserId == userId)
         .OrderByDescending(o => o.CreatedAt)
         .FirstOrDefaultAsync();

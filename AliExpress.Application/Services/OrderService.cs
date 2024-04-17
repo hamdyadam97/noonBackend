@@ -27,7 +27,7 @@ namespace AliExpress.Application.Services
 
         public async Task<OrderReturnDto> CreateOrderAsync(int cartId, int deliveryMethodId, string userId)
         {
-            var appUser = await _orderRepository.GetAppUserAsync();
+            var appUser = await _orderRepository.GetAppUserAsync(userId);
             var order = await _orderRepository.CreateOrderAsync(cartId, deliveryMethodId, appUser);
             var mappedOrder=_mapper.Map<Order,OrderReturnDto>(order);
             return mappedOrder;

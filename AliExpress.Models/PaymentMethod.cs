@@ -10,7 +10,9 @@ namespace AliExpress.Models
     {
        // public int PaymentMethodID { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string Description { get; set; } 
+        public string Name_AR { get; set; }
+        public string Description_AR { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; } = false;
 

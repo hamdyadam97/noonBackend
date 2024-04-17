@@ -35,7 +35,7 @@ namespace Noon.MVC.Controllers
             // Store the current page number in the session
             HttpContext.Session.SetInt32("CurrentPageNumber", pageNumber);
 
-            var product = await _productService.GetAllProducts("", pageNumber, 10);
+            var product = await _productService.GetAllProducts("","", pageNumber, 10,-1,-1,"");
             return View(product.Entities);
             //return View();
         }
