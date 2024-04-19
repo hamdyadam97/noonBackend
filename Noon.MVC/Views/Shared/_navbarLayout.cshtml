@@ -1,5 +1,28 @@
-﻿﻿@{
+﻿
+@using Microsoft.Extensions.Localization
+@using Noon.MVC.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
+@inject IViewLocalizer _localizer﻿
+@{
     Layout = null;
+    var lan = "";
+    var direction = "";
+    var sessionData = Context.Session.GetString("Culture");
+    var culture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+    if (!string.IsNullOrEmpty(sessionData))
+    {
+        if (sessionData.StartsWith("ar"))
+        {
+            lan = "ar";
+            direction = "rtl";
+        }
+        else
+        {
+            lan = "en";
+            direction = "ltr";
+        }
+    }
 }
 <!doctype html>
 <html lang="en">
@@ -58,11 +81,11 @@
                 <div class="collapse navbar-collapse " id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto navbar-right-top">
                       
-
+                       
 
                         <li class="nav-item">
                             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Product", new { area = "" })">
-                                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                <button type="submit" class="nav-link btn btn-link text-dark">@_localizer["logout"]</button>
                             </form>
                         </li>
 
@@ -92,24 +115,30 @@
                             <li class="nav-divider">
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="http://localhost:5108/Product/">Products</a>
+                                        @* <a class="nav-link" href="@Url.Action("Arabic", "ar-EG")">العربية</a>  *@
+                                        <a class="nav-link" asp-controller="Lang" asp-action="Arabic">العربية</a>
+                                        <a class="nav-link" asp-controller="Lang" asp-action="English">English</a>
+                                        @* <a class="nav-link" href="@Url.Action("English", "en-US")">English</a> *@
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" asp-controller="Order" asp-action="Index">Orders</a>
+                                        <a class="nav-link" href="http://localhost:5108/Product/"> @_localizer["Products"]</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="http://localhost:5108/Product/create">Create New Product</a>
+                                        <a class="nav-link" asp-controller="Order" asp-action="Index">@_localizer["Orders"]</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="http://localhost:5108/category/create">Create New Category</a>
+                                        <a class="nav-link" href="http://localhost:5108/Product/create"> @_localizer["CreateProducts"] </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="http://localhost:5108/category/create">@_localizer["CreateCategory"]  </a>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a class="nav-link" href="http://localhost:5108/category">Category</a>
+                                        <a class="nav-link" href="http://localhost:5108/category">@_localizer["Category"]</a>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a class="nav-link" href="http://localhost:5108/Users">Users</a>
+                                        <a class="nav-link" href="http://localhost:5108/Users">@_localizer["Users"]</a>
                                     </li>
 
 
@@ -150,7 +179,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                                    Copyright © 2018 Concept. All rights reserved. Dashboard by <a href="https://colorlib.com/wp/">Colorlib</a>.
+                                    @_localizer["copy"].
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                     <div class="text-md-right footer-links  d-sm-block">

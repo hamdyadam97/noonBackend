@@ -1,8 +1,30 @@
 ﻿@model AliExpress.Dtos.Product.CreateUpdateDeleteProductDto
-
+@using Microsoft.Extensions.Localization
+@using Noon.MVC.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
+@inject IViewLocalizer _localizer
+@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "DetailsProduct";
     var Cat = ViewBag.Category;
+    var lan = "";
+    var direction = "";
+    var sessionData = Context.Session.GetString("Culture");
+    var culture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+    if (!string.IsNullOrEmpty(sessionData))
+    {
+        if (sessionData.StartsWith("en"))
+        {
+            lan = "ar";
+            direction = "rtl";
+        }
+        else
+        {
+            lan = "en";
+            direction = "ltr";
+        }
+    }
 }
 
 <style>
@@ -96,49 +118,110 @@
 
             }
         </div>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Id)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Id)
-            </dd>
-        
+        <dt class="col-sm-4">
+            
+        </dt>
+        <dd class="col-sm-8">
+          
+        </dd>
+
 
         @if (!string.IsNullOrEmpty(Model.Title))
         {
             <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Title)
+                @_localizer["Title"]
+                
             </dt>
             <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Title)
+                @{
+                    if (!string.IsNullOrEmpty(sessionData))
+                    {
+                        if (sessionData.StartsWith("en"))
+                        {
+                            // Display English properties
+                            @Html.DisplayFor(model => model.Title)
+                           
+                        }
+                        else if (sessionData.StartsWith("ar"))
+                        {
+                            // Display Arabic properties
+                            <td>@Html.DisplayFor(model => model.Title_AR)</td>
+                           
+                        }
+                        else
+                        {
+                            // Default to English if the language is not specified or supported
+                            @Html.DisplayFor(model => model.Title)
+                        }
+                    }
+                    else
+                    {
+                        // Default to English if culture parameter is not provided in the query string
+                        @Html.DisplayFor(model => model.Title)
+                       
+                    }
+                }
+                
             </dd>
         }
 
         @if (!string.IsNullOrEmpty(Model.Description))
         {
             <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Description)
+                @_localizer["Description"]
+               
             </dt>
             <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Description)
+                @{
+                    if (!string.IsNullOrEmpty(sessionData))
+                    {
+                        if (sessionData.StartsWith("en"))
+                        {
+                            // Display English properties
+                            @Html.DisplayFor(model => model.Description)
+
+                        }
+                        else if (sessionData.StartsWith("ar"))
+                        {
+                            // Display Arabic properties
+                            <td>@Html.DisplayFor(model => model.Description_AR)</td>
+
+                        }
+                        else
+                        {
+                            // Default to English if the language is not specified or supported
+                            @Html.DisplayFor(model => model.Description)
+                        }
+                    }
+                    else
+                    {
+                        // Default to English if culture parameter is not provided in the query string
+                        @Html.DisplayFor(model => model.Description)
+
+                    }
+                }
+                
             </dd>
         }
 
         @if (Model.Price != null)
         {
             <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Price)
+                @_localizer["Price"]
+                
             </dt>
             <dd class="col-sm-8">
+
                 @Html.DisplayFor(model => model.Price)
             </dd>
         }
-        
+
 
         @if (Model.Quantity != null)
         {
             <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Quantity)
+                @_localizer["Quantity"]
+               
             </dt>
             <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.Quantity)
@@ -148,7 +231,8 @@
         @if (!string.IsNullOrEmpty(Model.ShippingMethod))
         {
             <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.ShippingMethod)
+                @_localizer["ShippingMethod"]
+              
             </dt>
             <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.ShippingMethod)
@@ -167,6 +251,7 @@
         @if (!string.IsNullOrEmpty(Model.ModelNumber))
         {
             <dt class="col-sm-4">
+                
                 @Html.DisplayNameFor(model => model.ModelNumber)
             </dt>
             <dd class="col-sm-8">
@@ -568,15 +653,7 @@
             </dd>
         }
 
-      @*   @if (!string.IsNullOrEmpty(Model.Category))
-        {
-        <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class="col-sm-8">
-              @Cat{model => model.Category)
-        </dd>
-        } *@
+       
 
         @if (!string.IsNullOrEmpty(Model.AppName))
         {
@@ -856,6 +933,6 @@
     </dl>
 </div>
 <div class="back-btn">
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index"> @_localizer["Back"]</a>
 </div>
 </div>

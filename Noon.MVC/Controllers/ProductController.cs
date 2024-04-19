@@ -4,6 +4,8 @@ using AliExpress.Dtos.Product;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
+using System.Globalization;
 using System.Linq;
 //using testNoon.Models;
 
@@ -16,13 +18,18 @@ namespace Noon.MVC.Controllers
         private ICategoryService _categoryService;
         private IProductService _productService;
         private readonly IWebHostEnvironment _environment;
-        public ProductController(ICategoryService categoryService, IProductService productService, IWebHostEnvironment environment, IHttpContextAccessor httpContextAccessor)
+        private readonly IStringLocalizer<ProductController> _localizer;
+
+        public ProductController(ICategoryService categoryService, IProductService productService, 
+            IWebHostEnvironment environment, IHttpContextAccessor httpContextAccessor, IStringLocalizer<ProductController> localizer)
         {
             _categoryService = categoryService;
             _productService = productService;
             _environment = environment;
             _httpContextAccessor = httpContextAccessor;
+            _localizer = localizer;
         }
+
 
 
 
@@ -31,11 +38,13 @@ namespace Noon.MVC.Controllers
         public async Task<ActionResult> Index(int? page)
         {
             int pageNumber = (page ?? 1);
-
             // Store the current page number in the session
             HttpContext.Session.SetInt32("CurrentPageNumber", pageNumber);
 
             var product = await _productService.GetAllProducts("","", pageNumber, 10,-1,-1,"");
+            ViewData["Request"] = HttpContext.Request;
+            
+            ViewBag.Request = HttpContext.Request;
             return View(product.Entities);
             //return View();
         }
@@ -305,7 +314,7 @@ namespace Noon.MVC.Controllers
                 nextPageNumber = currentPageNumber + 1;
 
             // Redirect to the Index action with the next page number
-            return RedirectToAction("Index", new { page = nextPageNumber });
+            return RedirectToAction("Index", new { page = nextPageNumber, CultureInfo.CurrentCulture });
         }
         public async Task<ActionResult> DetailsProduct(int id)
         {
@@ -330,7 +339,7 @@ namespace Noon.MVC.Controllers
                 nextPageNumber = currentPageNumber - 1;
 
             // Redirect to the Index action with the next page number
-            return RedirectToAction("Index", new { page = nextPageNumber });
+            return RedirectToAction("Index", new { page = nextPageNumber, CultureInfo.CurrentCulture });
         }
 
     }

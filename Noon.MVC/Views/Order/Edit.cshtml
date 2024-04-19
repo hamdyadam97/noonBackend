@@ -1,7 +1,30 @@
 ﻿@model OrderReturnDto
+@using Microsoft.Extensions.Localization
+@using Noon.MVC.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
+@inject IViewLocalizer _localizer
+@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "Edit";
     Layout = "_navbarLayout";
+    var lan = "";
+    var direction = "";
+    var sessionData = Context.Session.GetString("Culture");
+    var culture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+    if (!string.IsNullOrEmpty(sessionData))
+    {
+        if (sessionData.StartsWith("ar"))
+        {
+            lan = "ar";
+            direction = "rtl";
+        }
+        else
+        {
+            lan = "en";
+            direction = "ltr";
+        }
+    }
 }
 
 <h1>More Details </h1>
@@ -10,14 +33,14 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Delivery Method</th>
-                <th>Delivery Cost</th>
-                <th>Contact Phone</th>
-                <th>Shipping Address</th>
-                <th>Product Name</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th>Total Amount</th>
+                <th>  @_localizer["Delivery Method"]</th>
+                <th>  @_localizer["Delivery Cost"]</th>
+                <th>  @_localizer["Contact Phone"]</th>
+                <th>  @_localizer["Shipping Address"]</th>
+                <th>  @_localizer["Product Name"]</th>
+                <th> @_localizer["Price"]</th>
+                <th> @_localizer["Status"]</th>
+                <th> @_localizer["Total Amount"]</th>
             </tr>
         </thead>
         <tbody>
@@ -66,53 +89,14 @@
         <span asp-validation-for="Status" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <input type="submit" value="Save" class="btn btn-primary" />
+        <input type="submit" value=@_localizer["Save"] class="btn btn-primary" />
     </div>
 </form>
 
-@* <div class="form-group">
-    <label asp-for="AppUser.Phone" class="control-label"></label>
-    <p>@Model.AppUser.Phone</p>
-</div>
-<div class="form-group">
-    <label asp-for="AppUser.Country" class="control-label"></label>
-    <p>@Model.AppUser.Country</p>
-</div>
-<div class="form-group">
-    <label asp-for="AppUser.City" class="control-label"></label>
-    <p>@Model.AppUser.City</p>
-</div>
-@{
-    foreach(var item in Model.OrderItems)
-    {
-        <div class="form-group">
-            <label asp-for="OrderItems" class="control-label"></label>
-            <p>@item.ProductId</p>
-        </div>
-    }
-}
- *@
 
 
 
 
-@* <form asp-action="Edit" asp-route-id="@Model.Id">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <input type="hidden" asp-for="Id" />
-    <input type="hidden" asp-for="AppUserId" />
-    <input type="hidden" asp-for="DeliveryMethodId" />
-    <div class="form-group">
-        <label asp-for="Status" class="control-label"></label>
-        <select asp-for="Status" class="form-control">
-            <option value="Pending">Pending</option>
-            <option value="Payment Received">Payment Received</option>
-            <option value="Payment Failed">Payment Failed</option>
-        </select>
-        <span asp-validation-for="Status" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Save" class="btn btn-primary" />
-    </div>
-</form>
- *@
+
+
 

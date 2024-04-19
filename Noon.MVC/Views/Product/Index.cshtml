@@ -1,81 +1,141 @@
-﻿@model IEnumerable<AliExpress.Dtos.Product.ProductViewDto>
-
+﻿
+@using Microsoft.Extensions.Localization
+@using Noon.MVC.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
+@inject IViewLocalizer _localizer
+@model IEnumerable<AliExpress.Dtos.Product.ProductViewDto>
+@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "Products";
     Layout = "_navbarLayout";
+    var lan = "";
+    var direction = "";
+    var sessionData = Context.Session.GetString("Culture");
+    var culture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+    System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US"); ;
+    if (!string.IsNullOrEmpty(culture))
+         {
+
+        if (culture.StartsWith("ar"))
+                  {
+
+                      lan = "ar";
+                      direction = "rtl";
+                  }
+    else
+    {
+        lan = "en";
+        direction = "ltr";
+    }
+         }
 }
-
-<style>
-    /* Your custom styles */
-</style>
-
-<h1>Products Page</h1>
-
+<h1>@_localizer["Products"]</h1>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">@_localizer["Create"]</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+               
+                @_localizer["Title"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @_localizer["Description"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @_localizer["Price"]
             </th>
-           
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @_localizer["Actions"]
             </th>
-            <th>Actions</th>
+            
+            
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @if (Model != null)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("DetailsProduct", "DetailsProduct", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "SfotDelete", new { id = item.Id })
-                </td>
-            </tr>
+            @foreach (var item in Model) {
+                <tr>
+                   
+                    @{
+                        if (!string.IsNullOrEmpty(culture))
+                        {
+                            if (culture.StartsWith("en"))
+                            {
+                                // Display English properties
+                                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                            }
+                            else if (culture.StartsWith("ar"))
+                            {
+                                // Display Arabic properties
+                                <td>@Html.DisplayFor(modelItem => item.Title_AR)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Description_AR)</td>
+                            }
+                            else
+                            {
+                                // Default to English if the language is not specified or supported
+                                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                            }
+                        }
+                        else
+                        {
+                            // Default to English if culture parameter is not provided in the query string
+                            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                        }
+                    }
+
+
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    
+                    <td>
+                        
+                        @{
+                            var editLocalized = _localizer["Edit"];
+                        }
+
+                        @Html.ActionLink(editLocalized.Value, "Edit", new { id = item.Id })
+
+                       
+                        |@{
+                            var DetailsProduct = _localizer["DetailsProduct"];
+                        }
+
+                        @Html.ActionLink(DetailsProduct.Value, "DetailsProduct", new { id = item.Id })|
+
+                        <a href="Product/Delete" class="btn btn-danger deactivate-btn" data-id="@item.Id">@_localizer["Delete"]</a>
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>
 
-<div class="btn-group @Html.Raw("btn btn-success")">
-    @Html.ActionLink("Next", "Next")
+
+@{
+    // var culture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+    int currentPage = ViewBag.CurrentPage ?? 1;
+}
+ |@{
+    var Next = _localizer["Next"];
+}
+@{
+    var Previous = _localizer["Previous"];
+}
+
+<div class="btn-group btn btn-success">
+    @Html.ActionLink(Next.Value, "Next", new { page = currentPage + 1, culture = culture }, new { @class = "btn btn-success" })
 </div>
 
-<div class="btn-group @Html.Raw("btn btn-success")">
-    @Html.ActionLink("Previous", "Previous")
+<div class="btn-group btn btn-success">
+    @Html.ActionLink(Previous.Value, "Previous", new { page = currentPage - 1, culture = culture }, new { @class = "btn btn-success" })
 </div>
 
-   @* <div class="btn-group">   
-    @Html.ActionLink("Previous", "Previous", null, new { @class = "btn btn-danger", style = "margin-top: 20px; margin-bottom: 20px;" })
-</div>
-
-<div class="btn-group">
-    @Html.ActionLink("Next", "Next", null, new { @class = "btn btn-success", style = "margin-top: 20px; margin-bottom: 20px;" })
-</div>
-
-<div class="btn-group">
-    @Html.ActionLink("Previous", "Previous", null, new { @class = "btn btn-danger", style = "margin-top: 20px; margin-bottom: 20px;" })
-</div>
- *@ 

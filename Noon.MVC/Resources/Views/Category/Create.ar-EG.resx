@@ -118,219 +118,234 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Accessories" xml:space="preserve">
-    <value>Accessories</value>
+    <value>اكسسورات</value>
   </data>
   <data name="Activity Tracking" xml:space="preserve">
-    <value>Activity Tracking</value>
+    <value>تتبع النشاط</value>
   </data>
   <data name="Age Category App" xml:space="preserve">
-    <value>Age Category App</value>
+    <value>تطبيق الفئة العمرية</value>
   </data>
   <data name="App Download Available" xml:space="preserve">
-    <value>App Download Available</value>
+    <value>تنزيل التطبيق متاح</value>
   </data>
   <data name="App Name" xml:space="preserve">
-    <value>App Name</value>
+    <value>اسم التطبيق</value>
   </data>
   <data name="Available Sim Card" xml:space="preserve">
-    <value>Available Sim Card</value>
+    <value>بطاقة سيم المتاحة</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>رجوع</value>
   </data>
   <data name="Band Length" xml:space="preserve">
-    <value>Band Length</value>
+    <value>طول الفرقة</value>
   </data>
   <data name="Band Width" xml:space="preserve">
-    <value>Band Width</value>
+    <value>عرض الفرقة</value>
   </data>
   <data name="Battery Capacity" xml:space="preserve">
-    <value>Battery Capacity</value>
+    <value>قدرة البطارية</value>
   </data>
   <data name="Bluetooth Version" xml:space="preserve">
-    <value>Bluetooth Version</value>
+    <value>نسخة البلوتوث</value>
   </data>
   <data name="Brand" xml:space="preserve">
-    <value>Brand</value>
+    <value>ماركة</value>
   </data>
   <data name="Brand Name" xml:space="preserve">
-    <value>Brand Name</value>
+    <value>اسم العلامة التجارية</value>
   </data>
   <data name="Built-In Voice Assistant" xml:space="preserve">
-    <value>Built-In Voice Assistant</value>
+    <value>مساعد صوت مدمج</value>
   </data>
   <data name="Case Material" xml:space="preserve">
-    <value>Case Material</value>
+    <value>مادة القضية</value>
   </data>
   <data name="Certification" xml:space="preserve">
-    <value>Certification</value>
+    <value>شهادة</value>
   </data>
   <data name="Charging Time" xml:space="preserve">
-    <value>Charging Time</value>
+    <value>وقت الشحن</value>
   </data>
   <data name="Communication Type" xml:space="preserve">
-    <value>Communication Type</value>
+    <value>نوع الاتصال</value>
   </data>
   <data name="Company History" xml:space="preserve">
-    <value>Company History</value>
+    <value>تاريخ الشركة</value>
   </data>
   <data name="Compatibility" xml:space="preserve">
-    <value>Compatibility</value>
+    <value>التوافق</value>
   </data>
   <data name="CPU Manufacturer" xml:space="preserve">
-    <value>CPU Manufacturer</value>
+    <value>لوحدة المعالجة المركزية</value>
   </data>
   <data name="CPU Model" xml:space="preserve">
-    <value>CPU Model</value>
+    <value>نموذج وحدة المعالجة المركزية</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>اضافة</value>
   </data>
   <data name="Department" xml:space="preserve">
-    <value>Department</value>
+    <value>قسم</value>
   </data>
   <data name="Detachable" xml:space="preserve">
-    <value>Detachable</value>
+    <value>انفصال</value>
   </data>
   <data name="Eyewear Type" xml:space="preserve">
-    <value>Eyewear Type</value>
+    <value>نوع النظارات</value>
   </data>
   <data name="Features" xml:space="preserve">
-    <value>Features</value>
+    <value>سمات</value>
   </data>
   <data name="Frame Color" xml:space="preserve">
-    <value>Frame Color</value>
+    <value>لون الاطار</value>
   </data>
   <data name="Frame Material" xml:space="preserve">
-    <value>Frame Material</value>
+    <value>مادة الإطار</value>
   </data>
   <data name="Functionality" xml:space="preserve">
-    <value>Functionality</value>
+    <value>وظائف</value>
   </data>
   <data name="Gender" xml:space="preserve">
-    <value>Gender</value>
+    <value>جنس</value>
   </data>
   <data name="GPS" xml:space="preserve">
-    <value>GPS</value>
+    <value>نظام تحديد المواقع</value>
   </data>
   <data name="Item Type" xml:space="preserve">
-    <value>Item Type</value>
+    <value>نوع العنصر</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Language</value>
+    <value>لغه</value>
   </data>
   <data name="Lens Attributes" xml:space="preserve">
-    <value>Lens Attributes</value>
+    <value>سمات العدسة</value>
   </data>
   <data name="Lens Color" xml:space="preserve">
-    <value>Lens Color</value>
+    <value>لون العدسة</value>
   </data>
   <data name="Lens Features" xml:space="preserve">
-    <value>Lens Features</value>
+    <value>مميزات العدسة</value>
   </data>
   <data name="LensHeight" xml:space="preserve">
-    <value>LensHeight</value>
+    <value>ارتفاع عدسة</value>
   </data>
   <data name="LensMaterial" xml:space="preserve">
-    <value>LensMaterial</value>
+    <value>نوع العدسه</value>
   </data>
   <data name="LensWidth" xml:space="preserve">
-    <value>LensWidth</value>
+    <value>عرض العدسه</value>
   </data>
   <data name="Measurement Scales" xml:space="preserve">
-    <value>Measurement Scales</value>
+    <value>موازين القياس</value>
   </data>
   <data name="Mechanism" xml:space="preserve">
-    <value>Mechanism</value>
+    <value>آلية</value>
   </data>
   <data name="ModelNumber" xml:space="preserve">
-    <value>ModelNumber</value>
+    <value>رقم الموديل</value>
   </data>
   <data name="Movement Type" xml:space="preserve">
-    <value>Movement Type</value>
+    <value>نوع الحركة</value>
   </data>
   <data name="Multi Face" xml:space="preserve">
-    <value>Multi Face</value>
+    <value>متعدد الوجه</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>الاسم</value>
   </data>
   <data name="Network Mode" xml:space="preserve">
-    <value>Network Mode</value>
+    <value>وضع الشبكة</value>
   </data>
   <data name="Origin" xml:space="preserve">
-    <value>Origin</value>
+    <value>اصل</value>
   </data>
   <data name="PlaceOfOrigin" xml:space="preserve">
-    <value>PlaceOfOrigin</value>
+    <value>مكان المنشأ</value>
   </data>
   <data name="RAM" xml:space="preserve">
-    <value>RAM</value>
+    <value>ذاكرة التخزين</value>
   </data>
   <data name="Rear Camera" xml:space="preserve">
-    <value>Rear Camera</value>
+    <value>الكاميرا الخلفية</value>
   </data>
   <data name="Removable Battery" xml:space="preserve">
-    <value>Removable Battery</value>
+    <value>بطارية قابلة للإزالة</value>
   </data>
   <data name="Resolution" xml:space="preserve">
-    <value>Resolution</value>
+    <value>دقة</value>
   </data>
   <data name="ROM" xml:space="preserve">
-    <value>ROM</value>
+    <value>ذاكرة للقراءة فقط</value>
   </data>
   <data name="Screen Material" xml:space="preserve">
-    <value>Screen Material</value>
+    <value>مادة الشاشة</value>
   </data>
   <data name="Screen Shape" xml:space="preserve">
-    <value>Screen Shape</value>
+    <value>شكل الشاشة</value>
   </data>
   <data name="Screen Size" xml:space="preserve">
-    <value>Screen Size</value>
+    <value>حجم الشاشة</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>اختار مواصفات</value>
   </data>
   <data name="Set Type" xml:space="preserve">
-    <value>Set Type</value>
+    <value>ضبط النوع</value>
   </data>
   <data name="ShippingMethod" xml:space="preserve">
-    <value>ShippingMethod</value>
+    <value>طريقة الشحن</value>
   </data>
   <data name="Sim Card Slot" xml:space="preserve">
-    <value>Sim Card Slot</value>
+    <value>فتحة بطاقة سيم</value>
   </data>
   <data name="Specification" xml:space="preserve">
-    <value>Specification</value>
+    <value>تخصيص</value>
   </data>
   <data name="Strap Material" xml:space="preserve">
-    <value>Strap Material</value>
+    <value>مادة الحزام</value>
   </data>
   <data name="Style" xml:space="preserve">
-    <value>Style</value>
+    <value>اسلوب</value>
   </data>
   <data name="Suitable Face Shapes" xml:space="preserve">
-    <value>Suitable Face Shapes</value>
+    <value>أشكال الوجه المناسبة</value>
   </data>
   <data name="Sunglasses Style" xml:space="preserve">
-    <value>Sunglasses Style</value>
+    <value>نمط النظارات الشمسية</value>
   </data>
   <data name="System" xml:space="preserve">
-    <value>System</value>
+    <value>النظام</value>
   </data>
   <data name="Touchscreen" xml:space="preserve">
-    <value>Touchscreen</value>
+    <value>شاشة اللمس</value>
   </data>
   <data name="Transmission Distance" xml:space="preserve">
-    <value>Transmission Distance</value>
+    <value>مسافة الإرسال</value>
   </data>
   <data name="Transmitter" xml:space="preserve">
-    <value>Transmitter</value>
+    <value>الارسال</value>
   </data>
   <data name="Type" xml:space="preserve">
-    <value>Type</value>
+    <value>نوع</value>
   </data>
   <data name="Usage Scope" xml:space="preserve">
-    <value>Usage Scope</value>
+    <value>نطاق الاستخدام</value>
+  </data>
+  <data name="Use" xml:space="preserve">
+    <value>استخدام</value>
   </data>
   <data name="Waterproof Rating" xml:space="preserve">
-    <value>Waterproof Rating</value>
+    <value>تصنيف مقاوم للماء</value>
   </data>
   <data name="Weight" xml:space="preserve">
-    <value>Weight</value>
+    <value>وزن</value>
   </data>
   <data name="WiFi" xml:space="preserve">
-    <value>WiFi</value>
+    <value>واي-فاي</value>
   </data>
   <data name="Working Hours" xml:space="preserve">
-    <value>Working Hours</value>
+    <value>ساعات العمل</value>
   </data>
 </root>

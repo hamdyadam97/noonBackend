@@ -135,6 +135,9 @@
   <data name="Available Sim Card" xml:space="preserve">
     <value>بطاقة سيم المتاحة</value>
   </data>
+  <data name="Back" xml:space="preserve">
+    <value>رجوع</value>
+  </data>
   <data name="Band Length" xml:space="preserve">
     <value>طول الفرقة</value>
   </data>
@@ -175,10 +178,13 @@
     <value>التوافق</value>
   </data>
   <data name="CPU Manufacturer" xml:space="preserve">
-    <value>الشركة المصنعة لوحدة المعالجة المركزية</value>
+    <value>لوحدة المعالجة المركزية</value>
   </data>
   <data name="CPU Model" xml:space="preserve">
     <value>نموذج وحدة المعالجة المركزية</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>تعديل</value>
   </data>
   <data name="Department" xml:space="preserve">
     <value>قسم</value>
@@ -246,6 +252,9 @@
   <data name="Multi Face" xml:space="preserve">
     <value>متعدد الوجه</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>الاسم</value>
+  </data>
   <data name="Network Mode" xml:space="preserve">
     <value>وضع الشبكة</value>
   </data>
@@ -278,6 +287,9 @@
   </data>
   <data name="Screen Size" xml:space="preserve">
     <value>حجم الشاشة</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>اختار مواصفات</value>
   </data>
   <data name="Set Type" xml:space="preserve">
     <value>ضبط النوع</value>
@@ -320,6 +332,9 @@
   </data>
   <data name="Usage Scope" xml:space="preserve">
     <value>نطاق الاستخدام</value>
+  </data>
+  <data name="Use" xml:space="preserve">
+    <value>استخدام</value>
   </data>
   <data name="Waterproof Rating" xml:space="preserve">
     <value>تصنيف مقاوم للماء</value>

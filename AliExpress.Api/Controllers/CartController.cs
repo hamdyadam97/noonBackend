@@ -82,7 +82,12 @@ namespace AliExpress.Api.Controllers
             {
                 if (IsLoggedIn())
                 {
-
+                    var userId = GetUserId();
+                    var cart = await _cartService.GetCartDtoByUserIdAsync(userId);
+                    if (cart != null)
+                    {
+                        return Ok();
+                    }
                     await _cartService.createUserCart(createCartDto);
 
                 }

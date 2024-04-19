@@ -29,9 +29,6 @@ namespace None.Infrastructure
             return counts;
         }
 
-
-
-
         //public async Task<IEnumerable<Product>> GetAllAsync(string searchValue, string category, int page, int pageSize)
         //{
         //    _context.Subcategories

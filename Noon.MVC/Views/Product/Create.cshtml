@@ -52,6 +52,12 @@
                 <span asp-validation-for="Title" style="color:red"></span>
             </div>
 
+             <div class="form-group">
+                <label asp-for="Title_AR" class="control-label">Title Product</label>
+                <input id="title_ar" class="form-control" asp-for="Title_AR" >
+                <span asp-validation-for="Title_AR" style="color:red"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="Quantity" class="control-label">quantity Product</label>
                 <input id="quantity" class="form-control" asp-for="Quantity">
@@ -62,6 +68,11 @@
                 <label asp-for="Description" class="control-label">Description Product</label>
                 <textarea id="description" class="form-control" asp-for="Description"></textarea>
                 <span asp-validation-for="Description" style="color:red"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description_AR" class="control-label">Description Product</label>
+                <textarea id="description_ar" class="form-control" asp-for="Description_AR"></textarea>
+                <span asp-validation-for="Description_AR" style="color:red"></span>
             </div>
 
             <div class="form-group">
