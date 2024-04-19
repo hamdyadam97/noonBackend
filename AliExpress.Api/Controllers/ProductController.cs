@@ -43,14 +43,14 @@ namespace AliExpress.Api.Controllers
             Prds.numberOfPages = totalPages;
 
 
-            if(language != "en") 
-            {
-                foreach (var p in Prds.Entities)
-                {
-                    p.Title = Translate.translate(p.Title);
-                    p.Description = Translate.translate(p.Description);
-                }
-            }
+            //if(language != "en") 
+            //{
+            //    foreach (var p in Prds.Entities)
+            //    {
+            //        p.Title = Translate.translate(p.Title);
+            //        p.Description = Translate.translate(p.Description);
+            //    }
+            //}
 
 
 
