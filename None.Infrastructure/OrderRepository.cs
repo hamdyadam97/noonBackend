@@ -33,6 +33,7 @@ namespace None.Infrastructure
                     var product = await _context.Products.FindAsync(item.ProductId);
                     var orderItem = new OrderItem(product, item.Quantity, item.Product.Price);
                     orderItems.Add(orderItem);
+                    product.quantity--;
                     await _context.SaveChangesAsync();
                 }
 
@@ -50,6 +51,11 @@ namespace None.Infrastructure
 
         public async Task DeleteAsync(Order order)
         {
+            var products=order.OrderItems.Select(item => item.Product).ToList();
+            foreach(var product in products)
+            {
+                product.quantity++;
+            }
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
         }
@@ -96,7 +102,7 @@ namespace None.Infrastructure
         .Where(o => o.AppUserId == userId)
         .OrderByDescending(o => o.CreatedAt)
         .FirstOrDefaultAsync();
-            return order;
+          return order;
         }
 
         public async Task<IEnumerable<DeliveryMethod>> GetDeliveryMethods()
@@ -126,10 +132,8 @@ namespace None.Infrastructure
 
         public async Task UpdateAsync(Order order)
         {
-           
                 _context.Orders.Update(order);
                 await _context.SaveChangesAsync();
-            
         }
         //public async Task UpdateAsync(Order order)
         //{
