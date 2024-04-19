@@ -37,26 +37,32 @@ namespace None.Infrastructure
             if (existingProduct == null)
             {
 
-                throw new ArgumentException($"Product with Id {cartItem.ProductId} does not exist.");
+                throw new ArgumentException($"Product with Id {cartItem.ProductId} does not exist");
             }
 
 
             cartItem.Product = existingProduct;
-
-            var existingCartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == cartItem.ProductId);
-            if (existingCartItem != null)
+            existingProduct.quantity--;
+           if(existingProduct.quantity <=0 )
             {
-
-                existingCartItem.Quantity += cartItem.Quantity;
-                _context.CartItems.Update(existingCartItem);
+                throw new ArgumentException($"Product does not exist");
             }
-            else
-            {
 
-                cart.CartItems.Add(cartItem);
-            }
-            cart.TotalAmount = cart.CartItems.Sum(ci => ci.Quantity * ci.Product.Price);
+                var existingCartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == cartItem.ProductId);
+                if (existingCartItem != null)
+                {
 
+                    existingCartItem.Quantity += cartItem.Quantity;
+                    _context.CartItems.Update(existingCartItem);
+                }
+                else
+                {
+
+                    cart.CartItems.Add(cartItem);
+                }
+                cart.TotalAmount = cart.CartItems.Sum(ci => ci.Quantity * ci.Product.Price);
+           
+           
 
             await _context.SaveChangesAsync();
 
