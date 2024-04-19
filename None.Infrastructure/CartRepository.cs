@@ -43,8 +43,11 @@ namespace None.Infrastructure
 
             cartItem.Product = existingProduct;
             existingProduct.quantity--;
-           if(existingProduct.quantity > 0)
+           if(existingProduct.quantity <=0 )
             {
+                throw new ArgumentException($"Product does not exist");
+            }
+
                 var existingCartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == cartItem.ProductId);
                 if (existingCartItem != null)
                 {
@@ -58,11 +61,7 @@ namespace None.Infrastructure
                     cart.CartItems.Add(cartItem);
                 }
                 cart.TotalAmount = cart.CartItems.Sum(ci => ci.Quantity * ci.Product.Price);
-            }
-            else
-            {
-                throw new ArgumentException($"Product does not exist");
-            }
+           
            
 
             await _context.SaveChangesAsync();
