@@ -10,6 +10,8 @@ namespace AliExpress.Models.Orders
     {
         public string ?Name { get; set; }
         public string ?Description { get; set; }
+        public string? Name__Ar { get; set; }
+        public string? Description_Ar { get; set; }
         public decimal Cost { get; set; }
         public string ?DeliveryTime { get; set; }
     }

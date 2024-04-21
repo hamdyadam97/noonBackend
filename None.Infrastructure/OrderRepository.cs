@@ -56,36 +56,46 @@ namespace None.Infrastructure
 
         public async Task<IEnumerable<Order>> GetAllAsync()
         {
-            //var orders=await _context.Orders.Include(o => o.DeliveryMethod).ToListAsync();
-            //return orders;
-            //var orders = await _context.Orders
-            //    .Include(o => o.DeliveryMethod)
-            //    .Include(o => o.OrderItems)
-            //    .Include(o => o.AppUser)
-            //    .ToListAsync();
-            //return orders;
+           
             var orders = await _context.Orders
         .Include(o => o.DeliveryMethod)
         .Include(o => o.OrderItems).ThenInclude(oi => oi.Product)
         .Include(o => o.AppUser)
+        .OrderByDescending(o => o.CreatedAt)
         .ToListAsync();
             return orders;
 
         }
 
-        public async Task<AppUser> GetAppUserAsync()
+        public async Task<AppUser> GetAppUserAsync(string userId)
         {
-            var appUser=await _context.Users.FirstOrDefaultAsync();
+            var appUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
             return appUser;
         }
 
+        //public async Task<Order> GetByUserIdAsync(string userId)
+        //{
+        //    var order = await _context.Orders
+        //.Include(o => o.OrderItems)
+        //    .ThenInclude(oi => oi.Product)
+        //    .ThenInclude(i => i.Images)// Include the related Product entity
+        //.Include(o => o.DeliveryMethod)
+        //.Where(o => o.AppUserId == userId)
+        //.OrderByDescending(o => o.CreatedAt)
+        //.FirstOrDefaultAsync();
+        //    return order;
+        //}
         public async Task<Order> GetByUserIdAsync(string userId)
         {
-            var order = await _context.Orders
-            .Include(o => o.OrderItems)
-            .Include(o => o.DeliveryMethod)
-            .Where(o => o.AppUserId == userId)
-            .FirstOrDefaultAsync();
+          var order = await _context.Orders
+        .Include(o => o.OrderItems)
+        .ThenInclude(oi => oi.Product)
+        .ThenInclude(i => i.Images)// Include the related Product entity
+        .Include(o => o.DeliveryMethod)
+        .Include(o => o.AppUser)
+        .Where(o => o.AppUserId == userId)
+        .OrderByDescending(o => o.CreatedAt)
+        .FirstOrDefaultAsync();
             return order;
         }
 

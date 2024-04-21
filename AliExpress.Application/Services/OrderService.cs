@@ -1,6 +1,7 @@
 ﻿using AliExpress.Application.Contract;
 using AliExpress.Application.IServices;
 using AliExpress.Dtos.Order;
+using AliExpress.Models;
 using AliExpress.Models.Orders;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AliExpress.Application.Services
 {
@@ -25,7 +27,7 @@ namespace AliExpress.Application.Services
 
         public async Task<OrderReturnDto> CreateOrderAsync(int cartId, int deliveryMethodId, string userId)
         {
-            var appUser = await _orderRepository.GetAppUserAsync();
+            var appUser = await _orderRepository.GetAppUserAsync(userId);
             var order = await _orderRepository.CreateOrderAsync(cartId, deliveryMethodId, appUser);
             var mappedOrder=_mapper.Map<Order,OrderReturnDto>(order);
             return mappedOrder;
@@ -60,7 +62,8 @@ namespace AliExpress.Application.Services
         public async Task<OrderReturnDto> GetOrderByUserIdAsync(string userId)
         {
             var order=await _orderRepository.GetByUserIdAsync(userId);
-            var mappedOrder=_mapper.Map<Order , OrderReturnDto>(order);
+            var mappedOrder = _mapper.Map<Order, OrderReturnDto>(order);
+            
             return mappedOrder;
         }
 

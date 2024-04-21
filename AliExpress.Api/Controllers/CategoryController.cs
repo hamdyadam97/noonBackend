@@ -1,6 +1,7 @@
 ﻿using AliExpress.Application.IServices;
 using AliExpress.Application.Services;
 using AliExpress.Context;
+using AliExpress.Dtos.Product;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,7 @@ namespace AliExpress.Api.Controllers
     {
         private readonly AliExpressContext _context;
         private readonly ICategoryService _categoryService;
-        public CategoryController(ICategoryService categoryService, AliExpressContext aliExpress )
+        public CategoryController(ICategoryService categoryService, AliExpressContext aliExpress)
         {
             _categoryService = categoryService;
             _context = aliExpress;
@@ -52,6 +53,19 @@ namespace AliExpress.Api.Controllers
             await _context.SaveChangesAsync();
             return Ok(result);
         }
+        [HttpGet("GetAllProductsByCategory/{cateId}")]
+        public async Task<ActionResult<IEnumerable<ProductViewDto>>> GetAllProductByCatName(int cateId)
+        {
+            var products = await _categoryService.GetAllProductsByCategory(cateId);
+            if (products == null)
+            {
+                return NotFound();
+            }
+            return Ok(products);
+        }
+
+
+
     }
 }
 

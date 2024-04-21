@@ -58,7 +58,7 @@
                 <div class="collapse navbar-collapse " id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto navbar-right-top">
                       
-
+                       
 
                         <li class="nav-item">
                             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Product", new { area = "" })">
@@ -91,6 +91,11 @@
                         <ul class="navbar-nav flex-column">
                             <li class="nav-divider">
                                 <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        @* <a class="nav-link" href="@Url.Action("Arabic", "ar-EG")">العربية</a>  *@
+                                        <a class="nav-link" asp-controller="Lang" asp-action="Arabic" asp-route-culture="ar-Eg">العربية</a>
+                                        <a class="nav-link" href="@Url.Action("English", "en-US")">English</a>
+                                    </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="http://localhost:5108/Product/">Products</a>
                                     </li>
