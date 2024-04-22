@@ -24,6 +24,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Noon.MVC.Areas.Identity.Pages.Account
 {
+    //[Authorize(Roles = "admin")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<AppUser> _signInManager;

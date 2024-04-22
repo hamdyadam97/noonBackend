@@ -11,7 +11,7 @@ namespace AliExpress.Dtos.Category
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string? Name_Ar { get; set; }
+        public string? Name_Ar { get; set; } = "";
         public bool IsDeleted { get; set; }
         public ICollection<SubCategoryDto> Subcategories { get; set; }
         public ICollection<string> Specification {  get; set; }
