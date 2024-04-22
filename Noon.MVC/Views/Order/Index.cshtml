@@ -1,8 +1,31 @@
 ﻿
 @model IEnumerable<OrderReturnDto>
+@using Microsoft.Extensions.Localization
+@using Noon.MVC.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
+@inject IViewLocalizer _localizer
+@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "Index";
     Layout = "_navbarLayout";
+    var lan = "";
+    var direction = "";
+    var sessionData = Context.Session.GetString("Culture");
+    var culture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+    if (!string.IsNullOrEmpty(sessionData))
+    {
+        if (sessionData.StartsWith("en"))
+        {
+            lan = "ar";
+            direction = "rtl";
+        }
+        else
+        {
+            lan = "en";
+            direction = "ltr";
+        }
+    }
 }
 
 @if(Model.Count() > 0)
@@ -11,30 +34,37 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Id)
+                    @_localizer["Id"]
+                   
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.OrderDate)
+                    @_localizer["OrderDate"]
+                    
+                <th>
+                    @_localizer["UserPhone"]
+                    
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.AppUser.Phone)
+                    @_localizer["UserCountry"]
+                   
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.AppUser.Country)
+                    @_localizer["UserCity"]
+                    
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.AppUser.City)
+                    @_localizer["DeliveryMethod"]
+                    
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.DeliveryMethod)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Status)
+                    @_localizer["Status"]
+                   
                 </th>
                <th>
-            @Html.DisplayNameFor(model => model.Total)
+                    @_localizer["Total"]
+           
             </th>
-                <th>Actions</th>
+                <th>@_localizer["Actions"]</th>
             </tr>
         </thead>
         <tbody>
@@ -73,12 +103,12 @@
                             @Html.DisplayFor(modelItem => item.Total)
                         </td>
                         <td>
-                       
-                            <a class="btn btn-primary" asp-controller="Order" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+
+                            <a class="btn btn-primary" asp-controller="Order" asp-action="Edit" asp-route-id="@item.Id">@_localizer["Edit"]</a>
                         </td>
                         <td>
                            
-                            <a class="btn btn-secondary" asp-controller="Order" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            @* <a class="btn btn-secondary" asp-controller="Order" asp-action="Details" asp-route-id="@item.Id">Details</a> *@
                         </td>
                     </tr>
                 }

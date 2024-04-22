@@ -1,37 +1,63 @@
 ﻿@model IEnumerable<AliExpress.Dtos.User.UserDTO>
+@using Microsoft.Extensions.Localization
+@using Noon.MVC.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
+@inject IViewLocalizer _localizer
 
+@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "Users Page";
     Layout = "_navbarLayout";
+    var lan = "";
+    var direction = "";
+    var sessionData = Context.Session.GetString("Culture");
+    var culture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+    if (!string.IsNullOrEmpty(sessionData))
+    {
+        if (sessionData.StartsWith("en"))
+        {
+            lan = "ar";
+            direction = "rtl";
+        }
+        else
+        {
+            lan = "en";
+            direction = "ltr";
+        }
+    }
 }
 
-<h1>Users Page</h1>
+<h1>@_localizer["Users Page"]</h1>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                @_localizer["Id"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserName)
+                @_localizer["UserName"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @_localizer["Email"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
+                @_localizer["PhoneNumber"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Country)
+                @_localizer["Country"]
+              
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.City)
+                @_localizer["City"]
+               
             </th>
             <th>
-                Status
+                @_localizer["Status"]
+                
             </th>
-            <th>Actions1</th>
-            <th>Actions2</th>
+            <th>@_localizer["Actions2"]</th>
+            <th>@_localizer["Actions1"]</th>
         </tr>
     </thead>
     <tbody>
@@ -55,29 +81,88 @@
                         @Html.DisplayFor(modelItem => item.PhoneNumber)
                     </td>
                     <td>
+                        @{
+                            if (!string.IsNullOrEmpty(sessionData))
+                            {
+                                if (sessionData.StartsWith("en"))
+                                {
+                                    // Display English properties
+                                    @Html.DisplayFor(modelItem => item.Country)
+                                }
+                                else if (sessionData.StartsWith("ar"))
+                                {
+                                    // Display Arabic properties
+                                    @Html.DisplayFor(modelItem => item.Country_AR)
+                                
+                                }
+                                else
+                                {
+                                    // Default to English if the language is not specified or supported
+                                    @Html.DisplayFor(modelItem => item.Country)
+                                }
+                            }
+                            else
+                            {
+                                // Default to English if culture parameter is not provided in the query string
+                                @Html.DisplayFor(modelItem => item.Country)
+                            }
+                        }
                         @Html.DisplayFor(modelItem => item.Country)
                     </td>
                     <td>
+                        @{
+                            if (!string.IsNullOrEmpty(sessionData))
+                            {
+                                if (sessionData.StartsWith("en"))
+                                {
+                                    // Display English properties
+                                    @Html.DisplayFor(modelItem => item.City)
+                                }
+                                else if (sessionData.StartsWith("ar"))
+                                {
+                                    // Display Arabic properties
+                                    @Html.DisplayFor(modelItem => item.City_AR)
+                                }
+                                else
+                                {
+                                    // Default to English if the language is not specified or supported
+                                    @Html.DisplayFor(modelItem => item.City)
+                                }
+                            }
+                            else
+                            {
+                                // Default to English if culture parameter is not provided in the query string
+                                @Html.DisplayFor(modelItem => item.City)
+                            }
+                        }
                         @Html.DisplayFor(modelItem => item.City)
                     </td>
                     @if(item.Deactivate==false)
                     {
                         <td>
-                            @* @Html.DisplayFor(modelItem => item.Deactivate) *@
-                            Active
+
+                            @_localizer["Active"]
                         </td>
                     }
                     else
                     {
                         <td>
-                            Deactivate
+                            @_localizer["Deactivate"]
                         </td>
                     }
+
+
                     <td>
-                        @Html.ActionLink("Activate", "Activate", new { id = item.Id }, new { @class = "btn btn-success" })
+                        @{
+                            var Activate = _localizer["Active"];
+                        }
+                        @Html.ActionLink(Activate.Value, "Activate", new { id = item.Id }, new { @class = "btn btn-success" })
                     </td>
                     <td>
-                        @Html.ActionLink("Deactivate", "Deactivate", new { id = item.Id }, new { @class = "btn btn-danger" })
+                        @{
+                            var Deactivate = _localizer["Deactivate"];
+                        }
+                        @Html.ActionLink(Deactivate.Value, "Deactivate", new { id = item.Id }, new { @class = "btn btn-danger" })
                     </td>
                 </tr>
             }

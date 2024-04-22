@@ -1,5 +1,10 @@
 ﻿@model AliExpress.Dtos.Product.CreateUpdateDeleteProductDto
-
+@using Microsoft.Extensions.Localization
+@using Noon.MVC.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
+@inject IViewLocalizer _localizer
+@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "Edit";
     Layout = "_navbarLayout";
@@ -21,11 +26,32 @@
             };
 
     var genderList = new SelectList(gender.ToList(), "Key", "Value");
+
+
+    ViewData["Title"] = "DetailsProduct";
+    var Cat = ViewBag.Category;
+    var lan = "";
+    var direction = "";
+    var sessionData = Context.Session.GetString("Culture");
+    var culture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+    if (!string.IsNullOrEmpty(sessionData))
+    {
+        if (sessionData.StartsWith("en"))
+        {
+            lan = "ar";
+            direction = "rtl";
+        }
+        else
+        {
+            lan = "en";
+            direction = "ltr";
+        }
+    }
 }
 
 <h1>Edit</h1>
 
-<h4>CreateUpdateDeleteProductDto</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-12">
@@ -47,6 +73,20 @@
                         </div>
                     </div>
                     }
+
+                    @if (!string.IsNullOrEmpty(Model.Title_AR))
+                    {
+                        <div class="col-sm">
+                            <div class="form-group">
+
+
+                                <label asp-for="Title_AR" class="control-label"></label>
+                                <input asp-for="Title_AR" class="form-control" />
+
+                                <span asp-validation-for="Title_AR" class="text-danger"></span>
+                            </div>
+                        </div>
+                    }
                     @if (!string.IsNullOrEmpty(Model.Description))
                             {
                     <div class="col-sm">
@@ -60,6 +100,20 @@
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
                     </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Description_AR))
+                    {
+                        <div class="col-sm">
+                            <div class="form-group">
+
+
+                                <label asp-for="Description_AR" class="control-label"></label>
+                                <textarea asp-for="Description_AR" class="form-control"></textarea>
+
+
+                                <span asp-validation-for="Description_AR" class="text-danger"></span>
+                            </div>
+                        </div>
                     }
                     @if (!string.IsNullOrEmpty(Convert.ToString(Model.Price)))
                             {
@@ -1192,14 +1246,15 @@
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                @* <input type="submit" value="Save" class="btn btn-primary" /> *@
+                <input type="submit" value=@_localizer["save"] class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index"> @_localizer["Back"]</a>
 </div>
 
 @section Scripts {
