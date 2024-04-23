@@ -86,7 +86,9 @@ namespace None.Infrastructure
                 var cat = _context.Categories.FirstOrDefault(c => c.Name.ToLower() == category.ToLower());
                 if (cat != null)
                 {
-                    query = query.Where(p => p.Category == cat.Id.ToString());
+                    //query = query.Where(p => p.Category == cat.Id.ToString());
+                    query = query.Where(p => p.ProductCategories.Any(pc => pc.Category.Name.ToLower() == category.ToLower()));
+
                 }
             }
 

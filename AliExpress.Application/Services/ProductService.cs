@@ -1,4 +1,5 @@
 ﻿using AliExpress.Application.Contract;
+using AliExpress.Context;
 using AliExpress.Dtos.Category;
 using AliExpress.Dtos.Pagination;
 using AliExpress.Dtos.Product;
@@ -6,6 +7,7 @@ using AliExpress.Dtos.ViewResult;
 using AliExpress.Models;
 using AutoMapper;
 using Azure;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
@@ -19,12 +21,13 @@ namespace AliExpress.Application.Services
     {
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
-
+        private readonly AliExpressContext _context;
         public ProductService(IProductRepository productRepository ,
-            IMapper mapper)
+            IMapper mapper, AliExpressContext context)
         {
             _productRepository = productRepository;
             _mapper = mapper;
+            _context = context;
         }
         public async Task<ResultView<CreateUpdateDeleteProductDto>> Create(CreateUpdateDeleteProductDto productDto)
         {
@@ -35,6 +38,15 @@ namespace AliExpress.Application.Services
                 var product = _mapper.Map<CreateUpdateDeleteProductDto, Product>(productDto);
                 var createdProduct = await _productRepository.CreateAsync(product);
                 var createdProductDto = _mapper.Map<Product, CreateUpdateDeleteProductDto>(createdProduct);
+                var productCategory = new ProductCategory
+                {
+                    ProductId = createdProductDto.Id,
+                    CategoryId = createdProductDto.Category,
+                };
+
+                // Add the new ProductCategory entity to the context
+                _context.ProductCategories.Add(productCategory);
+                await _context.SaveChangesAsync();
                 return new ResultView<CreateUpdateDeleteProductDto> { Entity = createdProductDto, IsSuccess = true, Message = "Create success" };
             }
             return new ResultView<CreateUpdateDeleteProductDto> { Entity = null, IsSuccess = false, Message = "Product Already Exist before Please change Product Name" };
