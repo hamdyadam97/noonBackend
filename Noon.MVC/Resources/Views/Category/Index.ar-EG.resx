@@ -127,7 +127,7 @@
     <value>تعديل</value>
   </data>
   <data name="id" xml:space="preserve">
-    <value>الرقم المميز</value>
+    <value>الرقم التعريفي</value>
   </data>
   <data name="name" xml:space="preserve">
     <value>الاسم</value>
