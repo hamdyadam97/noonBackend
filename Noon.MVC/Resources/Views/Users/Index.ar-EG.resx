@@ -129,6 +129,9 @@
   <data name="Active" xml:space="preserve">
     <value>نشيط</value>
   </data>
+  <data name="ADDNEWUSER" xml:space="preserve">
+    <value>إضافة مستخدم جديد</value>
+  </data>
   <data name="City" xml:space="preserve">
     <value>المدينة</value>
   </data>

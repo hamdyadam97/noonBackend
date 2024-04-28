@@ -24,7 +24,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Noon.MVC.Areas.Identity.Pages.Account
 {
-    //[Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin")]
+    [Authorize]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<AppUser> _signInManager;
@@ -129,7 +130,8 @@ namespace Noon.MVC.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                await _userManager.AddToRoleAsync(user, Role);
+                //await _userManager.AddToRoleAsync(user, Role);
+                await _userManager.AddToRoleAsync(user, "admin");
 
 
                 if (result.Succeeded)
@@ -156,12 +158,14 @@ namespace Noon.MVC.Areas.Identity.Pages.Account
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         var roles = _aliExpressContext.Roles.Select(r => r).ToList();
-                        ViewData["Roles"] = new SelectList(roles);
+                        //ViewData["Roles"] = new SelectList(roles);
+                        ViewData["Roles"] = "admin";
                         return LocalRedirect(returnUrl);
                     }
                 }
                 var roles2 = _aliExpressContext.Roles.Select(r => r).ToList();
-                ViewData["Roles"] = new SelectList(roles2);
+                //ViewData["Roles"] = new SelectList(roles2);
+                ViewData["Roles"] = "admin";
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);

@@ -99,11 +99,27 @@ namespace AliExpress.Api.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null) 
+                {
+                    var roles = await _userManager.GetRolesAsync(user);
+                    if (roles.Contains("admin"))
+                    {
+
+                        return Unauthorized("Invalid login attempt. Admin Account  Can't use it in log in");
+                    }
+                }
+                
+                if (user.Deactivate)
+                {
+                    return Unauthorized("Invalid login attempt. User account is deactivated.");
+
+                }
                 if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
                 {
                     var token = GenerateJwtToken(user);
                     return Ok(new { Token = token, User = user });
                 }
+               
                 else
                 {
                     return Unauthorized("Invalid email or password.");

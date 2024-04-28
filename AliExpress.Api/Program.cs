@@ -33,7 +33,13 @@ namespace AliExpress.Api
             //    .AddEntityFrameworkStores<AliExpressContext>().AddDefaultTokenProviders();
 
             builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
-               .AddEntityFrameworkStores<AliExpressContext>().AddDefaultTokenProviders();
+               .AddRoles<IdentityRole>().AddEntityFrameworkStores<AliExpressContext>().AddDefaultTokenProviders();
+
+
+
+
+
+
 
             //mapper
             builder.Services.AddAutoMapper(M =>M.AddProfile(new MappingProduct()));

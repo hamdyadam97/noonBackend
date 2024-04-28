@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Localization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using System.Text.RegularExpressions;
 namespace Noon.MVC.Controllers
 {
+    [Authorize(Roles = "admin")]
+    [Authorize]
     public class LangController : Controller
     {
         

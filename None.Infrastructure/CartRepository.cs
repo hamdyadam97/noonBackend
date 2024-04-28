@@ -42,7 +42,7 @@ namespace None.Infrastructure
 
 
             cartItem.Product = existingProduct;
-            existingProduct.quantity--;
+          
            if(existingProduct.quantity <=0 )
             {
                 throw new ArgumentException($"Product does not exist");

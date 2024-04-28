@@ -1,5 +1,4 @@
-﻿
-@using Microsoft.Extensions.Localization
+﻿@using Microsoft.Extensions.Localization
 @using Noon.MVC.Controllers
 @using Microsoft.AspNetCore.Mvc.Localization
 @using System.Globalization
@@ -15,20 +14,20 @@
     var culture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
     System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US"); ;
     if (!string.IsNullOrEmpty(culture))
-         {
+    {
 
         if (culture.StartsWith("ar"))
-                  {
+        {
 
-                      lan = "ar";
-                      direction = "rtl";
-                  }
-    else
-    {
-        lan = "en";
-        direction = "ltr";
+            lan = "ar";
+            direction = "rtl";
+        }
+        else
+        {
+            lan = "en";
+            direction = "ltr";
+        }
     }
-         }
 }
 <h1>@_localizer["Products"]</h1>
 <p>
@@ -38,7 +37,7 @@
     <thead>
         <tr>
             <th>
-               
+
                 @_localizer["Title"]
             </th>
             <th>
@@ -50,16 +49,17 @@
             <th>
                 @_localizer["Actions"]
             </th>
-            
-            
+
+
         </tr>
     </thead>
     <tbody>
         @if (Model != null)
         {
-            @foreach (var item in Model) {
+            @foreach (var item in Model)
+            {
                 <tr>
-                   
+
                     @{
                         if (!string.IsNullOrEmpty(culture))
                         {
@@ -95,23 +95,23 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Price)
                     </td>
-                    
+
                     <td>
-                        
+
                         @{
                             var editLocalized = _localizer["Edit"];
                         }
 
                         @Html.ActionLink(editLocalized.Value, "Edit", new { id = item.Id })
 
-                       
+
                         |@{
                             var DetailsProduct = _localizer["DetailsProduct"];
                         }
 
                         @Html.ActionLink(DetailsProduct.Value, "DetailsProduct", new { id = item.Id })|
 
-                       
+
 
                         @* <a href="@Url.Action("SfotDelete", "Product", new { id = item.Id })" class="btn btn-danger deactivate-btn">@_localizer["Delete"]</a> *@
 
@@ -142,7 +142,7 @@
     // var culture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
     int currentPage = ViewBag.CurrentPage ?? 1;
 }
- @{
+@{
     var Next = _localizer["Next"];
 }
 @{
@@ -156,4 +156,3 @@
 <div class="btn-group btn btn-success">
     @Html.ActionLink(Previous.Value, "Previous", new { page = currentPage - 1, culture = culture }, new { @class = "btn btn-success" })
 </div>
-

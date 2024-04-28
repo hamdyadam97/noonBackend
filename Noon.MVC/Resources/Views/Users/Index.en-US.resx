@@ -129,6 +129,9 @@
   <data name="Active" xml:space="preserve">
     <value>Active</value>
   </data>
+  <data name="ADDNEWUSER" xml:space="preserve">
+    <value>Add New User</value>
+  </data>
   <data name="City" xml:space="preserve">
     <value>City</value>
   </data>

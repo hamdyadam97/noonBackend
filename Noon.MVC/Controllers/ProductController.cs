@@ -11,7 +11,8 @@ using System.Linq;
 
 namespace Noon.MVC.Controllers
 {
-
+    [Authorize(Roles = "admin")]
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly IHttpContextAccessor _httpContextAccessor;

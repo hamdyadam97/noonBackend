@@ -1,12 +1,15 @@
 ﻿using AliExpress.Application.IServices;
 using AliExpress.Dtos.Category;
 using AliExpress.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SQLitePCL;
 
 namespace Noon.MVC.Controllers
 {
+    [Authorize(Roles = "admin")]
+    [Authorize]
     public class CategoryController : Controller
     {
 

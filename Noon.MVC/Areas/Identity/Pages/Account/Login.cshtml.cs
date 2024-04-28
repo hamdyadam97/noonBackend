@@ -28,7 +28,7 @@ namespace Noon.MVC.Areas.Identity.Pages.Account
         {
             _signInManager = signInManager;
             _logger = logger;
-            _userManager = userManager; 
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -104,6 +104,8 @@ namespace Noon.MVC.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
+
+
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -123,30 +125,31 @@ namespace Noon.MVC.Areas.Identity.Pages.Account
 
                     if (user != null)
                     {
+                        if (user.Deactivate)
+                        {
+                            // User is deactivated, prevent login
+                            _logger.LogWarning("Deactivated user tried to log in.");
+                            TempData["ErrorMessage"] = "Invalid login attempt. User account is deactivated.";
+                            await _signInManager.SignOutAsync(); // Sign out the user to prevent further actions
+                            return Page();
+                        }
+
                         var roles = await _userManager.GetRolesAsync(user);
 
                         if (roles.Contains("user"))
                         {
-
-
-
                             // User has the "user" role
                             _logger.LogWarning("User has the 'user' role. Not allowed to login.");
                             ModelState.AddModelError(string.Empty, "Invalid login attempt. User not allowed to login.");
                             await _signInManager.SignOutAsync(); // Sign out the user to prevent further actions
-
                             TempData["ErrorMessage"] = "Invalid login attempt for users with the 'user' role.";
-
-
                             return Page();
                         }
-                        else
-                        {
-                            // User doesn't have the "user" role, proceed with the login
-                            _logger.LogInformation("User logged in.");
-                            return LocalRedirect(returnUrl);
-                        }
                     }
+
+                    // User doesn't have the "user" role or is not deactivated, proceed with the login
+                    _logger.LogInformation("User logged in.");
+                    return LocalRedirect(returnUrl);
                 }
 
                 if (result.RequiresTwoFactor)
@@ -168,6 +171,7 @@ namespace Noon.MVC.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
 
 
     }

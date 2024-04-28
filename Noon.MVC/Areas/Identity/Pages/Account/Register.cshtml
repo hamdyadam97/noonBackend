@@ -1,7 +1,7 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Add new user";
    // Layout = "null";
 }
 
@@ -83,16 +83,16 @@
 
             @* Reuse the select list from the first page *@
 
-            @{
+          @*   @{
                 var roles = (IEnumerable<SelectListItem>)ViewData["Roles"];
-            }
+            } *@
 
-            <div class="form-group">
+           @*  <div class="form-group">
                 <label for="Role">Select Role:</label>
                 <select asp-for="Role" class="form-control" asp-items="roles"></select>
-            </div>
+            </div> *@
 
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Add</button>
         </form>
     </div>
 </div>

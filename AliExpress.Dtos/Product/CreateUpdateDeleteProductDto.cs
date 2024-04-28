@@ -62,7 +62,7 @@ namespace AliExpress.Dtos.Product
         public string? MeasurementScales { get; set; }
         public string? ActivityTracking { get; set; }
         public string? Touchscreen { get; set; }
-        public string? Category { get; set; }
+        public int Category { get; set; }
         public string? AppName { get; set; }
         public string? ScreenMaterial { get; set; }
         public string? CPUModel { get; set; }
