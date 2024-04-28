@@ -7,7 +7,7 @@
 
 @using Microsoft.AspNetCore.Http
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "CATEGORY";
    Layout = "_navbarLayout";
     var lan = "";
     var direction = "";
@@ -28,7 +28,7 @@
     }
 }
 
-<h1>Index</h1>
+<h1>@_localizer["CATEGORY"]</h1>
 
 <p>
     <a asp-action="Create">@_localizer["Create"]</a>

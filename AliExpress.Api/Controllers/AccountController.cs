@@ -107,6 +107,11 @@ namespace AliExpress.Api.Controllers
 
                         return Unauthorized("Invalid login attempt. Admin Account  Can't use it in log in");
                     }
+                    if(user.Deactivate=true)
+                    {
+                        return Unauthorized("Invalid login attempt.  Account  Deactivate ");
+
+                    }
                 }
                 
                 if (user.Deactivate)

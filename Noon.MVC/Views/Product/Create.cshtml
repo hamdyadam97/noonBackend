@@ -4,7 +4,7 @@
     Layout = "_navbarLayout";
 }
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Product";
     List<string> names = new List<string>() { "Ayed", "Hamdy", "Haidy" };
     // Retrieve categories from ViewBag and create a SelectList
     SelectList categoryList = null;
@@ -20,9 +20,9 @@
     
 }
 
-<h1>Create</h1>
+<h1>Create Product</h1>
 
-<h4>CreateUpdateDeleteProductDto</h4>
+
 <hr />
 <div class="row">
    
@@ -53,7 +53,7 @@
             </div>
 
              <div class="form-group">
-                <label asp-for="Title_AR" class="control-label">Title Product</label>
+                <label asp-for="Title_AR" class="control-label"> Arabic Title Product</label>
                 <input id="title_ar" class="form-control" asp-for="Title_AR" >
                 <span asp-validation-for="Title_AR" style="color:red"></span>
             </div>
@@ -70,7 +70,7 @@
                 <span asp-validation-for="Description" style="color:red"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description_AR" class="control-label">Description Product</label>
+                <label asp-for="Description_AR" class="control-label">Arabic Description Product</label>
                 <textarea id="description_ar" class="form-control" asp-for="Description_AR"></textarea>
                 <span asp-validation-for="Description_AR" style="color:red"></span>
             </div>

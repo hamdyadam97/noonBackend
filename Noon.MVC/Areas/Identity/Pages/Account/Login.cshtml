@@ -4,15 +4,11 @@
 @{
     ViewData["Title"] = "Log in";
 }
-
+@* 
 <style>
     body {
         background-color: #f8f9fa;
         font-family: Arial, sans-serif;
-    }
-
-    .container {
-        margin-top: 50px;
     }
 
     .card {
@@ -55,15 +51,14 @@
 </style>
 
 <div class="container">
-    <div class="row justify-content-md-center">
+    <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h1>@ViewData["Title"]</h1>
                 </div>
                 <div class="card-body">
-
-                    <!-- Your existing login form here -->
+                    
                     @if (Model.ModelState.TryGetValue(string.Empty, out var errors) && errors.Errors.Count > 0)
                     {
                         <div class="alert alert-danger" role="alert">
@@ -96,11 +91,106 @@
     </div>
 </div>
 
-
-
-
-
-
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+ *@
+
+
+
+ <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login</title>
+    
+    <link rel="stylesheet" href="~/assets/vendor/bootstrap/css/bootstrap.min.css"> 
+     <link href="~/assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/assets/libs/css/style.css">
+    <link rel="stylesheet" href="~/assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-image: url('https://scontent.fcai21-2.fna.fbcdn.net/v/t39.30808-6/357709778_632716582220937_8714296665847819641_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeGIjWS0kLCNnBOAszdCf_CIOsMIGkHKhdQ6wwgaQcqF1NKPWFSHDYAxu_ndhfhLCWoBY4VsP8qbH10fNkoAxXa0&_nc_ohc=AVPfghq9zoYQ7kNvgHaUGsv&_nc_ht=scontent.fcai21-2.fna&oh=00_AfBmUCInMjcBtRE-JeCci3x9TnmbuBY7WqK-XFPzIoblIw&oe=66344264');
+            /* https: //media.licdn.com/dms/image/D4D12AQGttzHmZDsM3g/article-cover_image-shrink_720_1280/0/1701341303241?e=2147483647&v=beta&t=8VfVuD0U1MiTXcWopz0gWGX9PtCGgSmDCdWdrV8TtQ0 background-size: cover; */
+            /* https: //comingsoon.ae/wp-content/uploads/2018/09/noon.jpg background-repeat: no-repeat; */
+            /* https: //su24su.com/wp-content/uploads/2023/11/noon-%D9%86%D9%88%D9%86-1536x864.jpg */
+        }
+
+        .logo-img {
+            width: 100%; /* Adjust the width as needed */
+            height: 50px; /* Adjust the height as needed */
+            margin-right: 10px; /* Adjust the margin as needed */
+        }
+    </style>
+</head>
+
+<body>
+    @if (Model.ModelState.TryGetValue(string.Empty, out var errors) && errors.Errors.Count > 0)
+    {
+        <div class="alert alert-danger" role="alert">
+            @errors.Errors[0].ErrorMessage
+        </div>
+    }
+    <div class="splash-container">
+        <div class="card">
+            <div class="card-header text-center">
+                <a href="../index.html"><img class="logo-img" src="https://seeklogo.com/images/N/noon-com-logo-96C05327E1-seeklogo.com.png" alt="logo"></a>
+
+                @* <a href="../index.html"><img class="logo-img" src="https://www.arabnews.com/sites/default/files/styles/n_670_395/public/2017/10/02/1005796-1410384298.jpg?itok=q7JCQgC3" alt="logo"></a> *@
+                <br /><br />
+                <span class="splash-description">Please enter your user information.</span>
+            </div>
+            <div class="card-body">
+                <form id="account" method="post">
+
+              
+
+                    <div class="form-group">
+                        <label for="inputEmail" class="form-label">Email address</label>
+                        <input asp-for="Input.Email" class="form-control form-control-lg" id="username" type="text" placeholder="name@example.com" required >
+                    </div>
+                  
+                    <div class="form-group">
+                        <label for="inputPassword" class="form-label">Password</label>
+                        <input asp-for="Input.Password" class="form-control form-control-lg" id="password" type="password" placeholder="Password" required>
+                    </div>
+
+
+
+                 
+                    <div class="form-group">
+                        <label class="custom-control custom-checkbox">
+                            <input  asp-for="Input.RememberMe" class="custom-control-input" type="checkbox">
+                            <span class="custom-control-label">Remember Me</span>
+                        </label>
+                    </div>
+
+                    
+                    <button id="login-submit" type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+                </form>
+            </div>
+            <div class="card-footer bg-white p-0">
+                
+                <div class="card-footer-item card-footer-item-bordered">
+                    <a href="./ForgotPassword" class="footer-link">Forgot Password</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+    <script src="~/assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+</body>
+ 

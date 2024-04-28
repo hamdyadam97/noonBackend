@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using None.Infrastructure;
 using System.Globalization;
@@ -25,7 +26,9 @@ namespace Noon.MVC
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-  
+            //builder.Services.AddScoped<IUserService, UserService>();
+            //builder.Services.AddScoped<IUserRepository, UserRepository>();
+
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -43,11 +46,18 @@ namespace Noon.MVC
                 op.UseSqlServer(builder.Configuration.GetConnectionString("ECommerceContex"));
             }, ServiceLifetime.Scoped);
 
-           
+
+            //builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            //{
+            //    options.User.RequireUniqueEmail = false;
+            //});
 
             builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = false)
                         .AddRoles<IdentityRole>()
                         .AddEntityFrameworkStores<AliExpressContext>();
+
+
+
             builder.Services.AddSession();
 
             builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -55,22 +65,22 @@ namespace Noon.MVC
               .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
               .AddDataAnnotationsLocalization();
             builder.Services.Configure<RequestLocalizationOptions>(options =>
-             {
-                 var supportedCultures = new[]
-                 {
+            {
+                var supportedCultures = new[]
+                {
               new CultureInfo("en-US"),
               new CultureInfo("ar-EG"), // Arabic (Egypt)
            };
-                 options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture(culture: "en-US", uiCulture: "en-US");
-                 options.SupportedCultures = supportedCultures;
-                 options.SupportedUICultures = supportedCultures;
-                 options.RequestCultureProviders = new List<IRequestCultureProvider>
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture(culture: "en-US", uiCulture: "en-US");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+                options.RequestCultureProviders = new List<IRequestCultureProvider>
              {        new CookieRequestCultureProvider(),       // Accept culture from cookies
                       new QueryStringRequestCultureProvider(),  // Accept culture from query string
                       new AcceptLanguageHeaderRequestCultureProvider() // Accept culture from header    };
              };
-             });
-            
+            });
+
             var app = builder.Build();
 
             app.UseSession();
