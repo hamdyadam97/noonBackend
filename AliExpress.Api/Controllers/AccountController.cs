@@ -102,23 +102,34 @@ namespace AliExpress.Api.Controllers
                 if (user != null) 
                 {
                     var roles = await _userManager.GetRolesAsync(user);
+                    //if (roles.Contains("admin"))
+                    //{
+
+                    //    return Unauthorized("Invalid login attempt. Admin Account  Can't use it in log in");
+                    //}
+                    //if(user.Deactivate==true)
+                    //{
+                    //    return Unauthorized("Invalid login attempt.  Account  Deactivate ");
+
+                    //}
+
                     if (roles.Contains("admin"))
                     {
-
-                        return Unauthorized("Invalid login attempt. Admin Account  Can't use it in log in");
+                        Response.StatusCode = 403;
+                        return new JsonResult(new { message = "Invalid login attempt. Admin Account can't be used for login." });
                     }
-                    if(user.Deactivate=true)
+                    if (user.Deactivate == true)
                     {
-                        return Unauthorized("Invalid login attempt.  Account  Deactivate ");
-
+                        Response.StatusCode = 403;
+                        return new JsonResult(new { message = "Invalid login attempt. Account is deactivated." });
                     }
                 }
                 
-                if (user.Deactivate)
-                {
-                    return Unauthorized("Invalid login attempt. User account is deactivated.");
+                //if (user.Deactivate)
+                //{
+                //    return Unauthorized("Invalid login attempt. User account is deactivated.");
 
-                }
+                //}
                 if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
                 {
                     var token = GenerateJwtToken(user);
