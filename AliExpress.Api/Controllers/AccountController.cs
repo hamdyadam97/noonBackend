@@ -125,11 +125,7 @@ namespace AliExpress.Api.Controllers
                     }
                 }
                 
-                //if (user.Deactivate)
-                //{
-                //    return Unauthorized("Invalid login attempt. User account is deactivated.");
-
-                //}
+               
                 if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
                 {
                     var token = GenerateJwtToken(user);

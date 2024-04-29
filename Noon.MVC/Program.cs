@@ -100,7 +100,7 @@ namespace Noon.MVC
             app.UseAuthorization();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Product}/{action=Index}/{id?}");
+                pattern: "{controller=Report}/{action=Index}/{id?}");
 
 
             app.Run();

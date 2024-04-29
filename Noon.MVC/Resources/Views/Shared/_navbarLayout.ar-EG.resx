@@ -141,6 +141,9 @@
   <data name="Products" xml:space="preserve">
     <value>المنتجات</value>
   </data>
+  <data name="Report" xml:space="preserve">
+    <value>صفحة التقرير</value>
+  </data>
   <data name="Users" xml:space="preserve">
     <value> المستخدمين</value>
   </data>
