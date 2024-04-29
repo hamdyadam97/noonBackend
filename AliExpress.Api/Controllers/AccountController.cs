@@ -11,6 +11,8 @@ using System.Security.Claims;
 using System.Text;
 using AliExpress.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using AliExpress.Application.IServices;
 
 namespace AliExpress.Api.Controllers
 {
@@ -23,6 +25,7 @@ namespace AliExpress.Api.Controllers
         //private readonly UserManager<IdentityUser> _userManager;
         //private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IConfiguration _configuration;
+        private readonly IUserService _userService;
 
         private string GenerateVerificationCode()
         {
@@ -60,8 +63,10 @@ namespace AliExpress.Api.Controllers
         public AccountController(
       UserManager<AppUser> userManager,
       SignInManager<AppUser> signInManager,
+      IUserService userService,
        IConfiguration configuration)
         {
+            _userService = userService;
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
@@ -207,5 +212,53 @@ namespace AliExpress.Api.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetUserById()
+        {
+            try
+            {
+                // Retrieve the user ID from the token
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                // Retrieve only necessary user data
+                var userData = await _userManager.FindByIdAsync(userId);
+
+                if (userData == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(userData);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpPut]
+        
+        public async Task<IActionResult> Update(APIUserDTO aPIUserDTO)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var user = await _userService.Update(aPIUserDTO);
+                if (user == null)
+                    return BadRequest("Error in Update Try Agin Later ");
+                else
+                {
+                   
+                    return Ok("User updated successfully.");
+
+                }
+            }
+            return BadRequest(ModelState);
+        }
+
+
+
     }
 }
