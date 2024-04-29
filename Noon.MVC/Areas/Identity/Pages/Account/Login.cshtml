@@ -141,7 +141,9 @@
         <div class="alert alert-danger" role="alert">
             @errors.Errors[0].ErrorMessage
         </div>
+        
     }
+    <div class="alert alert-danger" role="alert">@ViewData["ErrorMessage"]</div>
     <div class="splash-container">
         <div class="card">
             <div class="card-header text-center">

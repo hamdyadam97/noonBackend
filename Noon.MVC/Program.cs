@@ -47,10 +47,7 @@ namespace Noon.MVC
             }, ServiceLifetime.Scoped);
 
 
-            //builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
-            //{
-            //    options.User.RequireUniqueEmail = false;
-            //});
+           
 
             builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = false)
                         .AddRoles<IdentityRole>()
@@ -64,6 +61,27 @@ namespace Noon.MVC
             builder.Services.AddControllersWithViews()
               .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
               .AddDataAnnotationsLocalization();
+
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireLoggedIn", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                });
+
+                options.AddPolicy("RequireAdminRole", policy =>
+                {
+                    policy.RequireRole("Admin");
+                });
+
+                // Add more policies as needed
+            });
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Identity/Account/Login"; // Redirect to login page for access denied
+            });
+
             builder.Services.Configure<RequestLocalizationOptions>(options =>
             {
                 var supportedCultures = new[]

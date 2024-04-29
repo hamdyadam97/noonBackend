@@ -122,6 +122,7 @@ namespace Noon.MVC.Areas.Identity.Pages.Account
                 {
                     // Check if the user has the "user" role
                     var user = await _userManager.FindByEmailAsync(Input.Email);
+                    var roles = await _userManager.GetRolesAsync(user);
 
                     if (user != null)
                     {
@@ -129,20 +130,20 @@ namespace Noon.MVC.Areas.Identity.Pages.Account
                         {
                             // User is deactivated, prevent login
                             _logger.LogWarning("Deactivated user tried to log in.");
-                            TempData["ErrorMessage"] = "Invalid login attempt. User account is deactivated.";
+                            ViewData["ErrorMessage"] = "Invalid login attempt. User account is deactivated.";
                             await _signInManager.SignOutAsync(); // Sign out the user to prevent further actions
                             return Page();
                         }
 
-                        var roles = await _userManager.GetRolesAsync(user);
+                        
 
-                        if (roles.Contains("user"))
+                        if (roles.Contains("user")|roles.Count()==0)
                         {
                             // User has the "user" role
                             _logger.LogWarning("User has the 'user' role. Not allowed to login.");
                             ModelState.AddModelError(string.Empty, "Invalid login attempt. User not allowed to login.");
                             await _signInManager.SignOutAsync(); // Sign out the user to prevent further actions
-                            TempData["ErrorMessage"] = "Invalid login attempt for users with the 'user' role.";
+                            TempData["ErrorMessage"] = "Invalid login attempt for users with the user role.";
                             return Page();
                         }
                     }
