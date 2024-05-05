@@ -121,10 +121,8 @@
             align-items: center;
             padding-top: 40px;
             padding-bottom: 40px;
-            background-image: url('~\assets\noon.jpg');
-            /* background-image: url('https://scontent-hbe1-2.xx.fbcdn.net/v/t39.30808-6/371798479_685203153634973_5862830155031603111_n.jpg?stp=dst-jpg_p180x540&_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFyaK7GBgkyRTPFRA2QvkP9IZwvgKkAwZ8hnC-AqQDBn0uQiQqBd7OAs4OYlzEptF01q6nGIU5zwS8LA5ltEGo7&_nc_ohc=Bp3So3xf2acQ7kNvgEGkKE9&_nc_ht=scontent-hbe1-2.xx&oh=00_AfBYfFiKKFWEtT23Lz0uVGHPfb3_mYaRN5B0llqxB-Q7nA&oe=663D95E1'); */
-            /* https: //media.licdn.com/dms/image/D4D12AQGttzHmZDsM3g/article-cover_image-shrink_720_1280/0/1701341303241?e=2147483647&v=beta&t=8VfVuD0U1MiTXcWopz0gWGX9PtCGgSmDCdWdrV8TtQ0 background-size: cover; */
-            /* https: //comingsoon.ae/wp-content/uploads/2018/09/noon.jpg background-repeat: no-repeat; */
+            
+            background-image: url('/assets/noon.jpg');
             /* https: //su24su.com/wp-content/uploads/2023/11/noon-%D9%86%D9%88%D9%86-1536x864.jpg */
         }
 
@@ -148,6 +146,12 @@
     {
         <div class="alert alert-danger" role="alert">@ViewData["ErrorMessage"]</div>
     }
+
+    @if (@ViewData["deactivated"] != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewData["deactivated"]</div>
+    }
+
    
     <div class="splash-container">
         <div class="card">
