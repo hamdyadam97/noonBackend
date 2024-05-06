@@ -156,13 +156,27 @@
                         @{
                             var Activate = _localizer["Active"];
                         }
-                        @Html.ActionLink(Activate.Value, "Activate", new { id = item.Id }, new { @class = "btn btn-success" })
+                        @* @Html.ActionLink(Activate.Value, "Activate", new { id = item.Id }, new { @class = "btn btn-success" }) *@
+                        @Html.ActionLink(
+                                 Activate.Value,
+                                 "Activate",
+                                 new { id = item.Id },
+                                 new { @class = "btn btn-success", onclick = "return confirm('Are you sure you want to activate this user?');" }
+                                 )
+
                     </td>
                     <td>
                         @{
                             var Deactivate = _localizer["Deactivate"];
                         }
-                        @Html.ActionLink(Deactivate.Value, "Deactivate", new { id = item.Id }, new { @class = "btn btn-danger" })
+                        @* @Html.ActionLink(Deactivate.Value, "Deactivate", new { id = item.Id }, new { @class = "btn btn-danger" }) *@
+                        @Html.ActionLink(
+                                 Deactivate.Value,
+                                 "Deactivate",
+                                 new { id = item.Id },
+                                 new { @class = "btn btn-danger", onclick = "return confirm('Are you sure you want to deactivate this user?');" }
+                                 )
+
                     </td>
                 </tr>
             }

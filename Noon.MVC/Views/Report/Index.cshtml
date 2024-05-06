@@ -120,92 +120,84 @@
                                         <div class="table-responsive">
                                             @if (Model.Count() > 0)
                                             {
-                                                <table class="table table-striped">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>
-                                                                Id
-
-                                                            </th>
-                                                            <th>
-                                                                OrderDate
-
-                                                            <th>
+                                                <div style="max-height: 300px; overflow-y: auto;">
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>
+                                                                    Id
+                                                                </th>
+                                                                <th>
+                                                                    OrderDate
+                                                                </th>
+                                                                <th>
                                                                     UserPhone
-
-                                                            </th>
-                                                            <th>
+                                                                </th>
+                                                                <th>
                                                                     UserCountry
-
-                                                            </th>
-                                                            <th>
+                                                                </th>
+                                                                <th>
                                                                     UserCity
-
-                                                            </th>
-                                                            <th>
-                                                                  DeliveryMethod
-
-                                                            </th>
-                                                            <th>
+                                                                </th>
+                                                                <th>
+                                                                    DeliveryMethod
+                                                                </th>
+                                                                <th>
                                                                     Status
-
-                                                            </th>
-                                                            <th>
-                                                                  Total
-
-                                                            </th>
-                                                            <th>Actions</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @if (Model != null)
-                                                        {
-                                                            @foreach (var item in Model)
+                                                                </th>
+                                                                <th>
+                                                                    Total
+                                                                </th>
+                                                                <th>Actions</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @if (Model != null)
                                                             {
-                                                                <tr>
-                                                                    <td>
-                                                                        @Html.DisplayFor(modelItem => item.Id)
-                                                                    </td>
-                                                                    <td>
-                                                                        @{
-                                                                            string formattedOrderDate = item.OrderDate.ToString("M/d/yyyy");
-                                                                        }
-
-                                                                        @Html.DisplayFor(modelItem => formattedOrderDate)
-                                                                        @*  @Html.DisplayFor(modelItem => item.OrderDate.ToString("M/d/yyyy")) *@
-                                                                    </td>
-                                                                    <td>
-                                                                        @Html.DisplayFor(modelItem => item.AppUser.Phone)
-                                                                    </td>
-                                                                    <td>
-                                                                        @Html.DisplayFor(modelItem => item.AppUser.Country)
-                                                                    </td>
-                                                                    <td>
-                                                                        @Html.DisplayFor(modelItem => item.AppUser.City)
-                                                                    </td>
-                                                                    <td>
-                                                                        @Html.DisplayFor(modelItem => item.DeliveryMethod)
-                                                                    </td>
-                                                                    <td>
-                                                                        @Html.DisplayFor(modelItem => item.Status)
-                                                                    </td>
-                                                                    <td>
-                                                                        @Html.DisplayFor(modelItem => item.Total)
-                                                                    </td>
-                                                                    <td>
-
-                                                                        <a class="btn btn-primary" asp-controller="Order" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                                                                    </td>
-                                                                    <td>
-
-                                                                        @* <a class="btn btn-secondary" asp-controller="Order" asp-action="Details" asp-route-id="@item.Id">Details</a> *@
-                                                                    </td>
-                                                                </tr>
+                                                                @foreach (var item in Model.Take(5))
+                                                                {
+                                                                    <tr>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.Id)
+                                                                        </td>
+                                                                        <td>
+                                                                            @{
+                                                                                string formattedOrderDate = item.OrderDate.ToString("M/d/yyyy");
+                                                                            }
+                                                                            @Html.DisplayFor(modelItem => formattedOrderDate)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.AppUser.Phone)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.AppUser.Country)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.AppUser.City)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.DeliveryMethod)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.Status)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.Total)
+                                                                        </td>
+                                                                        <td>
+                                                                            <a class="btn btn-primary" asp-controller="Order" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            @* <a class="btn btn-secondary" asp-controller="Order" asp-action="Details" asp-route-id="@item.Id">Details</a> *@
+                                                                        </td>
+                                                                    </tr>
+                                                                }
                                                             }
-                                                        }
-                                                    </tbody>
-                                                </table>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             }
+
                                             else
                                             {
                                                 <div class="alert alert-danger"><p>No orders</p></div>

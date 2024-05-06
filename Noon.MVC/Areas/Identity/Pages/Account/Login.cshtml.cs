@@ -130,7 +130,7 @@ namespace Noon.MVC.Areas.Identity.Pages.Account
                         {
                             // User is deactivated, prevent login
                             _logger.LogWarning("Deactivated user tried to log in.");
-                            ViewData["deactivated"] = "Invalid login attempt. User account is deactivated.";
+                           // ViewData["deactivated"] = "Invalid login attempt. User account is deactivated.";
                             TempData["ErrorMessage"] = "Invalid login attempt. User account is deactivated.";
                             await _signInManager.SignOutAsync(); // Sign out the user to prevent further actions
                             return Page();

@@ -1,10 +1,13 @@
 ﻿using AliExpress.Application.IServices;
 using AliExpress.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Noon.MVC.Controllers
 {
+    [Authorize(Roles = "admin")]
+    [Authorize]
     public class ReportController : Controller
     {
         private readonly IOrderService _orderService;
